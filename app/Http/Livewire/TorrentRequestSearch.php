@@ -240,7 +240,7 @@ class TorrentRequestSearch extends Component
             ->when($this->categoryIds !== [], fn ($query) => $query->whereIntegerInRaw('category_id', $this->categoryIds))
             ->when($this->typeIds !== [], fn ($query) => $query->whereIntegerInRaw('type_id', $this->typeIds))
             ->when($this->resolutionIds !== [], fn ($query) => $query->whereIntegerInRaw('resolution_id', $this->resolutionIds))
-            ->when($this->tmdbId !== null, fn ($query) => $query->where('tmdb', '=', $this->tmdbId))
+            ->when($this->tmdbId !== null, fn ($query) => $query->where(fn ($query) => $query->where('movie_id', '=', $this->tmdbId)->orWhere('tv_id', '=', $this->tmdbId)))
             ->when($this->imdbId !== '', fn ($query) => $query->where('imdb', '=', (preg_match('/tt0*(?=(\d{7,}))/', $this->imdbId, $matches) ? $matches[1] : $this->imdbId)))
             ->when($this->tvdbId !== null, fn ($query) => $query->where('tvdb', '=', $this->tvdbId))
             ->when($this->malId !== null, fn ($query) => $query->where('mal', '=', $this->malId))
@@ -252,12 +252,12 @@ class TorrentRequestSearch extends Component
                             ->where(
                                 fn ($query) => $query
                                     ->whereRelation('category', 'movie_meta', '=', true)
-                                    ->whereIn('tmdb', DB::table('genre_movie')->select('movie_id')->whereIn('genre_id', $this->genreIds))
+                                    ->whereIn('movie_id', DB::table('genre_movie')->select('movie_id')->whereIn('genre_id', $this->genreIds))
                             )
                             ->orWhere(
                                 fn ($query) => $query
                                     ->whereRelation('category', 'tv_meta', '=', true)
-                                    ->whereIn('tmdb', DB::table('genre_tv')->select('tv_id')->whereIn('genre_id', $this->genreIds))
+                                    ->whereIn('tv_id', DB::table('genre_tv')->select('tv_id')->whereIn('genre_id', $this->genreIds))
                             )
                     )
             )

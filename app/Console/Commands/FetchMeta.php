@@ -56,9 +56,9 @@ class FetchMeta extends Command
 
         $tmdbMovieIds = Torrent::query()
             ->whereRelation('category', 'movie_meta', '=', true)
-            ->select('tmdb')
+            ->select('movie_id')
             ->distinct()
-            ->pluck('tmdb');
+            ->pluck('tv_id');
 
         $this->info('Queueing all tmdb movie metadata fetching');
 
@@ -72,9 +72,9 @@ class FetchMeta extends Command
 
         $tmdbTvIds = Torrent::query()
             ->whereRelation('category', 'tv_meta', '=', true)
-            ->select('tmdb')
+            ->select('tv_id')
             ->distinct()
-            ->pluck('tmdb');
+            ->pluck('tv_id');
 
         $this->info('Queueing all tmdb tv metadata fetching');
 

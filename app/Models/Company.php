@@ -60,7 +60,7 @@ class Company extends Model
      */
     public function movieTorrents(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
-        return $this->belongsToMany(Torrent::class, 'company_movie', 'movie_id', 'company_id', 'id', 'tmdb')->whereRelation('category', 'movie_meta', '=', true);
+        return $this->belongsToMany(Torrent::class, 'company_movie', 'movie_id', 'company_id', 'id', 'movie_id')->whereRelation('category', 'movie_meta', '=', true);
     }
 
     /**
@@ -68,6 +68,6 @@ class Company extends Model
      */
     public function tvTorrents(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
-        return $this->belongsToMany(Torrent::class, 'company_tv', 'tv_id', 'company_id', 'id', 'tmdb')->whereRelation('category', 'tv_meta', '=', true);
+        return $this->belongsToMany(Torrent::class, 'company_tv', 'tv_id', 'company_id', 'id', 'tv_id')->whereRelation('category', 'tv_meta', '=', true);
     }
 }

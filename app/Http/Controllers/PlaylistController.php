@@ -120,8 +120,8 @@ class PlaylistController extends Controller
         return view('playlist.show', [
             'playlist' => $playlist->load('user.group'),
             'meta'     => match (true) {
-                $randomTorrent?->category?->tv_meta    => Tv::find($randomTorrent->tmdb),
-                $randomTorrent?->category?->movie_meta => Movie::find($randomTorrent->tmdb),
+                $randomTorrent?->category?->tv_meta    => Tv::find($randomTorrent->tv_id),
+                $randomTorrent?->category?->movie_meta => Movie::find($randomTorrent->movie_id),
                 default                                => null,
             },
             'latestPlaylistTorrent' => $playlist->torrents()->orderByPivot('created_at', 'desc')->first(),

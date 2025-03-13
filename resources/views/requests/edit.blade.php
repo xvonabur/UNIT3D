@@ -27,7 +27,13 @@
 
 @section('main')
     @if ($user->can_request ?? $user->group->can_request)
-        <section class="panelV2">
+        <section
+            class="panelV2"
+            x-data="{
+                cat: {{ (int) $category_id }},
+                cats: JSON.parse(atob('{{ base64_encode(json_encode($categories)) }}')),
+            }"
+        >
             <h2 class="panel__heading">{{ __('request.edit-request') }}</h2>
             <div class="panel__body">
                 <form
@@ -105,25 +111,48 @@
                             {{ __('request.resolution') }}
                         </label>
                     </p>
-                    <div class="form__group--short-horizontal">
-                        <p class="form__group">
-                            <input type="hidden" name="tmdb" value="0" />
+                    <div
+                        class="form__group--short-horizontal"
+                        x-show="cats[cat].type === 'movie' || cats[cat].type === 'tv' || cats[cat].type === 'game'"
+                    >
+                        <p class="form__group" x-show="cats[cat].type === 'movie'">
+                            <input type="hidden" name="movie_id" value="0" />
                             <input
-                                id="autotmdb"
+                                id="movie_id"
                                 class="form__text"
                                 inputmode="numeric"
-                                name="tmdb"
+                                name="movie_id"
                                 pattern="[0-9]*"
                                 required
                                 type="text"
-                                value="{{ $torrentRequest->tmdb ?: old('tmdb') }}"
+                                value="{{ $torrentRequest->movie_id ?: old('movie_id') }}"
                             />
-                            <label class="form__label form__label--floating" for="autotmdb">
-                                TMDB ID
+                            <label class="form__label form__label--floating" for="movie_id">
+                                TMDB Movie ID
                             </label>
                             <output name="apimatch" id="apimatch" for="torrent"></output>
                         </p>
-                        <p class="form__group">
+                        <p class="form__group" x-show="cats[cat].type === 'tv'">
+                            <input type="hidden" name="tv_id" value="0" />
+                            <input
+                                id="tv_id"
+                                class="form__text"
+                                inputmode="numeric"
+                                name="tv_id"
+                                pattern="[0-9]*"
+                                required
+                                type="text"
+                                value="{{ $torrentRequest->tv_id ?: old('tv_id') }}"
+                            />
+                            <label class="form__label form__label--floating" for="tv_id">
+                                TMDB TV ID
+                            </label>
+                            <output name="apimatch" id="apimatch" for="torrent"></output>
+                        </p>
+                        <p
+                            class="form__group"
+                            x-show="cats[cat].type === 'movie' || cats[cat].type === 'tv'"
+                        >
                             <input type="hidden" name="imdb" value="0" />
                             <input
                                 id="autoimdb"
@@ -139,7 +168,7 @@
                                 IMDB ID
                             </label>
                         </p>
-                        <p class="form__group">
+                        <p class="form__group" x-show="cats[cat].type === 'tv'">
                             <input type="hidden" name="tvdb" value="0" />
                             <input
                                 id="autotvdb"
@@ -155,7 +184,10 @@
                                 TVDB ID
                             </label>
                         </p>
-                        <p class="form__group">
+                        <p
+                            class="form__group"
+                            x-show="cats[cat].type === 'movie' || cats[cat].type === 'tv'"
+                        >
                             <input type="hidden" name="mal" value="0" />
                             <input
                                 id="automal"
@@ -171,7 +203,7 @@
                                 MAL ID ({{ __('torrent.required-anime') }})
                             </label>
                         </p>
-                        <p class="form__group">
+                        <p class="form__group" x-show="cats[cat].type === 'game'">
                             <input
                                 id="igdb"
                                 class="form__text"

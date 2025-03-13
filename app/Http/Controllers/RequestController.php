@@ -67,20 +67,20 @@ class RequestController extends Controller
                 ->whereKey($torrentRequest)
                 ->exists(),
             'meta' => match (true) {
-                ($torrentRequest->category->tv_meta && $torrentRequest->tmdb) => Tv::with([
+                ($torrentRequest->category->tv_meta && $torrentRequest->tv_id) => Tv::with([
                     'genres',
                     'credits' => ['person', 'occupation'],
                     'networks',
                     'seasons'
                 ])
-                    ->find($torrentRequest->tmdb),
-                ($torrentRequest->category->movie_meta && $torrentRequest->tmdb) => Movie::with([
+                    ->find($torrentRequest->tv_id),
+                ($torrentRequest->category->movie_meta && $torrentRequest->movie_id) => Movie::with([
                     'genres',
                     'credits' => ['person', 'occupation'],
                     'companies',
                     'collection'
                 ])
-                    ->find($torrentRequest->tmdb),
+                    ->find($torrentRequest->movie_id),
                 ($torrentRequest->category->game_meta && $torrentRequest->igdb) => IgdbGame::with([
                     'genres',
                     'companies',
@@ -118,7 +118,8 @@ class RequestController extends Controller
             'category_id' => $request->category_id ?? Category::first('id')->id,
             'title'       => urldecode((string) $request->title),
             'imdb'        => $request->imdb,
-            'tmdb'        => $request->tmdb,
+            'movieId'     => $request->movie_id,
+            'tvId'        => $request->tv_id,
             'mal'         => $request->mal,
             'tvdb'        => $request->tvdb,
             'igdb'        => $request->igdb,
@@ -157,10 +158,10 @@ class RequestController extends Controller
         $category = $torrentRequest->category;
 
         match (true) {
-            $category->tv_meta && $torrentRequest->tmdb > 0    => new TMDBScraper()->tv($torrentRequest->tmdb),
-            $category->movie_meta && $torrentRequest->tmdb > 0 => new TMDBScraper()->movie($torrentRequest->tmdb),
-            $category->game_meta && $torrentRequest->igdb > 0  => new IgdbScraper()->game($torrentRequest->igdb),
-            default                                            => null,
+            $category->tv_meta && $torrentRequest->tv_id > 0       => new TMDBScraper()->tv($torrentRequest->tv_id),
+            $category->movie_meta && $torrentRequest->movie_id > 0 => new TMDBScraper()->movie($torrentRequest->movie_id),
+            $category->game_meta && $torrentRequest->igdb > 0      => new IgdbScraper()->game($torrentRequest->igdb),
+            default                                                => null,
         };
 
         return to_route('requests.index')
@@ -209,10 +210,10 @@ class RequestController extends Controller
         $category = $torrentRequest->category;
 
         match (true) {
-            $category->tv_meta && $torrentRequest->tmdb > 0    => new TMDBScraper()->tv($torrentRequest->tmdb),
-            $category->movie_meta && $torrentRequest->tmdb > 0 => new TMDBScraper()->movie($torrentRequest->tmdb),
-            $category->game_meta && $torrentRequest->igdb > 0  => new IgdbScraper()->game($torrentRequest->igdb),
-            default                                            => null,
+            $category->tv_meta && $torrentRequest->tv_id > 0       => new TMDBScraper()->tv($torrentRequest->tv_id),
+            $category->movie_meta && $torrentRequest->movie_id > 0 => new TMDBScraper()->movie($torrentRequest->movie_id),
+            $category->game_meta && $torrentRequest->igdb > 0      => new IgdbScraper()->game($torrentRequest->igdb),
+            default                                                => null,
         };
 
         return to_route('requests.show', ['torrentRequest' => $torrentRequest])

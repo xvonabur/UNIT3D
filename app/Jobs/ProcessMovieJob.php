@@ -107,7 +107,7 @@ class ProcessMovieJob implements ShouldQueue
         Recommendation::upsert($movieScraper->getRecommendations(), ['recommendation_movie_id', 'movie_id']);
 
         Torrent::query()
-            ->where('tmdb', '=', $this->id)
+            ->where('movie_id', '=', $this->id)
             ->whereRelation('category', 'movie_meta', '=', true)
             ->searchable();
     }

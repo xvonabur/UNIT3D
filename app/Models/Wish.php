@@ -62,7 +62,7 @@ class Wish extends Model
      */
     public function movieTorrents(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
-        return $this->hasMany(Torrent::class, 'tmdb', 'movie_id')
+        return $this->hasMany(Torrent::class, 'movie_id', 'movie_id')
             ->whereRelation('category', 'movie_meta', '=', true);
     }
 
@@ -73,7 +73,7 @@ class Wish extends Model
      */
     public function tvTorrents(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
-        return $this->hasMany(Torrent::class, 'tmdb', 'tv_id')
+        return $this->hasMany(Torrent::class, 'tv_id', 'tv_id')
             ->whereRelation('category', 'tv_meta', '=', true);
     }
 }

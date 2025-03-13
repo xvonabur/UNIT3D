@@ -55,10 +55,10 @@
                         $meta = match (true) {
                             $feature->torrent->category->tv_meta => App\Models\Tv::query()
                                 ->with('genres', 'networks', 'seasons')
-                                ->find($feature->torrent->tmdb ?? 0),
+                                ->find($feature->torrent->tv_id ?? 0),
                             $feature->torrent->category->movie_meta => App\Models\Movie::query()
                                 ->with('genres', 'companies', 'collection')
-                                ->find($feature->torrent->tmdb ?? 0),
+                                ->find($feature->torrent->movie_id ?? 0),
                             $feature->torrent->category->game_meta => App\Models\Game::query()
                                 ->with('genres')
                                 ->find((int) $feature->torrent->igdb),

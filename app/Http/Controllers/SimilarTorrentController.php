@@ -38,7 +38,7 @@ class SimilarTorrentController extends Controller
 
         switch (true) {
             case $category->movie_meta:
-                $hasTorrents = Torrent::query()->where('category_id', '=', $categoryId)->where('tmdb', '=', $tmdbId)->exists();
+                $hasTorrents = Torrent::query()->where('category_id', '=', $categoryId)->where('movie_id', '=', $tmdbId)->exists();
 
                 abort_unless($hasTorrents, 404, 'No Similar Torrents Found');
 
@@ -52,7 +52,7 @@ class SimilarTorrentController extends Controller
 
                 break;
             case $category->tv_meta:
-                $hasTorrents = Torrent::query()->where('category_id', '=', $categoryId)->where('tmdb', '=', $tmdbId)->exists();
+                $hasTorrents = Torrent::query()->where('category_id', '=', $categoryId)->where('tv_id', '=', $tmdbId)->exists();
 
                 abort_unless($hasTorrents, 404, 'No Similar Torrents Found');
 
@@ -105,9 +105,14 @@ class SimilarTorrentController extends Controller
         if (
             $metaId === 0
             || (
-                ($category->movie_meta || $category->tv_meta)
-                && Torrent::where('category_id', '=', $category->id)->where('tmdb', '=', $metaId)->doesntExist()
-                && TorrentRequest::where('category_id', '=', $category->id)->where('tmdb', '=', $metaId)->doesntExist()
+                $category->movie_meta
+                && Torrent::where('category_id', '=', $category->id)->where('movie_id', '=', $metaId)->doesntExist()
+                && TorrentRequest::where('category_id', '=', $category->id)->where('movie_id', '=', $metaId)->doesntExist()
+            )
+            || (
+                $category->tv_meta
+                && Torrent::where('category_id', '=', $category->id)->where('tv_id', '=', $metaId)->doesntExist()
+                && TorrentRequest::where('category_id', '=', $category->id)->where('tv_id', '=', $metaId)->doesntExist()
             )
             || (
                 $category->game_meta

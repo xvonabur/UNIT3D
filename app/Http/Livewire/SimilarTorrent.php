@@ -280,11 +280,9 @@ class SimilarTorrent extends Component
                 $this->category->tv_meta,
                 fn ($query) => $query->whereRelation('category', 'tv_meta', '=', true),
             )
-            ->when(
-                $this->category->tv_meta || $this->category->movie_meta,
-                fn ($query) => $query->where('tmdb', '=', $this->tmdbId),
-                fn ($query) => $query->where('igdb', '=', $this->igdbId),
-            )
+            ->when($this->category->tv_meta, fn ($query) => $query->where('tv_id', '=', $this->tmdbId))
+            ->when($this->category->movie_meta, fn ($query) => $query->where('movie_id', '=', $this->tmdbId))
+            ->when($this->category->game_meta, fn ($query) => $query->where('igdb', '=', $this->tmdbId))
             ->where((new TorrentSearchFiltersDTO(
                 name: $this->name,
                 description: $this->description,
@@ -392,7 +390,9 @@ class SimilarTorrent extends Component
     {
         return TorrentRequest::with(['user:id,username,group_id', 'user.group', 'category', 'type', 'resolution'])
             ->withCount(['comments'])
-            ->where('tmdb', '=', $this->tmdbId)
+            ->when($this->category->movie_meta, fn ($query) => $query->where('movie_id', '=', $this->tmdbId))
+            ->when($this->category->tv_meta, fn ($query) => $query->where('tv_id', '=', $this->tmdbId))
+            ->when($this->category->game_meta, fn ($query) => $query->where('igdb', '=', $this->tmdbId))
             ->where('category_id', '=', $this->category->id)
             ->when(
                 $this->hideFilledRequests,

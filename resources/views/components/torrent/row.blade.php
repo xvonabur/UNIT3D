@@ -24,7 +24,7 @@
     @if (auth()->user()->settings?->show_poster)
         <td class="torrent-search--list__poster">
             <a
-                href="{{ route('torrents.similar', ['category_id' => $torrent->category_id, 'tmdb' => $torrent->tmdb]) }}"
+                href="{{ route('torrents.similar', ['category_id' => $torrent->category_id, 'tmdb' => $torrent->movie_id ?? $torrent->tv_id]) }}"
             >
                 @if ($torrent->category->movie_meta || $torrent->category->tv_meta)
                     <img

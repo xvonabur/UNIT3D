@@ -50,7 +50,8 @@ use Laravel\Scout\Searchable;
  * @property int                             $user_id
  * @property int                             $imdb
  * @property int                             $tvdb
- * @property int                             $tmdb
+ * @property int|null                        $movie_id
+ * @property int|null                        $tv_id
  * @property int                             $mal
  * @property int                             $igdb
  * @property int|null                        $season_number
@@ -95,7 +96,8 @@ class Torrent extends Model
      * Get the attributes that should be cast.
      *
      * @return array{
-     *     tmdb: 'int',
+     *     movie_id: 'int',
+     *     tv_id: 'int',
      *     igdb: 'int',
      *     status: class-string<ModerationStatus>,
      *     bumped_at: 'datetime',
@@ -112,7 +114,8 @@ class Torrent extends Model
     protected function casts(): array
     {
         return [
-            'tmdb'             => 'int',
+            'movie_id'         => 'int',
+            'tv_id'            => 'int',
             'igdb'             => 'int',
             'bumped_at'        => 'datetime',
             'fl_until'         => 'datetime',
@@ -161,7 +164,8 @@ class Torrent extends Model
             torrents.user_id,
             torrents.imdb,
             torrents.tvdb,
-            torrents.tmdb,
+            torrents.movie_id,
+            torrents.tv_id,
             torrents.mal,
             torrents.igdb,
             torrents.season_number,
@@ -285,7 +289,7 @@ class Torrent extends Model
                 SELECT vote_average
                 FROM movies
                 WHERE
-                    torrents.tmdb = movies.id
+                    torrents.movie_id = movies.id
                     AND torrents.category_id in (
                         SELECT id
                         FROM categories
@@ -295,7 +299,7 @@ class Torrent extends Model
                 SELECT vote_average
                 FROM tv
                 WHERE
-                    torrents.tmdb = tv.id
+                    torrents.tv_id = tv.id
                     AND torrents.category_id in (
                         SELECT id
                         FROM categories
@@ -331,7 +335,7 @@ class Torrent extends Model
                         WHERE companies.id IN (
                             SELECT company_id
                             FROM company_movie
-                            WHERE company_movie.movie_id = torrents.tmdb
+                            WHERE company_movie.movie_id = torrents.movie_id
                         )
                     ),
                     'genres', (
@@ -343,7 +347,7 @@ class Torrent extends Model
                         WHERE genres.id IN (
                             SELECT genre_id
                             FROM genre_movie
-                            WHERE genre_movie.movie_id = torrents.tmdb
+                            WHERE genre_movie.movie_id = torrents.movie_id
                         )
                     ),
                     'collection', (
@@ -363,7 +367,7 @@ class Torrent extends Model
                     )
                 )
                 FROM movies
-                WHERE torrents.tmdb = movies.id
+                WHERE torrents.movie_id = movies.id
                     AND torrents.category_id in (
                         SELECT id
                         FROM categories
@@ -388,7 +392,7 @@ class Torrent extends Model
                         WHERE companies.id IN (
                             SELECT company_id
                             FROM company_tv
-                            WHERE company_tv.tv_id = torrents.id
+                            WHERE company_tv.tv_id = torrents.tv_id
                         )
                     ),
                     'genres', (
@@ -400,7 +404,7 @@ class Torrent extends Model
                         WHERE genres.id IN (
                             SELECT genre_id
                             FROM genre_tv
-                            WHERE genre_tv.tv_id = torrents.tmdb
+                            WHERE genre_tv.tv_id = torrents.tv_id
                         )
                     ),
                     'networks', (
@@ -412,7 +416,7 @@ class Torrent extends Model
                         WHERE networks.id IN (
                             SELECT network_id
                             FROM network_tv
-                            WHERE network_tv.tv_id = torrents.id
+                            WHERE network_tv.tv_id = torrents.tv_id
                         )
                     ),
                     'wishes', (
@@ -424,7 +428,7 @@ class Torrent extends Model
                     )
                 )
                 FROM tv
-                WHERE torrents.tmdb = tv.id
+                WHERE torrents.tv_id = tv.id
                     AND torrents.category_id in (
                         SELECT id
                         FROM categories
@@ -544,7 +548,7 @@ class Torrent extends Model
      */
     public function movie(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
-        return $this->belongsTo(Movie::class, 'tmdb');
+        return $this->belongsTo(Movie::class);
     }
 
     /**
@@ -554,7 +558,7 @@ class Torrent extends Model
      */
     public function tv(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
-        return $this->belongsTo(Tv::class, 'tmdb');
+        return $this->belongsTo(Tv::class);
     }
 
     /**
@@ -837,7 +841,8 @@ class Torrent extends Model
             'user_id',
             'imdb',
             'tvdb',
-            'tmdb',
+            'movie_id',
+            'tv_id',
             'mal',
             'igdb',
             'season_number',
@@ -907,7 +912,8 @@ class Torrent extends Model
             'user_id'            => $torrent->user_id,
             'imdb'               => $torrent->imdb,
             'tvdb'               => $torrent->tvdb,
-            'tmdb'               => $torrent->tmdb,
+            'movie_id'           => $torrent->movie_id,
+            'tv_id'              => $torrent->tv_id,
             'mal'                => $torrent->mal,
             'igdb'               => $torrent->igdb,
             'season_number'      => $torrent->season_number,
