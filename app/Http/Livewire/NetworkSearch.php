@@ -42,7 +42,11 @@ class NetworkSearch extends Component
     #[Computed]
     final public function networks(): \Illuminate\Pagination\LengthAwarePaginator
     {
-        return Network::withCount('tv')
+        return Network::query()
+            ->withCount([
+                'tv' => fn ($query) => $query->has('torrents'),
+            ])
+            ->whereHas('tvTorrents')
             ->when($this->search !== '', fn ($query) => $query->where('name', 'LIKE', '%'.$this->search.'%'))
             ->oldest('name')
             ->paginate(30);

@@ -54,4 +54,20 @@ class Company extends Model
     {
         return $this->belongsToMany(Tv::class);
     }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany<Torrent, $this>
+     */
+    public function movieTorrents(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
+        return $this->belongsToMany(Torrent::class, 'company_movie', 'movie_id', 'company_id', 'id', 'tmdb')->whereRelation('category', 'movie_meta', '=', true);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany<Torrent, $this>
+     */
+    public function tvTorrents(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
+        return $this->belongsToMany(Torrent::class, 'company_tv', 'tv_id', 'company_id', 'id', 'tmdb')->whereRelation('category', 'tv_meta', '=', true);
+    }
 }

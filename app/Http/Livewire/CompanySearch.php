@@ -42,7 +42,12 @@ class CompanySearch extends Component
     #[Computed]
     final public function companies(): \Illuminate\Pagination\LengthAwarePaginator
     {
-        return Company::withCount('tv', 'movie')
+        return Company::query()
+            ->withCount([
+                'movie' => fn ($query) => $query->has('torrents'),
+                'tv'    => fn ($query) => $query->has('torrents'),
+            ])
+            ->where(fn ($query) => $query->whereHas('movieTorrents')->orWhereHas('tvTorrents'))
             ->when($this->search !== '', fn ($query) => $query->where('name', 'LIKE', '%'.$this->search.'%'))
             ->oldest('name')
             ->paginate(30);
