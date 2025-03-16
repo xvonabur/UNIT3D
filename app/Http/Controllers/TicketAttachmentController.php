@@ -51,7 +51,7 @@ class TicketAttachmentController extends Controller
             }
 
             $fileName = uniqid('', true).'.'.$file->getClientOriginalExtension();
-            $file->storeAs('attachments', $fileName, 'attachments');
+            $file->storeAs('', $fileName, 'attachment-files');
 
             $attachment = new TicketAttachment();
             $attachment->user_id = $user->id;
