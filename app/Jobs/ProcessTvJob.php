@@ -70,7 +70,7 @@ class ProcessTvJob implements ShouldQueue
 
         $companies = [];
 
-        foreach ($this->tv['production_companies'] ?? [] as $company) {
+        foreach ($tvScraper->data['production_companies'] ?? [] as $company) {
             $companies[] = (new Client\Company($company['id']))->getCompany();
         }
 
@@ -81,7 +81,7 @@ class ProcessTvJob implements ShouldQueue
 
         $networks = [];
 
-        foreach ($this->tv['networks'] ?? [] as $network) {
+        foreach ($tvScraper->data['networks'] ?? [] as $network) {
             $networks[] = (new Client\Network($network['id']))->getNetwork();
         }
 
