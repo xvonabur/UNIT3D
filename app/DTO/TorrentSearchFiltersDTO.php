@@ -534,22 +534,52 @@ readonly class TorrentSearchFiltersDTO
         }
 
         if ($this->tmdbId !== null) {
-            $filters[] = [
-                'tmdb_movie_id = '.$this->tmdbId,
-                'tmdb_tv_id = '.$this->tmdbId,
-            ];
+            if ($this->tmdbId === 0) {
+                $filters[] = [
+                    'tmdb_movie_id IS NULL AND tmdb_tv_id IS NOT NULL',
+                    'tmdb_tv_id IS NULL AND tmdb_movie_id IS NOT NULL',
+                    'tmdb_movie_id = 0 AND tmdb_tv_id != 0',
+                    'tmdb_tv_id = 0 AND tmdb_movie_id != 0',
+                ];
+            } else {
+                $filters[] = [
+                    'tmdb_movie_id = '.$this->tmdbId,
+                    'tmdb_tv_id = '.$this->tmdbId,
+                ];
+            }
         }
 
         if ($this->imdbId !== null) {
-            $filters[] = 'imdb = '.$this->imdbId;
+            if ($this->imdbId === 0) {
+                $filters[] = [
+                    'imdb IS NULL',
+                    'imdb = 0',
+                ];
+            } else {
+                $filters[] = 'imdb = '.$this->imdbId;
+            }
         }
 
         if ($this->tvdbId !== null) {
-            $filters[] = 'tvdb = '.$this->tvdbId;
+            if ($this->tvdbId === 0) {
+                $filters[] = [
+                    'tvdb IS NULL',
+                    'tvdb = 0',
+                ];
+            } else {
+                $filters[] = 'tvdb = '.$this->tvdbId;
+            }
         }
 
         if ($this->malId !== null) {
-            $filters[] = 'mal = '.$this->malId;
+            if ($this->malId === 0) {
+                $filters[] = [
+                    'mal IS NULL',
+                    'mal = 0',
+                ];
+            } else {
+                $filters[] = 'mal = '.$this->malId;
+            }
         }
 
         if ($this->playlistId !== null) {

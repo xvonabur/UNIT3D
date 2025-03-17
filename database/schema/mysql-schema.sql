@@ -2127,9 +2127,9 @@ CREATE TABLE `torrents` (
   `user_id` int unsigned NOT NULL,
   `tmdb_movie_id` int unsigned DEFAULT NULL,
   `tmdb_tv_id` int unsigned DEFAULT NULL,
-  `imdb` int unsigned NOT NULL DEFAULT '0',
-  `tvdb` int unsigned NOT NULL DEFAULT '0',
-  `mal` int unsigned NOT NULL DEFAULT '0',
+  `imdb` int unsigned DEFAULT NULL,
+  `tvdb` int unsigned DEFAULT NULL,
+  `mal` int unsigned DEFAULT NULL,
   `igdb` int unsigned DEFAULT NULL,
   `season_number` int DEFAULT NULL,
   `episode_number` int DEFAULT NULL,
@@ -2972,3 +2972,4 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (339,'2025_03_12_04
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (340,'2025_03_16_185628_update_torrents_table_to_int_igdb',2);
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (341,'2025_03_17_122748_add_tmdb_prefix_to_metadata_tables',3);
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (342,'2025_03_23_203227_add_automatically_unbookmark_torrents_user_setting',4);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (343,'2025_03_25_093436_update_metadata_id_default_to_null',5);

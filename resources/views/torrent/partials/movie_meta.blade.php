@@ -5,7 +5,7 @@
 
     <a
         class="meta__title-link"
-        href="{{ route('torrents.similar', ['category_id' => $category->id, 'tmdb' => $tmdb]) }}"
+        href="{{ $tmdb ? route('torrents.similar', ['category_id' => $category->id, 'tmdb' => $tmdb]) : '#' }}"
     >
         <h1 class="meta__title">
             {{ $meta->title ?? 'No Meta Found' }}
@@ -14,7 +14,7 @@
     </a>
     <a
         class="meta__poster-link"
-        href="{{ route('torrents.similar', ['category_id' => $category->id, 'tmdb' => $tmdb]) }}"
+        href="{{ $tmdb ? route('torrents.similar', ['category_id' => $category->id, 'tmdb' => $tmdb]) : '#' }}"
     >
         <img
             src="{{ $meta?->poster ? tmdb_image('poster_big', $meta->poster) : 'https://via.placeholder.com/400x600' }}"

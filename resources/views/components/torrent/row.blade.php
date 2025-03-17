@@ -24,7 +24,13 @@
     @if (auth()->user()->settings?->show_poster)
         <td class="torrent-search--list__poster">
             <a
-                href="{{ route('torrents.similar', ['category_id' => $torrent->category_id, 'tmdb' => $torrent->tmdb_movie_id ?? $torrent->tmdb_tv_id]) }}"
+                href="{{
+                    match (true) {
+                        $torrent->tmdb_movie_id !== null => route('torrents.similar', ['category_id' => $torrent->category_id, 'tmdb' => $torrent->tmdb_movie_id]),
+                        $torrent->tmdb_tv_id !== null => route('torrents.similar', ['category_id' => $torrent->category_id, 'tmdb' => $torrent->tmdb_tv_id]),
+                        default => '#',
+                    }
+                }}"
             >
                 @if ($torrent->category->movie_meta || $torrent->category->tv_meta)
                     <img

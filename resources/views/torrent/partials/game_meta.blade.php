@@ -9,7 +9,7 @@
 
     <a
         class="meta__title-link"
-        href="{{ route('torrents.similar', ['category_id' => $category->id, 'tmdb' => $igdb]) }}"
+        href="{{ $igdb ? route('torrents.similar', ['category_id' => $category->id, 'tmdb' => $igdb]) : '#' }}"
     >
         <h1 class="meta__title">
             {{ $meta->name ?? 'No Meta Found' }}
@@ -18,7 +18,7 @@
     </a>
     <a
         class="meta__poster-link"
-        href="{{ route('torrents.similar', ['category_id' => $category->id, 'tmdb' => $igdb]) }}"
+        href="{{ $igdb ? route('torrents.similar', ['category_id' => $category->id, 'tmdb' => $igdb]) : '#' }}"
     >
         <img
             src="{{ $meta?->cover_image_id ? 'https://images.igdb.com/igdb/image/upload/t_original/' . $meta->cover_image_id . '.jpg' : 'https://via.placeholder.com/400x600' }}"

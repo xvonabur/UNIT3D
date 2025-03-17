@@ -39,7 +39,13 @@
     <aside class="torrent-card__aside">
         <a
             class="torrent-card__similar-link"
-            href="{{ route('torrents.similar', ['category_id' => $torrent->category_id, 'tmdb' => $torrent->tmdb_movie_id ?? $torrent->tmdb_tv_id]) }}"
+            href="{{
+                match (true) {
+                    $torrent->tmdb_movie_id !== null => route('torrents.similar', ['category_id' => $torrent->category_id, 'tmdb' => $torrent->tmdb_movie_id]),
+                    $torrent->tmdb_tv_id !== null => route('torrents.similar', ['category_id' => $torrent->category_id, 'tmdb' => $torrent->tmdb_tv_id]),
+                    default => '#',
+                }
+            }}"
         >
             <figure class="torrent-card__figure">
                 <img
