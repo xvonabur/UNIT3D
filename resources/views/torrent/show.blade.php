@@ -27,11 +27,11 @@
 @section('main')
     @switch(true)
         @case($torrent->category->movie_meta)
-            @include('torrent.partials.movie_meta', ['category' => $torrent->category, 'tmdb' => $torrent->tmdb])
+            @include('torrent.partials.movie_meta', ['category' => $torrent->category, 'tmdb' => $torrent->movie_id])
 
             @break
         @case($torrent->category->tv_meta)
-            @include('torrent.partials.tv_meta', ['category' => $torrent->category, 'tmdb' => $torrent->tmdb])
+            @include('torrent.partials.tv_meta', ['category' => $torrent->category, 'tmdb' => $torrent->tv_id])
 
             @break
         @case($torrent->category->game_meta)

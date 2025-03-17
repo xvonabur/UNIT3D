@@ -527,21 +527,22 @@ class TorrentSearch extends Component
         $isSqlAllowed = (($user->group->is_modo || $user->group->is_torrent_modo || $user->group->is_editor) && $this->driver === 'sql') || $this->description || $this->mediainfo;
 
         $groupQuery = Torrent::query()
-            ->select('tmdb')
+            ->select('movie_id', 'tv_id')
             ->selectRaw('MAX(sticky) as sticky')
             ->selectRaw('MAX(bumped_at) as bumped_at')
             ->selectRaw('MAX(created_at) as created_at')
             ->selectRaw('SUM(times_completed) as times_completed')
             ->selectRaw(<<<'SQL'
-                CASE
+                MIN(CASE
                     WHEN category_id IN (SELECT id FROM categories WHERE movie_meta = 1) THEN 'movie'
                     WHEN category_id IN (SELECT id FROM categories WHERE tv_meta = 1) THEN 'tv'
-                END AS meta
+                END) AS meta
             SQL)
             ->havingNotNull('meta')
-            ->where('tmdb', '!=', 0)
+            ->where(fn ($query) => $query->where('movie_id', '>', 0)->orWhere('tv_id', '>', 0))
+            ->where('imdb', '>', 0)
             ->where($this->filters()->toSqlQueryBuilder())
-            ->groupBy('tmdb', 'meta')
+            ->groupBy('movie_id', 'tv_id')
             ->latest('sticky')
             ->orderBy($this->sortField, $this->sortDirection);
 
@@ -553,26 +554,47 @@ class TorrentSearch extends Component
                 ->index(config('scout.prefix').'torrents')
                 ->search($this->name, [
                     'sort'                 => ['sticky:desc', $this->sortField.':'.$this->sortDirection,],
-                    'filter'               => $this->filters()->toMeilisearchFilter(),
+                    'filter'               => [...$this->filters()->toMeilisearchFilter(), 'imdb != 0', ['movie_id > 0', 'tv_id > 0']],
                     'matchingStrategy'     => 'all',
                     'page'                 => (int) $this->getPage(),
                     'hitsPerPage'          => min($this->perPage, 100),
-                    'attributesToRetrieve' => ['imdb'],
+                    'attributesToRetrieve' => ['movie_id', 'tv_id'],
                     'distinct'             => 'imdb',
                 ]);
 
-            $imdbIds = array_column($results->getHits(), 'imdb');
+            $ids = [];
+
+            foreach ($results->getHits() as $result) {
+                if ($result['movie_id']) {
+                    $ids[] = "tmdb-movie:{$result['movie_id']}";
+                } elseif ($result['tv_id']) {
+                    $ids[] = "tmdb-tv:{$result['tv_id']}";
+                }
+            }
+
+            // dd($ids)
+
+            // dd([
+            //     'movie_id' => array_column($results->getHits(), 'movie_id'),
+            //     'tv_id'    => array_column($results->getHits(), 'tv_id'),
+            // ]);
 
             $groups = $groupQuery
-                ->whereIntegerInRaw('imdb', $imdbIds)
+                ->where(
+                    fn ($query) => $query
+                        ->whereIntegerInRaw('movie_id', array_filter(array_column($results->getHits(), 'movie_id')))
+                        ->orWhereIntegerInRaw('tv_id', array_filter(array_column($results->getHits(), 'tv_id')))
+                )
                 ->get()
-                ->sortBy(fn ($group) => array_search($group->imdb, $imdbIds));
+                ->sortBy(fn ($group) => array_search($group->movie_id ? "tmdb-movie:{$group->movie_id}" : "tmdb-tv:{$group->tv_id}", $ids));
+
+            // dd($groups);
 
             $groups = new LengthAwarePaginator($groups, $results->getTotalHits(), $this->perPage, $this->getPage());
         }
 
-        $movieIds = $groups->getCollection()->where('meta', '=', 'movie')->pluck('tmdb');
-        $tvIds = $groups->getCollection()->where('meta', '=', 'tv')->pluck('tmdb');
+        $movieIds = $groups->getCollection()->where('meta', '=', 'movie')->pluck('movie_id');
+        $tvIds = $groups->getCollection()->where('meta', '=', 'tv')->pluck('tv_id');
 
         $movies = Movie::with('genres', 'directors')->whereIntegerInRaw('id', $movieIds)->get()->keyBy('id');
         $tv = Tv::with('genres', 'creators')->whereIntegerInRaw('id', $tvIds)->get()->keyBy('id');
@@ -591,7 +613,8 @@ class TorrentSearch extends Component
                 'user_id',
                 'season_number',
                 'episode_number',
-                'tmdb',
+                'movie_id',
+                'tv_id',
                 'free',
                 'doubleup',
                 'highspeed',
@@ -652,12 +675,12 @@ class TorrentSearch extends Component
                     ->where(
                         fn ($query) => $query
                             ->whereRelation('category', 'movie_meta', '=', true)
-                            ->whereIntegerInRaw('tmdb', $movieIds)
+                            ->whereIntegerInRaw('movie_id', $movieIds)
                     )
                     ->orWhere(
                         fn ($query) => $query
                             ->whereRelation('category', 'tv_meta', '=', true)
-                            ->whereIntegerInRaw('tmdb', $tvIds)
+                            ->whereIntegerInRaw('tv_id', $tvIds)
                     )
             )
             ->where($this->filters()->toSqlQueryBuilder())
@@ -669,7 +692,7 @@ class TorrentSearch extends Component
             // Memoizing and avoiding casts reduces runtime duration from 70ms to 40ms.
             // If accessing laravel's attributes array directly, it's reduced to 11ms,
             // but the attributes array is marked as protected so we can't access it.
-            $tmdb = $torrent->getAttributeValue('tmdb');
+            $tmdb = $torrent->getAttributeValue('movie_id') ?: $torrent->getAttributeValue('tv_id');
             $type = $torrent->getRelationValue('type')->getAttributeValue('name');
 
             switch ($torrent->getAttributeValue('meta')) {
@@ -754,10 +777,10 @@ class TorrentSearch extends Component
         $medias = $groups->through(function ($group) use ($groupedTorrents, $movies, $tv) {
             switch ($group->meta) {
                 case 'movie':
-                    if ($movies->has($group->tmdb)) {
-                        $media = $movies[$group->tmdb];
+                    if ($movies->has($group->movie_id)) {
+                        $media = $movies[$group->movie_id];
                         $media->setAttribute('meta', 'movie');
-                        $media->setRelation('torrents', $groupedTorrents['movie'][$group->tmdb] ?? []);
+                        $media->setRelation('torrents', $groupedTorrents['movie'][$group->movie_id] ?? []);
                         $media->setAttribute('category_id', $media->torrents['category_id']);
                     } else {
                         $media = null;
@@ -765,10 +788,10 @@ class TorrentSearch extends Component
 
                     break;
                 case 'tv':
-                    if ($tv->has($group->tmdb)) {
-                        $media = $tv[$group->tmdb];
+                    if ($tv->has($group->tv_id)) {
+                        $media = $tv[$group->tv_id];
                         $media->setAttribute('meta', 'tv');
-                        $media->setRelation('torrents', $groupedTorrents['tv'][$group->tmdb] ?? []);
+                        $media->setRelation('torrents', $groupedTorrents['tv'][$group->tv_id] ?? []);
                         $media->setAttribute('category_id', $media->torrents['category_id']);
                     } else {
                         $media = null;
@@ -825,7 +848,7 @@ class TorrentSearch extends Component
         }
 
         $groups = Torrent::query()
-            ->select('tmdb')
+            ->select('movie_id', 'tv_id')
             ->selectRaw('MAX(sticky) as sticky')
             ->selectRaw('MAX(bumped_at) as bumped_at')
             ->selectRaw('SUM(times_completed) as times_completed')
@@ -837,15 +860,15 @@ class TorrentSearch extends Component
                 END AS meta
             SQL)
             ->havingNotNull('meta')
-            ->where('tmdb', '!=', 0)
+            ->where(fn ($query) => $query->where('movie_id', '!=', 0)->orWhere('tv_id', '!=', 0))
             ->where($this->filters()->toSqlQueryBuilder())
-            ->groupBy('tmdb', 'meta')
+            ->groupBy('movie_id', 'tv_id')
             ->latest('sticky')
             ->orderBy($this->sortField, $this->sortDirection)
             ->paginate(min($this->perPage, 100));
 
-        $movieIds = $groups->getCollection()->where('meta', '=', 'movie')->pluck('tmdb');
-        $tvIds = $groups->getCollection()->where('meta', '=', 'tv')->pluck('tmdb');
+        $movieIds = $groups->getCollection()->where('meta', '=', 'movie')->pluck('movie_id');
+        $tvIds = $groups->getCollection()->where('meta', '=', 'tv')->pluck('tv_id');
 
         $movies = Movie::with('genres', 'directors')->whereIntegerInRaw('id', $movieIds)->get()->keyBy('id');
         $tv = Tv::with('genres', 'creators')->whereIntegerInRaw('id', $tvIds)->get()->keyBy('id');
@@ -853,11 +876,11 @@ class TorrentSearch extends Component
         $groups = $groups->through(function ($group) use ($movies, $tv) {
             switch ($group->meta) {
                 case 'movie':
-                    $group->movie = $movies[$group->tmdb] ?? null;
+                    $group->movie = $movies[$group->movie_id] ?? null;
 
                     break;
                 case 'tv':
-                    $group->tv = $tv[$group->tmdb] ?? null;
+                    $group->tv = $tv[$group->tv_id] ?? null;
 
                     break;
             }

@@ -45,7 +45,8 @@ test('create returns an ok response', function (): void {
     $response->assertViewHas('category_id');
     $response->assertViewHas('title');
     $response->assertViewHas('imdb');
-    $response->assertViewHas('tmdb');
+    $response->assertViewHas('movie_id');
+    $response->assertViewHas('tv_id');
     $response->assertViewHas('mal');
     $response->assertViewHas('tvdb');
     $response->assertViewHas('igdb');

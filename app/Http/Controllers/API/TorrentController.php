@@ -161,7 +161,8 @@ class TorrentController extends BaseController
         $torrent->user_id = $user->id;
         $torrent->imdb = $request->input('imdb');
         $torrent->tvdb = $request->input('tvdb');
-        $torrent->tmdb = $request->input('tmdb');
+        $torrent->movie_id = $category->movie_meta ? $request->integer('tmdb') : 0;
+        $torrent->tv_id = $category->tv_meta ? $request->integer('tmdb') : 0;
         $torrent->mal = $request->input('mal');
         $torrent->igdb = $request->integer('igdb');
         $torrent->season_number = $request->input('season_number');
@@ -248,24 +249,64 @@ class TorrentController extends BaseController
                 'exists:users,id',
             ],
             'imdb' => [
-                'required',
-                'numeric',
+                Rule::when($category->movie_meta || $category->tv_meta, [
+                    'required',
+                    'decimal:0',
+                    'min:0',
+                ]),
+                Rule::when(!($category->movie_meta || $category->tv_meta), [
+                    Rule::in([0]),
+                ]),
             ],
             'tvdb' => [
-                'required',
-                'numeric',
+                Rule::when($category->tv_meta, [
+                    'required',
+                    'decimal:0',
+                    'min:0',
+                ]),
+                Rule::when(!$category->tv_meta, [
+                    Rule::in([0]),
+                ]),
             ],
-            'tmdb' => [
-                'required',
-                'numeric',
+            'movie_id' => [
+                Rule::when($category->movie_meta, [
+                    'required',
+                    'decimal:0',
+                    'min:0',
+                ]),
+                Rule::when(!$category->movie_meta, [
+                    Rule::in([0]),
+                ]),
+            ],
+            'tv_id' => [
+                Rule::when($category->tv_meta, [
+                    'required',
+                    'decimal:0',
+                    'min:0',
+                ]),
+                Rule::when(!$category->tv_meta, [
+                    Rule::in([0]),
+                ]),
             ],
             'mal' => [
-                'required',
-                'numeric',
+                Rule::when($category->movie_meta || $category->tv_meta, [
+                    'required',
+                    'decimal:0',
+                    'min:0',
+                ]),
+                Rule::when(!($category->movie_meta || $category->tv_meta), [
+                    Rule::in([0]),
+                ]),
             ],
             'igdb' => [
-                'required',
-                'numeric',
+                Rule::when($category->game_meta, [
+                    'required',
+                    'decimal:0',
+                    'min:0',
+                ]),
+                Rule::when(!$category->game_meta, [
+                    Rule::in([0]),
+                ]),
             ],
             'season_number' => [
                 Rule::when($category->tv_meta, [
@@ -353,10 +394,10 @@ class TorrentController extends BaseController
         // Metadata updates come after tracker updates in case TMDB or IGDB is offline
 
         match (true) {
-            $category->tv_meta && $torrent->tmdb > 0    => new TMDBScraper()->tv($torrent->tmdb),
-            $category->movie_meta && $torrent->tmdb > 0 => new TMDBScraper()->movie($torrent->tmdb),
-            $category->game_meta && $torrent->igdb > 0  => new IgdbScraper()->game($torrent->igdb),
-            default                                     => null,
+            $category->tv_meta && $torrent->tv_id > 0       => new TMDBScraper()->tv($torrent->tv_id),
+            $category->movie_meta && $torrent->movie_id > 0 => new TMDBScraper()->movie($torrent->movie_id),
+            $category->game_meta && $torrent->igdb > 0      => new IgdbScraper()->game($torrent->igdb),
+            default                                         => null,
         };
 
         // Torrent Keywords System
@@ -463,12 +504,12 @@ class TorrentController extends BaseController
 
         $torrent->setAttribute('meta', null);
 
-        if ($torrent->category->tv_meta && $torrent->tmdb) {
-            $torrent->setAttribute('meta', Tv::with(['genres'])->find($torrent->tmdb));
+        if ($torrent->category->tv_meta && $torrent->tv_id) {
+            $torrent->setAttribute('meta', Tv::with(['genres'])->find($torrent->tv_id));
         }
 
-        if ($torrent->category->movie_meta && $torrent->tmdb) {
-            $torrent->setAttribute('meta', Movie::with(['genres'])->find($torrent->tmdb));
+        if ($torrent->category->movie_meta && $torrent->movie_id) {
+            $torrent->setAttribute('meta', Movie::with(['genres'])->find($torrent->movie_id));
         }
 
         if ($torrent->category->game_meta && $torrent->igdb) {
@@ -637,7 +678,7 @@ class TorrentController extends BaseController
                             'seeders'          => $hit['seeders'],
                             'leechers'         => $hit['leechers'],
                             'times_completed'  => $hit['times_completed'],
-                            'tmdb_id'          => $hit['tmdb'],
+                            'tmdb_id'          => $hit['movie_id'] ?: $hit['tv_id'] ?: 0,
                             'imdb_id'          => $hit['imdb'],
                             'tvdb_id'          => $hit['tvdb'],
                             'mal_id'           => $hit['mal'],

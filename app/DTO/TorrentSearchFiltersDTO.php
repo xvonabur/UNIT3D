@@ -200,12 +200,12 @@ readonly class TorrentSearchFiltersDTO
                             ->where(
                                 fn ($query) => $query
                                     ->whereRelation('category', 'movie_meta', '=', true)
-                                    ->whereIn('tmdb', DB::table('genre_movie')->select('movie_id')->whereIn('genre_id', $this->genreIds))
+                                    ->whereIn('movie_id', DB::table('genre_movie')->select('movie_id')->whereIn('genre_id', $this->genreIds))
                             )
                             ->orWhere(
                                 fn ($query) => $query
                                     ->whereRelation('category', 'tv_meta', '=', true)
-                                    ->whereIn('tmdb', DB::table('genre_tv')->select('tv_id')->whereIn('genre_id', $this->genreIds))
+                                    ->whereIn('tv_id', DB::table('genre_tv')->select('tv_id')->whereIn('genre_id', $this->genreIds))
                             )
                     )
             )
@@ -227,7 +227,15 @@ readonly class TorrentSearchFiltersDTO
                             ->when(\in_array(0, $this->distributorIds), fn ($query) => $query->orWhereNull('distributor_id'))
                     )
             )
-            ->when($this->tmdbId !== null, fn ($query) => $query->where('tmdb', '=', $this->tmdbId))
+            ->when(
+                $this->tmdbId !== null,
+                fn ($query) => $query
+                    ->where(
+                        fn ($query) => $query
+                            ->where('movie_id', '=', $this->tmdbId)
+                            ->orWhere('tv_id', '=', $this->tmdbId)
+                    )
+            )
             ->when($this->imdbId !== null, fn ($query) => $query->where('imdb', '=', $this->imdbId))
             ->when($this->tvdbId !== null, fn ($query) => $query->where('tvdb', '=', $this->tvdbId))
             ->when($this->malId !== null, fn ($query) => $query->where('mal', '=', $this->malId))
@@ -259,7 +267,7 @@ readonly class TorrentSearchFiltersDTO
                 $this->collectionId !== null,
                 fn ($query) => $query
                     ->whereRelation('category', 'movie_meta', '=', true)
-                    ->whereIn('tmdb', DB::table('collection_movie')->select('movie_id')->where('collection_id', '=', $this->collectionId))
+                    ->whereIn('movie_id', DB::table('collection_movie')->select('movie_id')->where('collection_id', '=', $this->collectionId))
             )
             ->when(
                 $this->companyId !== null,
@@ -269,12 +277,12 @@ readonly class TorrentSearchFiltersDTO
                             ->where(
                                 fn ($query) => $query
                                     ->whereRelation('category', 'movie_meta', '=', true)
-                                    ->whereIn('tmdb', DB::table('company_movie')->select('movie_id')->where('company_id', '=', $this->companyId))
+                                    ->whereIn('movie_id', DB::table('company_movie')->select('movie_id')->where('company_id', '=', $this->companyId))
                             )
                             ->orWhere(
                                 fn ($query) => $query
                                     ->whereRelation('category', 'tv_meta', '=', true)
-                                    ->whereIn('tmdb', DB::table('company_tv')->select('tv_id')->where('company_id', '=', $this->companyId))
+                                    ->whereIn('tv_id', DB::table('company_tv')->select('tv_id')->where('company_id', '=', $this->companyId))
                             )
                     )
             )
@@ -282,7 +290,7 @@ readonly class TorrentSearchFiltersDTO
                 $this->networkId !== null,
                 fn ($query) => $query
                     ->whereRelation('category', 'tv_meta', '=', true)
-                    ->whereIn('tmdb', DB::table('network_tv')->select('tv_id')->where('network_id', '=', $this->networkId))
+                    ->whereIn('tv_id', DB::table('network_tv')->select('tv_id')->where('network_id', '=', $this->networkId))
             )
             ->when(
                 $this->primaryLanguageNames !== [],
@@ -353,7 +361,23 @@ readonly class TorrentSearchFiltersDTO
             ->when($this->refundable, fn ($query) => $query->where('refundable', '=', true))
             ->when($this->highspeed, fn ($query) => $query->where('highspeed', '=', 1))
             ->when($this->userBookmarked, fn ($query) => $query->whereRelation('bookmarks', 'user_id', '=', $this->user->id))
-            ->when($this->userWished, fn ($query) => $query->whereIn('tmdb', Wish::select('tmdb')->where('user_id', '=', $this->user->id)))
+            ->when(
+                $this->userWished,
+                fn ($query) => $query
+                    ->where(
+                        fn ($query) => $query
+                            ->where(
+                                fn ($query) => $query
+                                    ->whereRelation('movie_meta', '=', true)
+                                    ->whereIn('movie_id', Wish::select('movie_id')->where('user_id', '=', $this->user->id))
+                            )
+                            ->orWhere(
+                                fn ($query) => $query
+                                    ->whereRelation('tv_meta', '=', true)
+                                    ->whereIn('tv_id', Wish::select('tv_id')->where('user_id', '=', $this->user->id))
+                            )
+                    )
+            )
             ->when($this->internal, fn ($query) => $query->where('internal', '=', 1))
             ->when($this->personalRelease, fn ($query) => $query->where('personal_release', '=', true))
             ->when($this->trumpable, fn ($query) => $query->has('trump'))
@@ -510,7 +534,10 @@ readonly class TorrentSearchFiltersDTO
         }
 
         if ($this->tmdbId !== null) {
-            $filters[] = 'tmdb = '.$this->tmdbId;
+            $filters[] = [
+                'movie_id = '.$this->tmdbId,
+                'tv_id = '.$this->tmdbId,
+            ];
         }
 
         if ($this->imdbId !== null) {

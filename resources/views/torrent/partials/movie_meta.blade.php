@@ -33,7 +33,7 @@
                             'category_id' => $category->id,
                             'title' => rawurlencode(($meta?->title ?? '') . ' ' . substr($meta->release_date ?? '', 0, 4) ?? ''),
                             'imdb' => $torrent->imdb ?? '' ?: $meta->imdb_id ?? '' ?: '',
-                            'tmdb' => $meta?->id ?? '',
+                            'movie_id' => $meta?->id ?? '',
                             'mal' => $torrent->mal ?? '',
                             'tvdb' => $torrent->tvdb ?? '',
                             'igdb' => $torrent->igdb ?? '',
@@ -50,7 +50,7 @@
                             'category_id' => $category->id,
                             'title' => rawurlencode(($meta?->title ?? '') . ' ' . substr($meta->release_date ?? '', 0, 4) ?? ''),
                             'imdb' => $torrent->imdb ?? '' ?: $meta->imdb_id ?? '' ?: '',
-                            'tmdb' => $meta?->id ?? '',
+                            'movie_id' => $meta?->id ?? '',
                             'mal' => $torrent->mal ?? '',
                             'tvdb' => $torrent->tvdb ?? '',
                             'igdb' => $torrent->igdb ?? '',
@@ -100,7 +100,7 @@
         </ul>
     </div>
     <ul class="meta__ids">
-        @foreach (array_unique(array_filter([$meta->id ?? 0, $torrent->tmdb ?? 0])) as $tmdbId)
+        @foreach (array_unique(array_filter([$meta->id ?? 0, $torrent->movie_id ?? 0])) as $tmdbId)
             <li class="meta__tmdb">
                 <a
                     class="meta-id-tag"

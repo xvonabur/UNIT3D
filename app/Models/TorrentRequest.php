@@ -28,7 +28,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property int                             $category_id
  * @property int|null                        $imdb
  * @property int|null                        $tvdb
- * @property int|null                        $tmdb
+ * @property int|null                        $movie_id
+ * @property int|null                        $tv_id
  * @property int|null                        $mal
  * @property int                             $igdb
  * @property string                          $description
@@ -72,14 +73,23 @@ class TorrentRequest extends Model
     /**
      * Get the attributes that should be cast.
      *
-     * @return array{filled_when: 'datetime', approved_when: 'datetime', tmdb: 'int', igdb: 'int', bounty: 'decimal:2', anon: 'bool'}
+     * @return array{
+     *     filled_when: 'datetime',
+     *     approved_when: 'datetime',
+     *     movie_id: 'int',
+     *     tv_id: 'int',
+     *     igdb: 'int',
+     *     bounty: 'decimal:2',
+     *     anon: 'bool'
+     * }
      */
     protected function casts(): array
     {
         return [
             'filled_when'   => 'datetime',
             'approved_when' => 'datetime',
-            'tmdb'          => 'int',
+            'movie_id'      => 'int',
+            'tv_id'         => 'int',
             'igdb'          => 'int',
             'bounty'        => 'decimal:2',
             'anon'          => 'bool',
@@ -172,7 +182,7 @@ class TorrentRequest extends Model
      */
     public function movie(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
-        return $this->belongsTo(Movie::class, 'tmdb');
+        return $this->belongsTo(Movie::class);
     }
 
     /**
@@ -182,7 +192,7 @@ class TorrentRequest extends Model
      */
     public function tv(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
-        return $this->belongsTo(Tv::class, 'tmdb');
+        return $this->belongsTo(Tv::class);
     }
 
     /**

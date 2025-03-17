@@ -90,29 +90,64 @@ class UpdateTorrentRequest extends FormRequest
                 'exists:distributors,id',
             ],
             'imdb' => [
-                'required',
-                'decimal:0',
-                'min:0',
+                Rule::when($category->movie_meta || $category->tv_meta, [
+                    'required',
+                    'decimal:0',
+                    'min:0',
+                ]),
+                Rule::when(!($category->movie_meta || $category->tv_meta), [
+                    Rule::in([0]),
+                ]),
             ],
             'tvdb' => [
-                'required',
-                'decimal:0',
-                'min:0',
+                Rule::when($category->tv_meta, [
+                    'required',
+                    'decimal:0',
+                    'min:0',
+                ]),
+                Rule::when(!$category->tv_meta, [
+                    Rule::in([0]),
+                ]),
             ],
-            'tmdb' => [
-                'required',
-                'decimal:0',
-                'min:0',
+            'movie_id' => [
+                Rule::when($category->movie_meta, [
+                    'required',
+                    'decimal:0',
+                    'min:0',
+                ]),
+                Rule::when(!$category->movie_meta, [
+                    Rule::in([0]),
+                ]),
+            ],
+            'tv_id' => [
+                Rule::when($category->tv_meta, [
+                    'required',
+                    'decimal:0',
+                    'min:0',
+                ]),
+                Rule::when(!$category->tv_meta, [
+                    Rule::in([0]),
+                ]),
             ],
             'mal' => [
-                'required',
-                'decimal:0',
-                'min:0',
+                Rule::when($category->movie_meta || $category->tv_meta, [
+                    'required',
+                    'decimal:0',
+                    'min:0',
+                ]),
+                Rule::when(!($category->movie_meta || $category->tv_meta), [
+                    Rule::in([0]),
+                ]),
             ],
             'igdb' => [
-                'required',
-                'decimal:0',
-                'min:0',
+                Rule::when($category->game_meta, [
+                    'required',
+                    'decimal:0',
+                    'min:0',
+                ]),
+                Rule::when(!$category->game_meta, [
+                    Rule::in([0]),
+                ]),
             ],
             'season_number' => [
                 Rule::when($category->tv_meta, 'required'),

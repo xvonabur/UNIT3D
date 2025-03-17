@@ -65,13 +65,23 @@ class UpdateTorrentRequestRequest extends FormRequest
                     Rule::in([0]),
                 ]),
             ],
-            'tmdb' => [
-                Rule::when($category->movie_meta || $category->tv_meta, [
+            'movie_id' => [
+                Rule::when($category->movie_meta, [
                     'required',
                     'decimal:0',
                     'min:0',
                 ]),
-                Rule::when(!($category->movie_meta || $category->tv_meta), [
+                Rule::when(!$category->movie_meta, [
+                    Rule::in([0]),
+                ]),
+            ],
+            'tv_id' => [
+                Rule::when($category->tv_meta, [
+                    'required',
+                    'decimal:0',
+                    'min:0',
+                ]),
+                Rule::when(!$category->tv_meta, [
                     Rule::in([0]),
                 ]),
             ],

@@ -168,7 +168,8 @@ class PersonCredit extends Component
                 'user_id',
                 'season_number',
                 'episode_number',
-                'tmdb',
+                'movie_id',
+                'tv_id',
                 'free',
                 'doubleup',
                 'highspeed',
@@ -228,12 +229,12 @@ class PersonCredit extends Component
                     ->where(
                         fn ($query) => $query
                             ->whereRelation('category', 'movie_meta', '=', true)
-                            ->whereIntegerInRaw('tmdb', $movieIds)
+                            ->whereIntegerInRaw('movie_id', $movieIds)
                     )
                     ->orWhere(
                         fn ($query) => $query
                             ->whereRelation('category', 'tv_meta', '=', true)
-                            ->whereIntegerInRaw('tmdb', $tvIds)
+                            ->whereIntegerInRaw('tv_id', $tvIds)
                     )
             )
             ->get();
@@ -244,7 +245,7 @@ class PersonCredit extends Component
             // Memoizing and avoiding casts reduces runtime duration from 70ms to 40ms.
             // If accessing laravel's attributes array directly, it's reduced to 11ms,
             // but the attributes array is marked as protected so we can't access it.
-            $tmdb = $torrent->getAttributeValue('tmdb');
+            $tmdb = $torrent->getAttributeValue('movie_id') ?: $torrent->getAttributeValue('tv_id');
             $type = $torrent->getRelationValue('type')->getAttributeValue('name');
 
             switch ($torrent->getAttributeValue('meta')) {

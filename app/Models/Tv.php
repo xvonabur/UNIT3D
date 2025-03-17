@@ -85,7 +85,7 @@ class Tv extends Model
      */
     public function torrents(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
-        return $this->hasMany(Torrent::class, 'tmdb', 'id')->whereRelation('category', 'tv_meta', '=', true);
+        return $this->hasMany(Torrent::class)->whereRelation('category', 'tv_meta', '=', true);
     }
 
     /**

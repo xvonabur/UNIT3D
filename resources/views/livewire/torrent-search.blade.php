@@ -1032,7 +1032,7 @@
                                 <x-movie.poster
                                     :categoryId="$group->category_id"
                                     :movie="$group->movie"
-                                    :tmdb="$group->tmdb"
+                                    :tmdb="$group->movie_id"
                                 />
 
                                 @break
@@ -1040,7 +1040,7 @@
                                 <x-tv.poster
                                     :categoryId="$group->category_id"
                                     :tv="$group->tv"
-                                    :tmdb="$group->tmdb"
+                                    :tmdb="$group->tv_id"
                                 />
 
                                 @break

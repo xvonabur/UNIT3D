@@ -41,12 +41,12 @@ trait TorrentMeta
     public function scopeMeta(\Illuminate\Database\Eloquent\Collection|\Illuminate\Pagination\CursorPaginator|\Illuminate\Pagination\LengthAwarePaginator|\Illuminate\Contracts\Pagination\LengthAwarePaginator $torrents): \Illuminate\Support\Collection|\Illuminate\Pagination\CursorPaginator|\Illuminate\Pagination\LengthAwarePaginator|\Illuminate\Contracts\Pagination\LengthAwarePaginator
     {
         if ($torrents instanceof \Illuminate\Contracts\Pagination\LengthAwarePaginator || $torrents instanceof \Illuminate\Contracts\Pagination\CursorPaginator) {
-            $movieIds = collect($torrents->items())->where('meta', '=', 'movie')->pluck('tmdb');
-            $tvIds = collect($torrents->items())->where('meta', '=', 'tv')->pluck('tmdb');
+            $movieIds = collect($torrents->items())->where('meta', '=', 'movie')->pluck('movie_id');
+            $tvIds = collect($torrents->items())->where('meta', '=', 'tv')->pluck('tv_id');
             $gameIds = collect($torrents->items())->where('meta', '=', 'game')->pluck('igdb');
         } else {
-            $movieIds = $torrents->where('meta', '=', 'movie')->pluck('tmdb');
-            $tvIds = $torrents->where('meta', '=', 'tv')->pluck('tmdb');
+            $movieIds = $torrents->where('meta', '=', 'movie')->pluck('movie_id');
+            $tvIds = $torrents->where('meta', '=', 'tv')->pluck('tv_id');
             $gameIds = $torrents->where('meta', '=', 'game')->pluck('igdb');
         }
 
@@ -58,8 +58,8 @@ trait TorrentMeta
             $torrent->setAttribute(
                 'meta',
                 match ($torrent->meta) {
-                    'movie' => $movies[$torrent->tmdb] ?? null,
-                    'tv'    => $tv[$torrent->tmdb] ?? null,
+                    'movie' => $movies[$torrent->movie_id] ?? null,
+                    'tv'    => $tv[$torrent->tv_id] ?? null,
                     'game'  => $games[$torrent->igdb] ?? null,
                     default => null,
                 },

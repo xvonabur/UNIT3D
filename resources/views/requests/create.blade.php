@@ -108,24 +108,39 @@
                         class="form__group--horizontal"
                         x-show="cats[cat].type === 'movie' || cats[cat].type === 'tv' || cats[cat].type === 'game'"
                     >
-                        <p
-                            class="form__group"
-                            x-show="cats[cat].type === 'movie' || cats[cat].type === 'tv'"
-                        >
-                            <input type="hidden" name="tmdb" value="0" />
+                        <p class="form__group" x-show="cats[cat].type === 'movie'">
+                            <input type="hidden" name="movie_id" value="0" />
                             <input
-                                id="autotmdb"
+                                id="movie_id"
                                 class="form__text"
                                 inputmode="numeric"
-                                name="tmdb"
+                                name="movie_id"
                                 pattern="[0-9]*"
                                 required
                                 type="text"
-                                x-bind:value="cats[cat].type === 'movie' || cats[cat].type === 'tv' ? '{{ $tmdb ?: old('tmdb') }}' : '0'"
-                                x-bind:required="cats[cat].type === 'movie' || cats[cat].type === 'tv'"
+                                x-bind:value="cats[cat].type === 'movie' ? '{{ $movieId ?: old('movie_id') }}' : '0'"
+                                x-bind:required="cats[cat].type === 'movie'"
                             />
-                            <label class="form__label form__label--floating" for="autotmdb">
-                                TMDB ID
+                            <label class="form__label form__label--floating" for="movie_id">
+                                TMDB Movie ID
+                            </label>
+                            <span class="form__hint">Numeric digits only.</span>
+                        </p>
+                        <p class="form__group" x-show="cats[cat].type === 'tv'">
+                            <input type="hidden" name="tv_id" value="0" />
+                            <input
+                                id="tv_id"
+                                class="form__text"
+                                inputmode="numeric"
+                                name="tv_id"
+                                pattern="[0-9]*"
+                                required
+                                type="text"
+                                x-bind:value="cats[cat].type === 'tv' ? '{{ $tvId ?: old('tv_id') }}' : '0'"
+                                x-bind:required="cats[cat].type === 'tv'"
+                            />
+                            <label class="form__label form__label--floating" for="tv_id">
+                                TMDB TV ID
                             </label>
                             <span class="form__hint">Numeric digits only.</span>
                         </p>

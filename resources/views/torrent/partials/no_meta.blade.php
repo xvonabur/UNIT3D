@@ -49,15 +49,15 @@
             </li>
         @endif
 
-        @if (isset($torrent) && $torrent->tmdb > 0)
+        @if (isset($torrent) && $torrent->movie_id > 0)
             <li class="meta__tmdb">
                 <a
                     class="meta-id-tag"
-                    href="https://www.themoviedb.org/movie/{{ $torrent->tmdb }}"
+                    href="https://www.themoviedb.org/movie/{{ $torrent->movie_id }}"
                     title="The Movie Database"
                     target="_blank"
                 >
-                    TMDB: {{ $torrent->tmdb }}
+                    TMDB: {{ $torrent->movie_id }}
                 </a>
             </li>
         @endif

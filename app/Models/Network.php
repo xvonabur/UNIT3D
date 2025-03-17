@@ -60,6 +60,6 @@ class Network extends Model
      */
     public function tvTorrents(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
-        return $this->belongsToMany(Torrent::class, 'network_tv', 'tv_id', 'network_id', 'id', 'tmdb')->whereRelation('category', 'tv_meta', '=', true);
+        return $this->belongsToMany(Torrent::class, 'network_tv', 'tv_id', 'network_id', 'id', 'tv_id')->whereRelation('category', 'tv_meta', '=', true);
     }
 }
