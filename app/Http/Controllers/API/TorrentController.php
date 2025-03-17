@@ -26,10 +26,10 @@ use App\Models\Category;
 use App\Models\FeaturedTorrent;
 use App\Models\IgdbGame;
 use App\Models\Keyword;
-use App\Models\Movie;
+use App\Models\TmdbMovie;
 use App\Models\Torrent;
 use App\Models\TorrentFile;
-use App\Models\Tv;
+use App\Models\TmdbTv;
 use App\Models\User;
 use App\Repositories\ChatRepository;
 use App\Services\Igdb\IgdbScraper;
@@ -161,8 +161,8 @@ class TorrentController extends BaseController
         $torrent->user_id = $user->id;
         $torrent->imdb = $request->input('imdb');
         $torrent->tvdb = $request->input('tvdb');
-        $torrent->movie_id = $category->movie_meta ? $request->integer('tmdb') : 0;
-        $torrent->tv_id = $category->tv_meta ? $request->integer('tmdb') : 0;
+        $torrent->tmdb_movie_id = $category->movie_meta ? $request->integer('tmdb') : 0;
+        $torrent->tmdb_tv_id = $category->tv_meta ? $request->integer('tmdb') : 0;
         $torrent->mal = $request->input('mal');
         $torrent->igdb = $request->integer('igdb');
         $torrent->season_number = $request->input('season_number');
@@ -268,7 +268,7 @@ class TorrentController extends BaseController
                     Rule::in([0]),
                 ]),
             ],
-            'movie_id' => [
+            'tmdb_movie_id' => [
                 Rule::when($category->movie_meta, [
                     'required',
                     'decimal:0',
@@ -278,7 +278,7 @@ class TorrentController extends BaseController
                     Rule::in([0]),
                 ]),
             ],
-            'tv_id' => [
+            'tmdb_tv_id' => [
                 Rule::when($category->tv_meta, [
                     'required',
                     'decimal:0',
@@ -394,10 +394,10 @@ class TorrentController extends BaseController
         // Metadata updates come after tracker updates in case TMDB or IGDB is offline
 
         match (true) {
-            $category->tv_meta && $torrent->tv_id > 0       => new TMDBScraper()->tv($torrent->tv_id),
-            $category->movie_meta && $torrent->movie_id > 0 => new TMDBScraper()->movie($torrent->movie_id),
-            $category->game_meta && $torrent->igdb > 0      => new IgdbScraper()->game($torrent->igdb),
-            default                                         => null,
+            $category->tv_meta && $torrent->tmdb_tv_id > 0       => new TMDBScraper()->tv($torrent->tmdb_tv_id),
+            $category->movie_meta && $torrent->tmdb_movie_id > 0 => new TMDBScraper()->movie($torrent->tmdb_movie_id),
+            $category->game_meta && $torrent->igdb > 0           => new IgdbScraper()->game($torrent->igdb),
+            default                                              => null,
         };
 
         // Torrent Keywords System
@@ -504,12 +504,12 @@ class TorrentController extends BaseController
 
         $torrent->setAttribute('meta', null);
 
-        if ($torrent->category->tv_meta && $torrent->tv_id) {
-            $torrent->setAttribute('meta', Tv::with(['genres'])->find($torrent->tv_id));
+        if ($torrent->category->tv_meta && $torrent->tmdb_tv_id) {
+            $torrent->setAttribute('meta', TmdbTv::with(['genres'])->find($torrent->tmdb_tv_id));
         }
 
-        if ($torrent->category->movie_meta && $torrent->movie_id) {
-            $torrent->setAttribute('meta', Movie::with(['genres'])->find($torrent->movie_id));
+        if ($torrent->category->movie_meta && $torrent->tmdb_movie_id) {
+            $torrent->setAttribute('meta', TmdbMovie::with(['genres'])->find($torrent->tmdb_movie_id));
         }
 
         if ($torrent->category->game_meta && $torrent->igdb) {
@@ -678,7 +678,7 @@ class TorrentController extends BaseController
                             'seeders'          => $hit['seeders'],
                             'leechers'         => $hit['leechers'],
                             'times_completed'  => $hit['times_completed'],
-                            'tmdb_id'          => $hit['movie_id'] ?: $hit['tv_id'] ?: 0,
+                            'tmdb_id'          => $hit['tmdb_movie_id'] ?: $hit['tmdb_tv_id'] ?: 0,
                             'imdb_id'          => $hit['imdb'],
                             'tvdb_id'          => $hit['tvdb'],
                             'mal_id'           => $hit['mal'],

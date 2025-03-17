@@ -280,15 +280,15 @@
                     x-show="cats[cat].type === 'movie' || cats[cat].type === 'tv'"
                 >
                     <p class="form__group">
-                        <input type="hidden" name="movie_id" value="0" />
+                        <input type="hidden" name="tmdb_movie_id" value="0" />
                         <input
                             type="text"
-                            name="movie_id"
+                            name="tmdb_movie_id"
                             id="auto_tmdb_movie"
                             class="form__text"
                             inputmode="numeric"
                             pattern="[0-9]*"
-                            x-bind:value="cats[cat].type === 'movie' ? '{{ $movieId ?: old('movie_id') }}' : '0'"
+                            x-bind:value="cats[cat].type === 'movie' ? '{{ $movieId ?: old('tmdb_movie_id') }}' : '0'"
                             x-bind:required="cats[cat].type === 'movie'"
                         />
                         <label class="form__label form__label--floating" for="auto_tmdb_movie">
@@ -298,15 +298,15 @@
                         <output name="apimatch" id="apimatch" for="torrent"></output>
                     </p>
                     <p class="form__group">
-                        <input type="hidden" name="tv_id" value="0" />
+                        <input type="hidden" name="tmdb_tv_id" value="0" />
                         <input
                             type="text"
-                            name="tv_id"
+                            name="tmdb_tv_id"
                             id="auto_tmdb_tv"
                             class="form__text"
                             inputmode="numeric"
                             pattern="[0-9]*"
-                            x-bind:value="cats[cat].type === 'tv' ? '{{ $tvId ?: old('tv_id') }}' : '0'"
+                            x-bind:value="cats[cat].type === 'tv' ? '{{ $tvId ?: old('tmdb_tv_id') }}' : '0'"
                             x-bind:required="cats[cat].type === 'tv'"
                         />
                         <label class="form__label form__label--floating" for="auto_tmdb_tv">

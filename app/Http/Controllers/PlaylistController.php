@@ -18,9 +18,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StorePlaylistRequest;
 use App\Http\Requests\UpdatePlaylistRequest;
-use App\Models\Movie;
+use App\Models\TmdbMovie;
 use App\Models\Playlist;
-use App\Models\Tv;
+use App\Models\TmdbTv;
 use App\Repositories\ChatRepository;
 use App\Traits\TorrentMeta;
 use Illuminate\Http\Request;
@@ -120,8 +120,8 @@ class PlaylistController extends Controller
         return view('playlist.show', [
             'playlist' => $playlist->load('user.group'),
             'meta'     => match (true) {
-                $randomTorrent?->category?->tv_meta    => Tv::find($randomTorrent->tv_id),
-                $randomTorrent?->category?->movie_meta => Movie::find($randomTorrent->movie_id),
+                $randomTorrent?->category?->tv_meta    => TmdbTv::find($randomTorrent->tmdb_tv_id),
+                $randomTorrent?->category?->movie_meta => TmdbMovie::find($randomTorrent->tmdb_movie_id),
                 default                                => null,
             },
             'latestPlaylistTorrent' => $playlist->torrents()->orderByPivot('created_at', 'desc')->first(),

@@ -29,13 +29,13 @@ use App\Models\Distributor;
 use App\Models\History;
 use App\Models\IgdbGame;
 use App\Models\Keyword;
-use App\Models\Movie;
+use App\Models\TmdbMovie;
 use App\Models\Region;
 use App\Models\Resolution;
 use App\Models\Scopes\ApprovedScope;
 use App\Models\Torrent;
 use App\Models\TorrentFile;
-use App\Models\Tv;
+use App\Models\TmdbTv;
 use App\Models\Type;
 use App\Models\User;
 use App\Notifications\TorrentDeleted;
@@ -101,31 +101,31 @@ class TorrentController extends Controller
 
         $meta = null;
 
-        if ($torrent->category->tv_meta && $torrent->tv_id) {
-            $meta = Tv::with([
+        if ($torrent->category->tv_meta && $torrent->tmdb_tv_id) {
+            $meta = TmdbTv::with([
                 'genres',
                 'credits' => ['person', 'occupation'],
                 'companies',
                 'networks',
                 'recommendedTv' => fn ($query) => $query
-                    ->select('tv.id', 'tv.name', 'tv.poster', 'tv.first_air_date')
+                    ->select('tmdb_tv.id', 'tmdb_tv.name', 'tmdb_tv.poster', 'tmdb_tv.first_air_date')
                     ->withMin('torrents', 'category_id')
                     ->has('torrents'),
-            ])->find($torrent->tv_id);
+            ])->find($torrent->tmdb_tv_id);
         }
 
-        if ($torrent->category->movie_meta && $torrent->movie_id) {
-            $meta = Movie::with([
+        if ($torrent->category->movie_meta && $torrent->tmdb_movie_id) {
+            $meta = TmdbMovie::with([
                 'genres',
                 'credits' => ['person', 'occupation'],
                 'companies',
                 'collection',
                 'recommendedMovies' => fn ($query) => $query
-                    ->select('movies.id', 'movies.title', 'movies.poster', 'movies.release_date')
+                    ->select('tmdb_movies.id', 'tmdb_movies.title', 'tmdb_movies.poster', 'tmdb_movies.release_date')
                     ->withMin('torrents', 'category_id')
                     ->has('torrents'),
             ])
-                ->find($torrent->movie_id);
+                ->find($torrent->tmdb_movie_id);
         }
 
         if ($torrent->category->game_meta && $torrent->igdb) {
@@ -260,10 +260,10 @@ class TorrentController extends Controller
         // Meta
 
         match (true) {
-            $category->tv_meta && $torrent->tv_id > 0       => new TMDBScraper()->tv($torrent->tv_id),
-            $category->movie_meta && $torrent->movie_id > 0 => new TMDBScraper()->movie($torrent->movie_id),
-            $category->game_meta && $torrent->igdb > 0      => new IgdbScraper()->game($torrent->igdb),
-            default                                         => null,
+            $category->tv_meta && $torrent->tmdb_tv_id > 0       => new TMDBScraper()->tv($torrent->tmdb_tv_id),
+            $category->movie_meta && $torrent->tmdb_movie_id > 0 => new TMDBScraper()->movie($torrent->tmdb_movie_id),
+            $category->game_meta && $torrent->igdb > 0           => new IgdbScraper()->game($torrent->igdb),
+            default                                              => null,
         };
 
         return to_route('torrents.show', ['id' => $id])
@@ -361,8 +361,8 @@ class TorrentController extends Controller
             'category_id'  => $request->category_id ?? Category::query()->first()->id,
             'title'        => urldecode((string) $request->title),
             'imdb'         => $request->imdb,
-            'movieId'      => $request->movie_id,
-            'tvId'         => $request->tv_id,
+            'movieId'      => $request->tmdb_movie_id,
+            'tvId'         => $request->tmdb_tv_id,
             'mal'          => $request->mal,
             'tvdb'         => $request->tvdb,
             'igdb'         => $request->igdb,
@@ -449,10 +449,10 @@ class TorrentController extends Controller
 
         // Meta
         match (true) {
-            $category->tv_meta && $torrent->tv_id > 0       => new TMDBScraper()->tv($torrent->tv_id),
-            $category->movie_meta && $torrent->movie_id > 0 => new TMDBScraper()->movie($torrent->movie_id),
-            $category->game_meta && $torrent->igdb > 0      => new IgdbScraper()->game($torrent->igdb),
-            default                                         => null,
+            $category->tv_meta && $torrent->tmdb_tv_id > 0       => new TMDBScraper()->tv($torrent->tmdb_tv_id),
+            $category->movie_meta && $torrent->tmdb_movie_id > 0 => new TMDBScraper()->movie($torrent->tmdb_movie_id),
+            $category->game_meta && $torrent->igdb > 0           => new IgdbScraper()->game($torrent->igdb),
+            default                                              => null,
         };
 
         // Torrent Keywords System

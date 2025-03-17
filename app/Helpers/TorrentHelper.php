@@ -31,10 +31,10 @@ use App\Achievements\UserMadeUpload;
 use App\Bots\IRCAnnounceBot;
 use App\Enums\ModerationStatus;
 use App\Models\AutomaticTorrentFreeleech;
-use App\Models\Movie;
+use App\Models\TmdbMovie;
 use App\Models\Scopes\ApprovedScope;
 use App\Models\Torrent;
-use App\Models\Tv;
+use App\Models\TmdbTv;
 use App\Models\User;
 use App\Notifications\NewUpload;
 use App\Notifications\NewWishListNotice;
@@ -79,7 +79,7 @@ class TorrentHelper
         switch (true) {
             case $torrent->category->movie_meta:
                 User::query()
-                    ->whereRelation('wishes', 'movie_id', '=', $torrent->movie_id)
+                    ->whereRelation('wishes', 'tmdb_movie_id', '=', $torrent->tmdb_movie_id)
                     ->get()
                     ->each
                     ->notify(new NewWishListNotice($torrent));
@@ -87,7 +87,7 @@ class TorrentHelper
                 break;
             case $torrent->category->tv_meta:
                 User::query()
-                    ->whereRelation('wishes', 'tv_id', '=', $torrent->tv_id)
+                    ->whereRelation('wishes', 'tmdb_tv_id', '=', $torrent->tmdb_tv_id)
                     ->get()
                     ->each
                     ->notify(new NewWishListNotice($torrent));
@@ -126,10 +126,10 @@ class TorrentHelper
             $meta = null;
             $category = $torrent->category;
 
-            if ($torrent->movie_id > 0 || $torrent->tv_id > 0) {
+            if ($torrent->tmdb_movie_id > 0 || $torrent->tmdb_tv_id > 0) {
                 $meta = match (true) {
-                    $category->tv_meta    => Tv::find($torrent->tv_id),
-                    $category->movie_meta => Movie::find($torrent->movie_id),
+                    $category->tv_meta    => TmdbTv::find($torrent->tmdb_tv_id),
+                    $category->movie_meta => TmdbMovie::find($torrent->tmdb_movie_id),
                     default               => null,
                 };
             }

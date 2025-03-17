@@ -21,12 +21,12 @@ use App\Models\Category;
 use App\Models\Distributor;
 use App\Models\History;
 use App\Models\IgdbGame;
-use App\Models\Movie;
+use App\Models\TmdbMovie;
 use App\Models\Region;
 use App\Models\Resolution;
 use App\Models\Torrent;
 use App\Models\TorrentRequest;
-use App\Models\Tv;
+use App\Models\TmdbTv;
 use App\Models\Type;
 use App\Models\User;
 use App\Notifications\TorrentsDeleted;
@@ -46,7 +46,7 @@ class SimilarTorrent extends Component
 
     public Category $category;
 
-    public Movie|Tv|Game $work;
+    public TmdbMovie|TmdbTv|Game $work;
 
     public ?int $tmdbId;
 
@@ -203,9 +203,9 @@ class SimilarTorrent extends Component
 
     final public function boot(): void
     {
-        if ($this->work instanceof Movie) {
+        if ($this->work instanceof TmdbMovie) {
             $this->work->setAttribute('meta', 'movie');
-        } elseif ($this->work instanceof Tv) {
+        } elseif ($this->work instanceof TmdbTv) {
             $this->work->setAttribute('meta', 'tv');
         }
     }
@@ -280,8 +280,8 @@ class SimilarTorrent extends Component
                 $this->category->tv_meta,
                 fn ($query) => $query->whereRelation('category', 'tv_meta', '=', true),
             )
-            ->when($this->category->tv_meta, fn ($query) => $query->where('tv_id', '=', $this->tmdbId))
-            ->when($this->category->movie_meta, fn ($query) => $query->where('movie_id', '=', $this->tmdbId))
+            ->when($this->category->tv_meta, fn ($query) => $query->where('tmdb_tv_id', '=', $this->tmdbId))
+            ->when($this->category->movie_meta, fn ($query) => $query->where('tmdb_movie_id', '=', $this->tmdbId))
             ->when($this->category->game_meta, fn ($query) => $query->where('igdb', '=', $this->tmdbId))
             ->where((new TorrentSearchFiltersDTO(
                 name: $this->name,
@@ -390,8 +390,8 @@ class SimilarTorrent extends Component
     {
         return TorrentRequest::with(['user:id,username,group_id', 'user.group', 'category', 'type', 'resolution'])
             ->withCount(['comments'])
-            ->when($this->category->movie_meta, fn ($query) => $query->where('movie_id', '=', $this->tmdbId))
-            ->when($this->category->tv_meta, fn ($query) => $query->where('tv_id', '=', $this->tmdbId))
+            ->when($this->category->movie_meta, fn ($query) => $query->where('tmdb_movie_id', '=', $this->tmdbId))
+            ->when($this->category->tv_meta, fn ($query) => $query->where('tmdb_tv_id', '=', $this->tmdbId))
             ->when($this->category->game_meta, fn ($query) => $query->where('igdb', '=', $this->tmdbId))
             ->where('category_id', '=', $this->category->id)
             ->when(
@@ -432,8 +432,8 @@ class SimilarTorrent extends Component
         $torrents = Torrent::whereKey($this->checked)->get();
         $users = [];
         $title = match (true) {
-            $this->category->movie_meta => ($movie = Movie::find($this->tmdbId))->title.' ('.$movie->release_date->format('Y').')',
-            $this->category->tv_meta    => ($tv = Tv::find($this->tmdbId))->name.' ('.$tv->first_air_date->format('Y').')',
+            $this->category->movie_meta => ($movie = TmdbMovie::find($this->tmdbId))->title.' ('.$movie->release_date->format('Y').')',
+            $this->category->tv_meta    => ($tv = TmdbTv::find($this->tmdbId))->name.' ('.$tv->first_air_date->format('Y').')',
             $this->category->game_meta  => ($game = IgdbGame::find($this->igdbId))->name.' ('.$game->first_release_date->format('Y').')',
             default                     => $torrents->pluck('name')->join(', '),
         };

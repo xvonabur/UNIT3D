@@ -109,7 +109,7 @@ class UpdateTorrentRequest extends FormRequest
                     Rule::in([0]),
                 ]),
             ],
-            'movie_id' => [
+            'tmdb_movie_id' => [
                 Rule::when($category->movie_meta, [
                     'required',
                     'decimal:0',
@@ -119,7 +119,7 @@ class UpdateTorrentRequest extends FormRequest
                     Rule::in([0]),
                 ]),
             ],
-            'tv_id' => [
+            'tmdb_tv_id' => [
                 Rule::when($category->tv_meta, [
                     'required',
                     'decimal:0',

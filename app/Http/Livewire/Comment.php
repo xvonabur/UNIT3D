@@ -30,7 +30,7 @@ use App\Achievements\UserMadeComment;
 use App\Achievements\UserMadeTenComments;
 use App\Enums\ModerationStatus;
 use App\Models\Article;
-use App\Models\Collection;
+use App\Models\TmdbCollection;
 use App\Models\Playlist;
 use App\Models\Ticket;
 use App\Models\Torrent;
@@ -49,7 +49,7 @@ class Comment extends Component
 
     protected ChatRepository $chatRepository;
 
-    public null|Article|Collection|Playlist|Ticket|Torrent|TorrentRequest $model;
+    public null|Article|TmdbCollection|Playlist|Ticket|Torrent|TorrentRequest $model;
 
     public \App\Models\Comment $comment;
 
@@ -195,7 +195,7 @@ class Comment extends Component
                     $this->chatRepository->systemMessage($username.' has left a comment on Article [url='.href_article($this->model).']'.$this->model->title.'[/url]');
 
                     break;
-                case $this->model instanceof Collection:
+                case $this->model instanceof TmdbCollection:
                     $this->chatRepository->systemMessage($username.' has left a comment on Collection [url='.href_collection($this->model).']'.$this->model->name.'[/url]');
 
                     break;

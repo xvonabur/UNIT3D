@@ -17,7 +17,7 @@
 @endsection
 
 @section('main')
-    @livewire('person-credit', ['person' => $person])
+    @livewire('tmdb-person-credit', ['person' => $person])
 @endsection
 
 @section('sidebar')

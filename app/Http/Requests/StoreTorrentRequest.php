@@ -159,7 +159,7 @@ class StoreTorrentRequest extends FormRequest
                     Rule::in([0]),
                 ]),
             ],
-            'movie_id' => [
+            'tmdb_movie_id' => [
                 Rule::when($category->movie_meta, [
                     'required',
                     'decimal:0',
@@ -170,7 +170,7 @@ class StoreTorrentRequest extends FormRequest
                     'exclude',
                 ]),
             ],
-            'tv_id' => [
+            'tmdb_tv_id' => [
                 Rule::when($category->tv_meta, [
                     'required',
                     'decimal:0',
@@ -262,12 +262,12 @@ class StoreTorrentRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'igdb.in'     => 'The IGDB ID must be 0 if the media doesn\'t exist on IGDB or you\'re not uploading a game.',
-            'movie_id.in' => 'The TMDB ID must be 0 if the media doesn\'t exist on TMDB or you\'re not uploading a tv show or movie.',
-            'tv_id.in'    => 'The TMDB ID must be 0 if the media doesn\'t exist on TMDB or you\'re not uploading a tv show or movie.',
-            'imdb.in'     => 'The IMDB ID must be 0 if the media doesn\'t exist on IMDB or you\'re not uploading a tv show or movie.',
-            'tvdb.in'     => 'The TVDB ID must be 0 if the media doesn\'t exist on TVDB or you\'re not uploading a tv show.',
-            'mal.in'      => 'The MAL ID must be 0 if the media doesn\'t exist on MAL or you\'re not uploading a tv or movie.',
+            'igdb.in'          => 'The IGDB ID must be 0 if the media doesn\'t exist on IGDB or you\'re not uploading a game.',
+            'tmdb_movie_id.in' => 'The TMDB ID must be 0 if the media doesn\'t exist on TMDB or you\'re not uploading a tv show or movie.',
+            'tmdb_tv_id.in'    => 'The TMDB ID must be 0 if the media doesn\'t exist on TMDB or you\'re not uploading a tv show or movie.',
+            'imdb.in'          => 'The IMDB ID must be 0 if the media doesn\'t exist on IMDB or you\'re not uploading a tv show or movie.',
+            'tvdb.in'          => 'The TVDB ID must be 0 if the media doesn\'t exist on TVDB or you\'re not uploading a tv show.',
+            'mal.in'           => 'The MAL ID must be 0 if the media doesn\'t exist on MAL or you\'re not uploading a tv or movie.',
         ];
     }
 }

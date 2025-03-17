@@ -37,8 +37,8 @@ class QuickSearchController extends Controller
                 'category.tv_meta = true',
             ],
             [
-                'movie.name EXISTS',
-                'tv.name EXISTS',
+                'tmdb_movie.name EXISTS',
+                'tmdb_tv.name EXISTS',
             ]
         ];
 
@@ -47,8 +47,8 @@ class QuickSearchController extends Controller
 
         if (preg_match('/^(\d+)$/', $query, $matches)) {
             $filters[] = [
-                'movie_id = '.$matches[1],
-                'tv_id = '.$matches[1],
+                'tmdb_movie_id = '.$matches[1],
+                'tmdb_tv_id = '.$matches[1],
             ];
             $searchById = true;
         }
@@ -85,14 +85,14 @@ class QuickSearchController extends Controller
         // Process the hits from the multiSearchResults
         foreach ($multiSearchResults['hits'] as $hit) {
             if ($hit['_federation']['indexUid'] === config('scout.prefix').'torrents') {
-                $type = $hit['category']['movie_meta'] === true ? 'movie' : 'tv';
+                $type = $hit['category']['movie_meta'] === true ? 'tmdb_movie' : 'tmdb_tv';
 
                 $results[] = [
                     'id'    => $hit['id'],
                     'name'  => $hit[$type]['name'],
                     'year'  => $hit[$type]['year'],
                     'image' => $hit[$type]['poster'] ? tmdb_image('poster_small', $hit[$type]['poster']) : ($hit['name'][0] ?? '').($hit['name'][1] ?? ''),
-                    'url'   => route('torrents.similar', ['category_id' => $hit['category']['id'], 'tmdb' => $hit['tmdb']]),
+                    'url'   => route('torrents.similar', ['category_id' => $hit['category']['id'], 'tmdb' => $hit["{$type}_id"]]),
                     'type'  => $hit['category']['name'],
                 ];
             } elseif ($hit['_federation']['indexUid'] === config('scout.prefix').'people') {

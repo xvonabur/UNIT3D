@@ -80,8 +80,8 @@ class Top10 extends Component
         $this->validate();
 
         $metaIdColumn = match ($this->metaType) {
-            'tv_meta' => 'tv_id',
-            default   => 'movie_id',
+            'tv_meta' => 'tmdb_tv_id',
+            default   => 'tmdb_movie_id',
         };
 
         return cache()->remember(
@@ -122,8 +122,8 @@ class Top10 extends Component
         $this->validate();
 
         $metaIdColumn = match ($this->metaType) {
-            'tv_meta' => 'tv_id',
-            default   => 'movie_id',
+            'tv_meta' => 'tmdb_tv_id',
+            default   => 'tmdb_movie_id',
         };
 
         return cache()->remember(
@@ -171,8 +171,8 @@ class Top10 extends Component
         $this->validate();
 
         $metaIdColumn = match ($this->metaType) {
-            'tv_meta' => 'tv_id',
-            default   => 'movie_id',
+            'tv_meta' => 'tmdb_tv_id',
+            default   => 'tmdb_movie_id',
         };
 
         return cache()->remember(

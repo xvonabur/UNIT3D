@@ -18,10 +18,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\IgdbGame;
-use App\Models\Movie;
+use App\Models\TmdbMovie;
 use App\Models\Torrent;
 use App\Models\TorrentRequest;
-use App\Models\Tv;
+use App\Models\TmdbTv;
 use App\Services\Igdb\IgdbScraper;
 use App\Services\Tmdb\TMDBScraper;
 use Illuminate\Http\Request;
@@ -38,11 +38,11 @@ class SimilarTorrentController extends Controller
 
         switch (true) {
             case $category->movie_meta:
-                $hasTorrents = Torrent::query()->where('category_id', '=', $categoryId)->where('movie_id', '=', $tmdbId)->exists();
+                $hasTorrents = Torrent::query()->where('category_id', '=', $categoryId)->where('tmdb_movie_id', '=', $tmdbId)->exists();
 
                 abort_unless($hasTorrents, 404, 'No Similar Torrents Found');
 
-                $meta = Movie::with([
+                $meta = TmdbMovie::with([
                     'genres',
                     'credits' => ['person', 'occupation'],
                     'companies'
@@ -52,11 +52,11 @@ class SimilarTorrentController extends Controller
 
                 break;
             case $category->tv_meta:
-                $hasTorrents = Torrent::query()->where('category_id', '=', $categoryId)->where('tv_id', '=', $tmdbId)->exists();
+                $hasTorrents = Torrent::query()->where('category_id', '=', $categoryId)->where('tmdb_tv_id', '=', $tmdbId)->exists();
 
                 abort_unless($hasTorrents, 404, 'No Similar Torrents Found');
 
-                $meta = Tv::with([
+                $meta = TmdbTv::with([
                     'genres',
                     'credits' => ['person', 'occupation'],
                     'companies',
@@ -106,13 +106,13 @@ class SimilarTorrentController extends Controller
             $metaId === 0
             || (
                 $category->movie_meta
-                && Torrent::where('category_id', '=', $category->id)->where('movie_id', '=', $metaId)->doesntExist()
-                && TorrentRequest::where('category_id', '=', $category->id)->where('movie_id', '=', $metaId)->doesntExist()
+                && Torrent::where('category_id', '=', $category->id)->where('tmdb_movie_id', '=', $metaId)->doesntExist()
+                && TorrentRequest::where('category_id', '=', $category->id)->where('tmdb_movie_id', '=', $metaId)->doesntExist()
             )
             || (
                 $category->tv_meta
-                && Torrent::where('category_id', '=', $category->id)->where('tv_id', '=', $metaId)->doesntExist()
-                && TorrentRequest::where('category_id', '=', $category->id)->where('tv_id', '=', $metaId)->doesntExist()
+                && Torrent::where('category_id', '=', $category->id)->where('tmdb_tv_id', '=', $metaId)->doesntExist()
+                && TorrentRequest::where('category_id', '=', $category->id)->where('tmdb_tv_id', '=', $metaId)->doesntExist()
             )
             || (
                 $category->game_meta

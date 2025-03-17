@@ -53,12 +53,12 @@
 
                     @php
                         $meta = match (true) {
-                            $feature->torrent->category->tv_meta => App\Models\Tv::query()
+                            $feature->torrent->category->tv_meta => App\Models\TmdbTv::query()
                                 ->with('genres', 'networks', 'seasons')
-                                ->find($feature->torrent->tv_id ?? 0),
-                            $feature->torrent->category->movie_meta => App\Models\Movie::query()
+                                ->find($feature->torrent->tmdb_tv_id ?? 0),
+                            $feature->torrent->category->movie_meta => App\Models\TmdbMovie::query()
                                 ->with('genres', 'companies', 'collection')
-                                ->find($feature->torrent->movie_id ?? 0),
+                                ->find($feature->torrent->tmdb_movie_id ?? 0),
                             $feature->torrent->category->game_meta => App\Models\Game::query()
                                 ->with('genres')
                                 ->find((int) $feature->torrent->igdb),

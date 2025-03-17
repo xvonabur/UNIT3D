@@ -385,13 +385,13 @@ Route::middleware('language')->group(function (): void {
     */
     Route::prefix('mediahub')->middleware(['auth', 'banned'])->group(function (): void {
         Route::get('/', [App\Http\Controllers\MediaHub\HomeController::class, 'index'])->name('mediahub.index');
-        Route::get('/genres', [App\Http\Controllers\MediaHub\GenreController::class, 'index'])->name('mediahub.genres.index');
-        Route::get('/networks', [App\Http\Controllers\MediaHub\NetworkController::class, 'index'])->name('mediahub.networks.index');
-        Route::get('/companies', [App\Http\Controllers\MediaHub\CompanyController::class, 'index'])->name('mediahub.companies.index');
-        Route::get('/persons', [App\Http\Controllers\MediaHub\PersonController::class, 'index'])->name('mediahub.persons.index');
-        Route::get('/persons/{id}', [App\Http\Controllers\MediaHub\PersonController::class, 'show'])->name('mediahub.persons.show')->whereNumber('id');
-        Route::get('/collections', [App\Http\Controllers\MediaHub\CollectionController::class, 'index'])->name('mediahub.collections.index');
-        Route::get('/collections/{id}', [App\Http\Controllers\MediaHub\CollectionController::class, 'show'])->name('mediahub.collections.show')->whereNumber('id');
+        Route::get('/genres', [App\Http\Controllers\MediaHub\TmdbGenreController::class, 'index'])->name('mediahub.genres.index');
+        Route::get('/networks', [App\Http\Controllers\MediaHub\TmdbNetworkController::class, 'index'])->name('mediahub.networks.index');
+        Route::get('/companies', [App\Http\Controllers\MediaHub\TmdbCompanyController::class, 'index'])->name('mediahub.companies.index');
+        Route::get('/persons', [App\Http\Controllers\MediaHub\TmdbPersonController::class, 'index'])->name('mediahub.persons.index');
+        Route::get('/persons/{id}', [App\Http\Controllers\MediaHub\TmdbPersonController::class, 'show'])->name('mediahub.persons.show')->whereNumber('id');
+        Route::get('/collections', [App\Http\Controllers\MediaHub\TmdbCollectionController::class, 'index'])->name('mediahub.collections.index');
+        Route::get('/collections/{id}', [App\Http\Controllers\MediaHub\TmdbCollectionController::class, 'show'])->name('mediahub.collections.show')->whereNumber('id');
     });
 
     /*
