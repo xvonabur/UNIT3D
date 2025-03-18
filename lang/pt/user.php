@@ -225,7 +225,7 @@ return [
     'request-help'                         => 'Controle o compartilhamento de estatísticas e informações relacionadas a solicitações específicas com grupos que têm permissão para acessar seu perfil. Essas configurações serão canceladas se você não permitir que nenhum grupo acesse suas estatísticas e informações relacionadas solicitadas ou se você for <strong>Particular</strong>',
     'request'                              => 'Pedido',
     'requested'                            => 'Requeridos',
-    'requests'                             => 'solicitações de',
+    'requests'                             => 'Pedidos',
     'request-comments'                     => 'Solicitar Comentários Feitos',
     'request-notification'                 => 'Solicitar configurações de notificação',
     'request-notification-bounty'          => 'Receber uma notificação quando um torrent solicitado receber uma nova recompensa',
