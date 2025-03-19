@@ -20,5 +20,5 @@
 @endsection
 
 @section('main')
-    @livewire('collection-search')
+    @livewire('tmdb-collection-search')
 @endsection

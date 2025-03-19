@@ -17,7 +17,7 @@ declare(strict_types=1);
 namespace App\Notifications;
 
 use App\Models\Article;
-use App\Models\Collection;
+use App\Models\TmdbCollection;
 use App\Models\Comment;
 use App\Models\Playlist;
 use App\Models\Ticket;
@@ -35,7 +35,7 @@ class NewCommentTag extends Notification implements ShouldQueue
     /**
      * NewCommentTag Constructor.
      */
-    public function __construct(public Torrent|TorrentRequest|Ticket|Playlist|Collection|Article $model, public Comment $comment)
+    public function __construct(public Torrent|TorrentRequest|Ticket|Playlist|TmdbCollection|Article $model, public Comment $comment)
     {
     }
 
@@ -99,7 +99,7 @@ class NewCommentTag extends Notification implements ShouldQueue
                 // If the sender's group ID is found in the "Block all notifications from the selected groups" array,
                 // the expression will return false.
                 return ! \in_array($this->comment->user->group_id, $notifiable->notification?->json_mention_groups ?? [], true);
-            case $this->model instanceof Collection:
+            case $this->model instanceof TmdbCollection:
                 break;
         }
 
@@ -137,7 +137,7 @@ class NewCommentTag extends Notification implements ShouldQueue
                 'body'  => $username.' has tagged you in an comment on Playlist '.$this->model->name,
                 'url'   => '/playlists/'.$this->model->id,
             ],
-            $this->model instanceof Collection => [
+            $this->model instanceof TmdbCollection => [
                 'title' => $title,
                 'body'  => $username.' has tagged you in an comment on Collection '.$this->model->name,
                 'url'   => '/mediahub/collections/'.$this->model->id,

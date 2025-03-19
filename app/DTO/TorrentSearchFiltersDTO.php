@@ -200,12 +200,12 @@ readonly class TorrentSearchFiltersDTO
                             ->where(
                                 fn ($query) => $query
                                     ->whereRelation('category', 'movie_meta', '=', true)
-                                    ->whereIn('movie_id', DB::table('genre_movie')->select('movie_id')->whereIn('genre_id', $this->genreIds))
+                                    ->whereIn('tmdb_movie_id', DB::table('tmdb_genre_tmdb_movie')->select('tmdb_movie_id')->whereIn('tmdb_genre_id', $this->genreIds))
                             )
                             ->orWhere(
                                 fn ($query) => $query
                                     ->whereRelation('category', 'tv_meta', '=', true)
-                                    ->whereIn('tv_id', DB::table('genre_tv')->select('tv_id')->whereIn('genre_id', $this->genreIds))
+                                    ->whereIn('tmdb_tv_id', DB::table('tmdb_genre_tmdb_tv')->select('tmdb_tv_id')->whereIn('tmdb_genre_id', $this->genreIds))
                             )
                     )
             )
@@ -232,8 +232,8 @@ readonly class TorrentSearchFiltersDTO
                 fn ($query) => $query
                     ->where(
                         fn ($query) => $query
-                            ->where('movie_id', '=', $this->tmdbId)
-                            ->orWhere('tv_id', '=', $this->tmdbId)
+                            ->where('tmdb_movie_id', '=', $this->tmdbId)
+                            ->orWhere('tmdb_tv_id', '=', $this->tmdbId)
                     )
             )
             ->when($this->imdbId !== null, fn ($query) => $query->where('imdb', '=', $this->imdbId))
@@ -267,7 +267,7 @@ readonly class TorrentSearchFiltersDTO
                 $this->collectionId !== null,
                 fn ($query) => $query
                     ->whereRelation('category', 'movie_meta', '=', true)
-                    ->whereIn('movie_id', DB::table('collection_movie')->select('movie_id')->where('collection_id', '=', $this->collectionId))
+                    ->whereIn('tmdb_movie_id', DB::table('tmdb_collection_tmdb_movie')->select('tmdb_movie_id')->where('tmdb_collection_id', '=', $this->collectionId))
             )
             ->when(
                 $this->companyId !== null,
@@ -277,12 +277,12 @@ readonly class TorrentSearchFiltersDTO
                             ->where(
                                 fn ($query) => $query
                                     ->whereRelation('category', 'movie_meta', '=', true)
-                                    ->whereIn('movie_id', DB::table('company_movie')->select('movie_id')->where('company_id', '=', $this->companyId))
+                                    ->whereIn('tmdb_movie_id', DB::table('tmdb_company_tmdb_movie')->select('tmdb_movie_id')->where('tmdb_company_id', '=', $this->companyId))
                             )
                             ->orWhere(
                                 fn ($query) => $query
                                     ->whereRelation('category', 'tv_meta', '=', true)
-                                    ->whereIn('tv_id', DB::table('company_tv')->select('tv_id')->where('company_id', '=', $this->companyId))
+                                    ->whereIn('tmdb_tv_id', DB::table('tmdb_company_tmdb_tv')->select('tmdb_tv_id')->where('tmdb_company_id', '=', $this->companyId))
                             )
                     )
             )
@@ -290,7 +290,7 @@ readonly class TorrentSearchFiltersDTO
                 $this->networkId !== null,
                 fn ($query) => $query
                     ->whereRelation('category', 'tv_meta', '=', true)
-                    ->whereIn('tv_id', DB::table('network_tv')->select('tv_id')->where('network_id', '=', $this->networkId))
+                    ->whereIn('tmdb_tv_id', DB::table('tmdb_network_tmdb_tv')->select('tmdb_tv_id')->where('tmdb_network_id', '=', $this->networkId))
             )
             ->when(
                 $this->primaryLanguageNames !== [],
@@ -369,12 +369,12 @@ readonly class TorrentSearchFiltersDTO
                             ->where(
                                 fn ($query) => $query
                                     ->whereRelation('movie_meta', '=', true)
-                                    ->whereIn('movie_id', Wish::select('movie_id')->where('user_id', '=', $this->user->id))
+                                    ->whereIn('tmdb_movie_id', Wish::select('tmdb_movie_id')->where('user_id', '=', $this->user->id))
                             )
                             ->orWhere(
                                 fn ($query) => $query
                                     ->whereRelation('tv_meta', '=', true)
-                                    ->whereIn('tv_id', Wish::select('tv_id')->where('user_id', '=', $this->user->id))
+                                    ->whereIn('tmdb_tv_id', Wish::select('tmdb_tv_id')->where('user_id', '=', $this->user->id))
                             )
                     )
             )
@@ -460,15 +460,15 @@ readonly class TorrentSearchFiltersDTO
 
         if ($this->startYear !== null) {
             $filters[] = [
-                'movie.year >= '.$this->startYear,
-                'tv.year >= '.$this->startYear,
+                'tmdb_movie.year >= '.$this->startYear,
+                'tmdb_tv.year >= '.$this->startYear,
             ];
         }
 
         if ($this->endYear !== null) {
             $filters[] = [
-                'movie.year <= '.$this->endYear,
-                'tv.year <= '.$this->endYear,
+                'tmdb_movie.year <= '.$this->endYear,
+                'tmdb_tv.year <= '.$this->endYear,
             ];
         }
 
@@ -502,8 +502,8 @@ readonly class TorrentSearchFiltersDTO
 
         if ($this->genreIds !== []) {
             $filters[] = [
-                'movie.genres.id IN '.json_encode(array_map('intval', $this->genreIds)),
-                'tv.genres.id IN '.json_encode(array_map('intval', $this->genreIds)),
+                'tmdb_movie.genres.id IN '.json_encode(array_map('intval', $this->genreIds)),
+                'tmdb_tv.genres.id IN '.json_encode(array_map('intval', $this->genreIds)),
             ];
         }
 
@@ -530,13 +530,13 @@ readonly class TorrentSearchFiltersDTO
         }
 
         if ($this->adult !== null) {
-            $filters[] = 'movie.adult = '.($this->adult ? 'true' : 'false');
+            $filters[] = 'tmdb_movie.adult = '.($this->adult ? 'true' : 'false');
         }
 
         if ($this->tmdbId !== null) {
             $filters[] = [
-                'movie_id = '.$this->tmdbId,
-                'tv_id = '.$this->tmdbId,
+                'tmdb_movie_id = '.$this->tmdbId,
+                'tmdb_tv_id = '.$this->tmdbId,
             ];
         }
 
@@ -557,24 +557,24 @@ readonly class TorrentSearchFiltersDTO
         }
 
         if ($this->collectionId !== null) {
-            $filters[] = 'movie.collection.id = '.$this->collectionId;
+            $filters[] = 'tmdb_movie.collection.id = '.$this->collectionId;
         }
 
         if ($this->companyId !== null) {
             $filters[] = [
-                'movie.companies.id = '.$this->companyId,
-                'tv.companies.id = '.$this->companyId,
+                'tmdb_movie.companies.id = '.$this->companyId,
+                'tmdb_tv.companies.id = '.$this->companyId,
             ];
         }
 
         if ($this->networkId !== null) {
-            $filters[] = 'tv.networks.id = '.$this->networkId;
+            $filters[] = 'tmdb_tv.networks.id = '.$this->networkId;
         }
 
         if ($this->primaryLanguageNames !== []) {
             $filters[] = [
-                'movie.original_language IN '.json_encode(array_map('strval', $this->primaryLanguageNames)),
-                'tv.original_language IN '.json_encode(array_map('strval', $this->primaryLanguageNames)),
+                'tmdb_movie.original_language IN '.json_encode(array_map('strval', $this->primaryLanguageNames)),
+                'tmdb_tv.original_language IN '.json_encode(array_map('strval', $this->primaryLanguageNames)),
             ];
         }
 
@@ -650,8 +650,8 @@ readonly class TorrentSearchFiltersDTO
 
         if ($this->userWished) {
             $filters[] = [
-                'movie.wishes.user_id = '.$this->user->id,
-                'tv.wishes.user_id = '.$this->user->id,
+                'tmdb_movie.wishes.user_id = '.$this->user->id,
+                'tmdb_tv.wishes.user_id = '.$this->user->id,
             ];
         }
 

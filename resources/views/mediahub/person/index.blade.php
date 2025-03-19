@@ -20,5 +20,5 @@
 @endsection
 
 @section('content')
-    @livewire('person-search')
+    @livewire('tmdb-person-search')
 @endsection

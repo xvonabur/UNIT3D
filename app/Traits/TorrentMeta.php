@@ -17,8 +17,8 @@ declare(strict_types=1);
 namespace App\Traits;
 
 use App\Models\IgdbGame;
-use App\Models\Movie;
-use App\Models\Tv;
+use App\Models\TmdbMovie;
+use App\Models\TmdbTv;
 use JsonException;
 use ReflectionException;
 
@@ -41,25 +41,25 @@ trait TorrentMeta
     public function scopeMeta(\Illuminate\Database\Eloquent\Collection|\Illuminate\Pagination\CursorPaginator|\Illuminate\Pagination\LengthAwarePaginator|\Illuminate\Contracts\Pagination\LengthAwarePaginator $torrents): \Illuminate\Support\Collection|\Illuminate\Pagination\CursorPaginator|\Illuminate\Pagination\LengthAwarePaginator|\Illuminate\Contracts\Pagination\LengthAwarePaginator
     {
         if ($torrents instanceof \Illuminate\Contracts\Pagination\LengthAwarePaginator || $torrents instanceof \Illuminate\Contracts\Pagination\CursorPaginator) {
-            $movieIds = collect($torrents->items())->where('meta', '=', 'movie')->pluck('movie_id');
-            $tvIds = collect($torrents->items())->where('meta', '=', 'tv')->pluck('tv_id');
+            $movieIds = collect($torrents->items())->where('meta', '=', 'movie')->pluck('tmdb_movie_id');
+            $tvIds = collect($torrents->items())->where('meta', '=', 'tv')->pluck('tmdb_tv_id');
             $gameIds = collect($torrents->items())->where('meta', '=', 'game')->pluck('igdb');
         } else {
-            $movieIds = $torrents->where('meta', '=', 'movie')->pluck('movie_id');
-            $tvIds = $torrents->where('meta', '=', 'tv')->pluck('tv_id');
+            $movieIds = $torrents->where('meta', '=', 'movie')->pluck('tmdb_movie_id');
+            $tvIds = $torrents->where('meta', '=', 'tv')->pluck('tmdb_tv_id');
             $gameIds = $torrents->where('meta', '=', 'game')->pluck('igdb');
         }
 
-        $movies = Movie::with('genres')->whereIntegerInRaw('id', $movieIds)->get()->keyBy('id');
-        $tv = Tv::with('genres')->whereIntegerInRaw('id', $tvIds)->get()->keyBy('id');
+        $movies = TmdbMovie::with('genres')->whereIntegerInRaw('id', $movieIds)->get()->keyBy('id');
+        $tv = TmdbTv::with('genres')->whereIntegerInRaw('id', $tvIds)->get()->keyBy('id');
         $games = IgdbGame::with('genres')->whereIntegerInRaw('id', $gameIds)->get()->keyBy('id');
 
         $setRelation = function ($torrent) use ($movies, $tv, $games) {
             $torrent->setAttribute(
                 'meta',
                 match ($torrent->meta) {
-                    'movie' => $movies[$torrent->movie_id] ?? null,
-                    'tv'    => $tv[$torrent->tv_id] ?? null,
+                    'movie' => $movies[$torrent->tmdb_movie_id] ?? null,
+                    'tv'    => $tv[$torrent->tmdb_tv_id] ?? null,
                     'game'  => $games[$torrent->igdb] ?? null,
                     default => null,
                 },

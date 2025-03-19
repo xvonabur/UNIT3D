@@ -16,16 +16,16 @@ declare(strict_types=1);
 
 namespace App\Jobs;
 
-use App\Models\Company;
-use App\Models\Credit;
-use App\Models\Episode;
-use App\Models\Genre;
-use App\Models\Network;
-use App\Models\Person;
-use App\Models\Recommendation;
-use App\Models\Season;
+use App\Models\TmdbCompany;
+use App\Models\TmdbCredit;
+use App\Models\TmdbEpisode;
+use App\Models\TmdbGenre;
+use App\Models\TmdbNetwork;
+use App\Models\TmdbPerson;
+use App\Models\TmdbRecommendation;
+use App\Models\TmdbSeason;
 use App\Models\Torrent;
-use App\Models\Tv;
+use App\Models\TmdbTv;
 use App\Services\Tmdb\Client;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -64,7 +64,7 @@ class ProcessTvJob implements ShouldQueue
 
         $tvScraper = new Client\TV($this->id);
 
-        $tv = Tv::updateOrCreate(['id' => $this->id], $tvScraper->getTv());
+        $tv = TmdbTv::updateOrCreate(['id' => $this->id], $tvScraper->getTv());
 
         // Companies
 
@@ -74,7 +74,7 @@ class ProcessTvJob implements ShouldQueue
             $companies[] = (new Client\Company($company['id']))->getCompany();
         }
 
-        Company::upsert($companies, 'id');
+        TmdbCompany::upsert($companies, 'id');
         $tv->companies()->sync(array_unique(array_column($companies, 'id')));
 
         // Networks
@@ -85,12 +85,12 @@ class ProcessTvJob implements ShouldQueue
             $networks[] = (new Client\Network($network['id']))->getNetwork();
         }
 
-        Network::upsert($networks, 'id');
+        TmdbNetwork::upsert($networks, 'id');
         $tv->networks()->sync(array_unique(array_column($networks, 'id')));
 
         // Genres
 
-        Genre::upsert($tvScraper->getGenres(), 'id');
+        TmdbGenre::upsert($tvScraper->getGenres(), 'id');
         $tv->genres()->sync(array_unique(array_column($tvScraper->getGenres(), 'id')));
 
         // People
@@ -98,13 +98,13 @@ class ProcessTvJob implements ShouldQueue
         $credits = $tvScraper->getCredits();
         $people = [];
 
-        foreach (array_unique(array_column($credits, 'person_id')) as $person_id) {
+        foreach (array_unique(array_column($credits, 'tmdb_person_id')) as $person_id) {
             $people[] = (new Client\Person($person_id))->getPerson();
         }
 
-        Person::upsert($people, 'id');
-        Credit::where('tv_id', '=', $this->id)->delete();
-        Credit::upsert($credits, ['person_id', 'movie_id', 'tv_id', 'occupation_id', 'character']);
+        TmdbPerson::upsert($people, 'id');
+        TmdbCredit::where('tmdb_tv_id', '=', $this->id)->delete();
+        TmdbCredit::upsert($credits, ['tmdb_person_id', 'tmdb_movie_id', 'tmdb_tv_id', 'occupation_id', 'character']);
 
         // Seasons and episodes
 
@@ -118,15 +118,15 @@ class ProcessTvJob implements ShouldQueue
             array_push($episodes, ...$seasonScraper->getEpisodes());
         }
 
-        Season::upsert($seasons, 'id');
-        Episode::upsert($episodes, 'id');
+        TmdbSeason::upsert($seasons, 'id');
+        TmdbEpisode::upsert($episodes, 'id');
 
         // Recommendations
 
-        Recommendation::upsert($tvScraper->getRecommendations(), ['recommendation_tv_id', 'tv_id']);
+        TmdbRecommendation::upsert($tvScraper->getRecommendations(), ['recommended_tmdb_tv_id', 'tmdb_tv_id']);
 
         Torrent::query()
-            ->where('tv_id', '=', $this->id)
+            ->where('tmdb_tv_id', '=', $this->id)
             ->whereRelation('category', 'tv_meta', '=', true)
             ->searchable();
     }

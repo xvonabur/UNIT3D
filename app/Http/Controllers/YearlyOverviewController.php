@@ -55,7 +55,7 @@ class YearlyOverviewController extends Controller
                 'yearly-overview:'.$year.':top-movies',
                 fn () => Torrent::with('movie')
                     ->select([
-                        'movie_id',
+                        'tmdb_movie_id',
                         DB::raw('COUNT(h.user_id) as download_count'),
                         DB::raw('MIN(category_id) as category_id'),
                     ])
@@ -67,10 +67,10 @@ class YearlyOverviewController extends Controller
                         'h',
                         fn ($join) => $join->on('torrents.id', '=', 'h.torrent_id')
                     )
-                    ->where('movie_id', '!=', 0)
-                    ->whereNotNull('movie_id')
+                    ->where('tmdb_movie_id', '!=', 0)
+                    ->whereNotNull('tmdb_movie_id')
                     ->whereRelation('category', 'movie_meta', '=', true)
-                    ->groupBy('movie_id')
+                    ->groupBy('tmdb_movie_id')
                     ->orderByDesc('download_count')
                     ->take(10)
                     ->get()
@@ -79,7 +79,7 @@ class YearlyOverviewController extends Controller
                 'yearly-overview:'.$year.':bottom-movies',
                 fn () => Torrent::with('movie')
                     ->select([
-                        'movie_id',
+                        'tmdb_movie_id',
                         DB::raw('COUNT(h.user_id) as download_count'),
                         DB::raw('MIN(category_id) as category_id'),
                     ])
@@ -91,10 +91,10 @@ class YearlyOverviewController extends Controller
                         'h',
                         fn ($join) => $join->on('torrents.id', '=', 'h.torrent_id')
                     )
-                    ->where('movie_id', '!=', 0)
-                    ->whereNotNull('movie_id')
+                    ->where('tmdb_movie_id', '!=', 0)
+                    ->whereNotNull('tmdb_movie_id')
                     ->whereRelation('category', 'movie_meta', '=', true)
-                    ->groupBy('movie_id')
+                    ->groupBy('tmdb_movie_id')
                     ->orderBy('download_count')
                     ->take(5)
                     ->get()
@@ -103,7 +103,7 @@ class YearlyOverviewController extends Controller
                 'yearly-overview:'.$year.':top-tv',
                 fn () => Torrent::with('tv')
                     ->select([
-                        'tv_id',
+                        'tmdb_tv_id',
                         DB::raw('COUNT(h.user_id) as download_count'),
                         DB::raw('MIN(category_id) as category_id'),
                     ])
@@ -115,10 +115,10 @@ class YearlyOverviewController extends Controller
                         'h',
                         fn ($join) => $join->on('torrents.id', '=', 'h.torrent_id')
                     )
-                    ->where('tv_id', '!=', 0)
-                    ->whereNotNull('tv_id')
+                    ->where('tmdb_tv_id', '!=', 0)
+                    ->whereNotNull('tmdb_tv_id')
                     ->whereRelation('category', 'tv_meta', '=', true)
-                    ->groupBy('tv_id')
+                    ->groupBy('tmdb_tv_id')
                     ->orderByDesc('download_count')
                     ->take(10)
                     ->get()
@@ -127,7 +127,7 @@ class YearlyOverviewController extends Controller
                 'yearly-overview:'.$year.':bottom-tv',
                 fn () => Torrent::with('tv')
                     ->select([
-                        'tv_id',
+                        'tmdb_tv_id',
                         DB::raw('COUNT(h.user_id) as download_count'),
                         DB::raw('MIN(category_id) as category_id'),
                     ])
@@ -139,10 +139,10 @@ class YearlyOverviewController extends Controller
                         'h',
                         fn ($join) => $join->on('torrents.id', '=', 'h.torrent_id')
                     )
-                    ->where('tv_id', '!=', 0)
-                    ->whereNotNull('tv_id')
+                    ->where('tmdb_tv_id', '!=', 0)
+                    ->whereNotNull('tmdb_tv_id')
                     ->whereRelation('category', 'tv_meta', '=', true)
-                    ->groupBy('tv_id')
+                    ->groupBy('tmdb_tv_id')
                     ->orderBy('download_count')
                     ->take(5)
                     ->get()

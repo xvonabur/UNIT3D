@@ -19,12 +19,12 @@ namespace App\Http\Livewire;
 use App\DTO\TorrentSearchFiltersDTO;
 use App\Models\Category;
 use App\Models\Distributor;
-use App\Models\Genre;
-use App\Models\Movie;
+use App\Models\TmdbGenre;
+use App\Models\TmdbMovie;
 use App\Models\Region;
 use App\Models\Resolution;
 use App\Models\Torrent;
-use App\Models\Tv;
+use App\Models\TmdbTv;
 use App\Models\Type;
 use App\Traits\CastLivewireProperties;
 use App\Traits\LivewireSort;
@@ -295,12 +295,12 @@ class TorrentSearch extends Component
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Collection<int, Genre>
+     * @return \Illuminate\Database\Eloquent\Collection<int, TmdbGenre>
      */
     #[Computed(seconds: 3600, cache: true)]
     final public function genres(): \Illuminate\Database\Eloquent\Collection
     {
-        return Genre::query()->orderBy('name')->get();
+        return TmdbGenre::query()->orderBy('name')->get();
     }
 
     /**
@@ -322,12 +322,12 @@ class TorrentSearch extends Component
     }
 
     /**
-     * @return \Illuminate\Support\Collection<int, Movie>
+     * @return \Illuminate\Support\Collection<int, TmdbMovie>
      */
     #[Computed(seconds: 3600, cache: true)]
     final public function primaryLanguages(): \Illuminate\Support\Collection
     {
-        return Movie::query()
+        return TmdbMovie::query()
             ->select('original_language')
             ->distinct()
             ->orderBy('original_language')
@@ -527,7 +527,7 @@ class TorrentSearch extends Component
         $isSqlAllowed = (($user->group->is_modo || $user->group->is_torrent_modo || $user->group->is_editor) && $this->driver === 'sql') || $this->description || $this->mediainfo;
 
         $groupQuery = Torrent::query()
-            ->select('movie_id', 'tv_id')
+            ->select('tmdb_movie_id', 'tmdb_tv_id')
             ->selectRaw('MAX(sticky) as sticky')
             ->selectRaw('MAX(bumped_at) as bumped_at')
             ->selectRaw('MAX(created_at) as created_at')
@@ -539,10 +539,10 @@ class TorrentSearch extends Component
                 END) AS meta
             SQL)
             ->havingNotNull('meta')
-            ->where(fn ($query) => $query->where('movie_id', '>', 0)->orWhere('tv_id', '>', 0))
+            ->where(fn ($query) => $query->where('tmdb_movie_id', '>', 0)->orWhere('tmdb_tv_id', '>', 0))
             ->where('imdb', '>', 0)
             ->where($this->filters()->toSqlQueryBuilder())
-            ->groupBy('movie_id', 'tv_id')
+            ->groupBy('tmdb_movie_id', 'tmdb_tv_id')
             ->latest('sticky')
             ->orderBy($this->sortField, $this->sortDirection);
 
@@ -554,50 +554,41 @@ class TorrentSearch extends Component
                 ->index(config('scout.prefix').'torrents')
                 ->search($this->name, [
                     'sort'                 => ['sticky:desc', $this->sortField.':'.$this->sortDirection,],
-                    'filter'               => [...$this->filters()->toMeilisearchFilter(), 'imdb != 0', ['movie_id > 0', 'tv_id > 0']],
+                    'filter'               => [...$this->filters()->toMeilisearchFilter(), 'imdb != 0', ['tmdb_movie_id > 0', 'tmdb_tv_id > 0']],
                     'matchingStrategy'     => 'all',
                     'page'                 => (int) $this->getPage(),
                     'hitsPerPage'          => min($this->perPage, 100),
-                    'attributesToRetrieve' => ['movie_id', 'tv_id'],
+                    'attributesToRetrieve' => ['tmdb_movie_id', 'tmdb_tv_id'],
                     'distinct'             => 'imdb',
                 ]);
 
             $ids = [];
 
             foreach ($results->getHits() as $result) {
-                if ($result['movie_id']) {
-                    $ids[] = "tmdb-movie:{$result['movie_id']}";
-                } elseif ($result['tv_id']) {
-                    $ids[] = "tmdb-tv:{$result['tv_id']}";
+                if ($result['tmdb_movie_id']) {
+                    $ids[] = "tmdb-movie:{$result['tmdb_movie_id']}";
+                } elseif ($result['tmdb_tv_id']) {
+                    $ids[] = "tmdb-tv:{$result['tmdb_tv_id']}";
                 }
             }
-
-            // dd($ids)
-
-            // dd([
-            //     'movie_id' => array_column($results->getHits(), 'movie_id'),
-            //     'tv_id'    => array_column($results->getHits(), 'tv_id'),
-            // ]);
 
             $groups = $groupQuery
                 ->where(
                     fn ($query) => $query
-                        ->whereIntegerInRaw('movie_id', array_filter(array_column($results->getHits(), 'movie_id')))
-                        ->orWhereIntegerInRaw('tv_id', array_filter(array_column($results->getHits(), 'tv_id')))
+                        ->whereIntegerInRaw('tmdb_movie_id', array_filter(array_column($results->getHits(), 'tmdb_movie_id')))
+                        ->orWhereIntegerInRaw('tmdb_tv_id', array_filter(array_column($results->getHits(), 'tmdb_tv_id')))
                 )
                 ->get()
-                ->sortBy(fn ($group) => array_search($group->movie_id ? "tmdb-movie:{$group->movie_id}" : "tmdb-tv:{$group->tv_id}", $ids));
-
-            // dd($groups);
+                ->sortBy(fn ($group) => array_search($group->tmdb_movie_id ? "tmdb-movie:{$group->tmdb_movie_id}" : "tmdb-tv:{$group->tmdb_tv_id}", $ids));
 
             $groups = new LengthAwarePaginator($groups, $results->getTotalHits(), $this->perPage, $this->getPage());
         }
 
-        $movieIds = $groups->getCollection()->where('meta', '=', 'movie')->pluck('movie_id');
-        $tvIds = $groups->getCollection()->where('meta', '=', 'tv')->pluck('tv_id');
+        $movieIds = $groups->getCollection()->where('meta', '=', 'movie')->pluck('tmdb_movie_id');
+        $tvIds = $groups->getCollection()->where('meta', '=', 'tv')->pluck('tmdb_tv_id');
 
-        $movies = Movie::with('genres', 'directors')->whereIntegerInRaw('id', $movieIds)->get()->keyBy('id');
-        $tv = Tv::with('genres', 'creators')->whereIntegerInRaw('id', $tvIds)->get()->keyBy('id');
+        $movies = TmdbMovie::with('genres', 'directors')->whereIntegerInRaw('id', $movieIds)->get()->keyBy('id');
+        $tv = TmdbTv::with('genres', 'creators')->whereIntegerInRaw('id', $tvIds)->get()->keyBy('id');
 
         $torrents = Torrent::query()
             ->with(['type:id,name,position', 'resolution:id,name,position'])
@@ -613,8 +604,8 @@ class TorrentSearch extends Component
                 'user_id',
                 'season_number',
                 'episode_number',
-                'movie_id',
-                'tv_id',
+                'tmdb_movie_id',
+                'tmdb_tv_id',
                 'free',
                 'doubleup',
                 'highspeed',
@@ -675,12 +666,12 @@ class TorrentSearch extends Component
                     ->where(
                         fn ($query) => $query
                             ->whereRelation('category', 'movie_meta', '=', true)
-                            ->whereIntegerInRaw('movie_id', $movieIds)
+                            ->whereIntegerInRaw('tmdb_movie_id', $movieIds)
                     )
                     ->orWhere(
                         fn ($query) => $query
                             ->whereRelation('category', 'tv_meta', '=', true)
-                            ->whereIntegerInRaw('tv_id', $tvIds)
+                            ->whereIntegerInRaw('tmdb_tv_id', $tvIds)
                     )
             )
             ->where($this->filters()->toSqlQueryBuilder())
@@ -692,7 +683,7 @@ class TorrentSearch extends Component
             // Memoizing and avoiding casts reduces runtime duration from 70ms to 40ms.
             // If accessing laravel's attributes array directly, it's reduced to 11ms,
             // but the attributes array is marked as protected so we can't access it.
-            $tmdb = $torrent->getAttributeValue('movie_id') ?: $torrent->getAttributeValue('tv_id');
+            $tmdb = $torrent->getAttributeValue('tmdb_movie_id') ?: $torrent->getAttributeValue('tmdb_tv_id');
             $type = $torrent->getRelationValue('type')->getAttributeValue('name');
 
             switch ($torrent->getAttributeValue('meta')) {
@@ -777,10 +768,10 @@ class TorrentSearch extends Component
         $medias = $groups->through(function ($group) use ($groupedTorrents, $movies, $tv) {
             switch ($group->meta) {
                 case 'movie':
-                    if ($movies->has($group->movie_id)) {
-                        $media = $movies[$group->movie_id];
+                    if ($movies->has($group->tmdb_movie_id)) {
+                        $media = $movies[$group->tmdb_movie_id];
                         $media->setAttribute('meta', 'movie');
-                        $media->setRelation('torrents', $groupedTorrents['movie'][$group->movie_id] ?? []);
+                        $media->setRelation('torrents', $groupedTorrents['movie'][$group->tmdb_movie_id] ?? []);
                         $media->setAttribute('category_id', $media->torrents['category_id']);
                     } else {
                         $media = null;
@@ -788,10 +779,10 @@ class TorrentSearch extends Component
 
                     break;
                 case 'tv':
-                    if ($tv->has($group->tv_id)) {
-                        $media = $tv[$group->tv_id];
+                    if ($tv->has($group->tmdb_tv_id)) {
+                        $media = $tv[$group->tmdb_tv_id];
                         $media->setAttribute('meta', 'tv');
-                        $media->setRelation('torrents', $groupedTorrents['tv'][$group->tv_id] ?? []);
+                        $media->setRelation('torrents', $groupedTorrents['tv'][$group->tmdb_tv_id] ?? []);
                         $media->setAttribute('category_id', $media->torrents['category_id']);
                     } else {
                         $media = null;
@@ -848,7 +839,7 @@ class TorrentSearch extends Component
         }
 
         $groups = Torrent::query()
-            ->select('movie_id', 'tv_id')
+            ->select('tmdb_movie_id', 'tmdb_tv_id')
             ->selectRaw('MAX(sticky) as sticky')
             ->selectRaw('MAX(bumped_at) as bumped_at')
             ->selectRaw('SUM(times_completed) as times_completed')
@@ -860,27 +851,27 @@ class TorrentSearch extends Component
                 END AS meta
             SQL)
             ->havingNotNull('meta')
-            ->where(fn ($query) => $query->where('movie_id', '!=', 0)->orWhere('tv_id', '!=', 0))
+            ->where(fn ($query) => $query->where('tmdb_movie_id', '!=', 0)->orWhere('tmdb_tv_id', '!=', 0))
             ->where($this->filters()->toSqlQueryBuilder())
-            ->groupBy('movie_id', 'tv_id')
+            ->groupBy('tmdb_movie_id', 'tmdb_tv_id')
             ->latest('sticky')
             ->orderBy($this->sortField, $this->sortDirection)
             ->paginate(min($this->perPage, 100));
 
-        $movieIds = $groups->getCollection()->where('meta', '=', 'movie')->pluck('movie_id');
-        $tvIds = $groups->getCollection()->where('meta', '=', 'tv')->pluck('tv_id');
+        $movieIds = $groups->getCollection()->where('meta', '=', 'movie')->pluck('tmdb_movie_id');
+        $tvIds = $groups->getCollection()->where('meta', '=', 'tv')->pluck('tmdb_tv_id');
 
-        $movies = Movie::with('genres', 'directors')->whereIntegerInRaw('id', $movieIds)->get()->keyBy('id');
-        $tv = Tv::with('genres', 'creators')->whereIntegerInRaw('id', $tvIds)->get()->keyBy('id');
+        $movies = TmdbMovie::with('genres', 'directors')->whereIntegerInRaw('id', $movieIds)->get()->keyBy('id');
+        $tv = TmdbTv::with('genres', 'creators')->whereIntegerInRaw('id', $tvIds)->get()->keyBy('id');
 
         $groups = $groups->through(function ($group) use ($movies, $tv) {
             switch ($group->meta) {
                 case 'movie':
-                    $group->movie = $movies[$group->movie_id] ?? null;
+                    $group->movie = $movies[$group->tmdb_movie_id] ?? null;
 
                     break;
                 case 'tv':
-                    $group->tv = $tv[$group->tv_id] ?? null;
+                    $group->tv = $tv[$group->tmdb_tv_id] ?? null;
 
                     break;
             }

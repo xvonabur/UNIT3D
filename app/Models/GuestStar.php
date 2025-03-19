@@ -47,13 +47,13 @@ class GuestStar extends Model
 
     public $timestamps = false;
 
-    public $table = 'people';
+    public $table = 'tmdb_people';
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany<Episode, $this>
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany<TmdbEpisode, $this>
      */
     public function episode(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
-        return $this->belongsToMany(Episode::class, 'episode_guest_star', 'episode_id', 'person_id');
+        return $this->belongsToMany(TmdbEpisode::class, 'episode_guest_star', 'tmdb_episode_id', 'tmdb_person_id');
     }
 }

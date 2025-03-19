@@ -109,37 +109,37 @@
                         x-show="cats[cat].type === 'movie' || cats[cat].type === 'tv' || cats[cat].type === 'game'"
                     >
                         <p class="form__group" x-show="cats[cat].type === 'movie'">
-                            <input type="hidden" name="movie_id" value="0" />
+                            <input type="hidden" name="tmdb_movie_id" value="0" />
                             <input
-                                id="movie_id"
+                                id="tmdb_movie_id"
                                 class="form__text"
                                 inputmode="numeric"
-                                name="movie_id"
+                                name="tmdb_movie_id"
                                 pattern="[0-9]*"
                                 required
                                 type="text"
-                                x-bind:value="cats[cat].type === 'movie' ? '{{ $movieId ?: old('movie_id') }}' : '0'"
+                                x-bind:value="cats[cat].type === 'movie' ? '{{ $movieId ?: old('tmdb_movie_id') }}' : '0'"
                                 x-bind:required="cats[cat].type === 'movie'"
                             />
-                            <label class="form__label form__label--floating" for="movie_id">
+                            <label class="form__label form__label--floating" for="tmdb_movie_id">
                                 TMDB Movie ID
                             </label>
                             <span class="form__hint">Numeric digits only.</span>
                         </p>
                         <p class="form__group" x-show="cats[cat].type === 'tv'">
-                            <input type="hidden" name="tv_id" value="0" />
+                            <input type="hidden" name="tmdb_tv_id" value="0" />
                             <input
-                                id="tv_id"
+                                id="tmdb_tv_id"
                                 class="form__text"
                                 inputmode="numeric"
-                                name="tv_id"
+                                name="tmdb_tv_id"
                                 pattern="[0-9]*"
                                 required
                                 type="text"
-                                x-bind:value="cats[cat].type === 'tv' ? '{{ $tvId ?: old('tv_id') }}' : '0'"
+                                x-bind:value="cats[cat].type === 'tv' ? '{{ $tvId ?: old('tmdb_tv_id') }}' : '0'"
                                 x-bind:required="cats[cat].type === 'tv'"
                             />
-                            <label class="form__label form__label--floating" for="tv_id">
+                            <label class="form__label form__label--floating" for="tmdb_tv_id">
                                 TMDB TV ID
                             </label>
                             <span class="form__hint">Numeric digits only.</span>

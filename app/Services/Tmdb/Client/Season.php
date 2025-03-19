@@ -109,7 +109,7 @@ class Season
      *     name: ?string,
      *     overview: ?string,
      *     season_number: ?int,
-     *     tv_id: int,
+     *     tmdb_tv_id: int,
      * }
      */
     public function getSeason(): array
@@ -121,7 +121,7 @@ class Season
             'name'          => $this->data['name'] ?? null,
             'overview'      => $this->data['overview'] ?? null,
             'season_number' => $this->data['season_number'] ?? null,
-            'tv_id'         => $this->tvId,
+            'tmdb_tv_id'    => $this->tvId,
         ];
     }
 
@@ -130,7 +130,7 @@ class Season
      *     int<0, max>,
      *     array{
      *         id: ?int,
-     *         tv_id: ?int,
+     *         tmdb_tv_id: ?int,
      *         air_date: ?string,
      *         name: ?string,
      *         episode_number: ?int,
@@ -140,7 +140,7 @@ class Season
      *         season_number: ?int,
      *         vote_average: ?float,
      *         vote_count: ?int,
-     *         season_id: ?int,
+     *         tmdb_season_id: ?int,
      *     }
      * >
      */
@@ -151,7 +151,7 @@ class Season
         foreach ($this->data['episodes'] ?? [] as $episode) {
             $episodes[] = [
                 'id'              => $episode['id'] ?? null,
-                'tv_id'           => $this->tvId ?? null,
+                'tmdb_tv_id'      => $this->tvId ?? null,
                 'air_date'        => $this->tmdb->ifExists('air_date', $episode),
                 'name'            => Str::limit($this->tmdb->ifExists('name', $episode), 200),
                 'episode_number'  => $episode['episode_number'] ?? null,
@@ -161,7 +161,7 @@ class Season
                 'season_number'   => $episode['season_number'] ?? null,
                 'vote_average'    => $episode['vote_average'] ?? null,
                 'vote_count'      => $episode['vote_count'] ?? null,
-                'season_id'       => $this->data['id'] ?? null,
+                'tmdb_season_id'  => $this->data['id'] ?? null,
             ];
         }
 

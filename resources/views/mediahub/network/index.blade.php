@@ -20,5 +20,5 @@
 @endsection
 
 @section('main')
-    @livewire('network-search')
+    @livewire('tmdb-network-search')
 @endsection
