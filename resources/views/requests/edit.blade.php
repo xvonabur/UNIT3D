@@ -30,7 +30,7 @@
         <section
             class="panelV2"
             x-data="{
-                cat: {{ (int) $category_id }},
+                cat: {{ (int) $torrentRequest->category_id }},
                 cats: JSON.parse(atob('{{ base64_encode(json_encode($categories)) }}')),
             }"
         >
@@ -57,15 +57,21 @@
                         </label>
                     </p>
                     <p class="form__group">
-                        <select id="category_id" class="form__select" name="category_id" required>
-                            <option hidden selected disabled value=""></option>
-                            @foreach ($categories as $category)
+                        <select
+                            id="category_id"
+                            class="form__select"
+                            name="category_id"
+                            x-model="cat"
+                            required
+                        >
+                            <option hidden disabled selected value=""></option>
+                            @foreach ($categories as $id => $category)
                                 <option
                                     class="form__option"
-                                    value="{{ $category->id }}"
-                                    @selected($torrentRequest->category_id == $category->id)
+                                    value="{{ $id }}"
+                                    @selected($id === old('category_id', $torrentRequest->category_id))
                                 >
-                                    {{ $category->name }}
+                                    {{ $category['name'] }}
                                 </option>
                             @endforeach
                         </select>

@@ -174,7 +174,22 @@ class RequestController extends Controller
     public function edit(Request $request, TorrentRequest $torrentRequest): \Illuminate\Contracts\View\Factory|\Illuminate\View\View
     {
         return view('requests.edit', [
-            'categories'     => Category::orderBy('position')->get(),
+            'categories' => Category::query()
+                ->orderBy('position')
+                ->get()
+                ->mapWithKeys(fn ($cat) => [
+                    $cat['id'] => [
+                        'name' => $cat['name'],
+                        'type' => match (true) {
+                            $cat->movie_meta => 'movie',
+                            $cat->tv_meta    => 'tv',
+                            $cat->game_meta  => 'game',
+                            $cat->music_meta => 'music',
+                            $cat->no_meta    => 'no',
+                            default          => 'no',
+                        },
+                    ]
+                ]),
             'types'          => Type::orderBy('position')->get(),
             'resolutions'    => Resolution::orderBy('position')->get(),
             'user'           => $request->user(),

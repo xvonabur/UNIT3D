@@ -86,7 +86,7 @@
                             {{ $torrent->category->name }} ({{ __('torrent.current') }})
                         </option>
                         @foreach ($categories as $id => $category)
-                            <option value="{{ $id }}" @selected('category_id' === $id)>
+                            <option value="{{ $id }}" @selected(old('category_id') === $id)>
                                 {{ $category['name'] }}
                             </option>
                         @endforeach
