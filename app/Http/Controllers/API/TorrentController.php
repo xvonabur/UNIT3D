@@ -417,7 +417,7 @@ class TorrentController extends BaseController
             $user = $torrent->user;
             $username = $user->username;
             $anon = $torrent->anon;
-            $featured = $user->group->is_modo || $user->group->is_internal && $request->input('featured');
+            $featured = ($user->group->is_modo || $user->group->is_internal) && $request->input('featured');
             $free = $torrent->free;
             $doubleup = $torrent->doubleup;
 
