@@ -319,6 +319,23 @@
                                 Autofocus torrent search on page load
                             </label>
                         </p>
+                        <p class="form__group">
+                            <label class="form__label">
+                                <input
+                                    type="hidden"
+                                    name="unbookmark_torrents_on_completion"
+                                    value="0"
+                                />
+                                <input
+                                    class="form__checkbox"
+                                    type="checkbox"
+                                    name="unbookmark_torrents_on_completion"
+                                    value="1"
+                                    @checked($user->settings?->unbookmark_torrents_on_completion)
+                                />
+                                Automatically unbookmark torrents upon completion
+                            </label>
+                        </p>
                     </div>
                 </fieldset>
                 <p class="form__group">

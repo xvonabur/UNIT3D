@@ -2437,6 +2437,7 @@ CREATE TABLE `user_settings` (
   `custom_css` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `standalone_css` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `show_poster` tinyint(1) NOT NULL DEFAULT '0',
+  `unbookmark_torrents_on_completion` tinyint(1) NOT NULL,
   `torrent_sort_field` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `torrent_search_autofocus` tinyint(1) NOT NULL DEFAULT '1',
   `created_at` timestamp NULL DEFAULT NULL,
@@ -2970,3 +2971,4 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (338,'2025_03_11_13
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (339,'2025_03_12_043518_split_torrents_tmdb_into_movie_id_and_tv_id',2);
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (340,'2025_03_16_185628_update_torrents_table_to_int_igdb',2);
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (341,'2025_03_17_122748_add_tmdb_prefix_to_metadata_tables',3);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (342,'2025_03_23_203227_add_automatically_unbookmark_torrents_user_setting',4);
