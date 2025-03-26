@@ -42,7 +42,7 @@ class QuickSearchController extends Controller
             ],
             [
                 'tmdb_movie_id IS NOT NULL AND tmdb_movie_id != 0',
-                'tmdb_tv_id IS NOT NULL AND tmdb_tv_id IS != 0',
+                'tmdb_tv_id IS NOT NULL AND tmdb_tv_id != 0',
             ]
         ];
 
