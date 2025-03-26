@@ -77,7 +77,7 @@ class TorrentHelper
         $uploader = $torrent->user;
 
         switch (true) {
-            case $torrent->category->movie_meta:
+            case $torrent->tmdb_movie_id !== null:
                 User::query()
                     ->whereRelation('wishes', 'tmdb_movie_id', '=', $torrent->tmdb_movie_id)
                     ->get()
@@ -85,7 +85,7 @@ class TorrentHelper
                     ->notify(new NewWishListNotice($torrent));
 
                 break;
-            case $torrent->category->tv_meta:
+            case $torrent->tmdb_tv_id !== null:
                 User::query()
                     ->whereRelation('wishes', 'tmdb_tv_id', '=', $torrent->tmdb_tv_id)
                     ->get()

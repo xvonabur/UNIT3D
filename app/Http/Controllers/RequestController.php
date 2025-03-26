@@ -155,13 +155,11 @@ class RequestController extends Controller
             );
         }
 
-        $category = $torrentRequest->category;
-
         match (true) {
-            $category->tv_meta && $torrentRequest->tmdb_tv_id > 0       => new TMDBScraper()->tv($torrentRequest->tmdb_tv_id),
-            $category->movie_meta && $torrentRequest->tmdb_movie_id > 0 => new TMDBScraper()->movie($torrentRequest->tmdb_movie_id),
-            $category->game_meta && $torrentRequest->igdb > 0           => new IgdbScraper()->game($torrentRequest->igdb),
-            default                                                     => null,
+            $torrentRequest->tmdb_tv_id !== null    => new TMDBScraper()->tv($torrentRequest->tmdb_tv_id),
+            $torrentRequest->tmdb_movie_id !== null => new TMDBScraper()->movie($torrentRequest->tmdb_movie_id),
+            $torrentRequest->igdb !== null          => new IgdbScraper()->game($torrentRequest->igdb),
+            default                                 => null,
         };
 
         return to_route('requests.index')
@@ -225,10 +223,10 @@ class RequestController extends Controller
         $category = $torrentRequest->category;
 
         match (true) {
-            $category->tv_meta && $torrentRequest->tmdb_tv_id > 0       => new TMDBScraper()->tv($torrentRequest->tmdb_tv_id),
-            $category->movie_meta && $torrentRequest->tmdb_movie_id > 0 => new TMDBScraper()->movie($torrentRequest->tmdb_movie_id),
-            $category->game_meta && $torrentRequest->igdb > 0           => new IgdbScraper()->game($torrentRequest->igdb),
-            default                                                     => null,
+            $torrentRequest->tmdb_tv_id !== null    => new TMDBScraper()->tv($torrentRequest->tmdb_tv_id),
+            $torrentRequest->tmdb_movie_id !== null => new TMDBScraper()->movie($torrentRequest->tmdb_movie_id),
+            $torrentRequest->igdb !== null          => new IgdbScraper()->game($torrentRequest->igdb),
+            default                                 => null,
         };
 
         return to_route('requests.show', ['torrentRequest' => $torrentRequest])
