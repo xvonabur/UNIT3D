@@ -260,10 +260,10 @@ class TorrentController extends Controller
         // Meta
 
         match (true) {
-            $category->tv_meta && $torrent->tmdb_tv_id > 0       => new TMDBScraper()->tv($torrent->tmdb_tv_id),
-            $category->movie_meta && $torrent->tmdb_movie_id > 0 => new TMDBScraper()->movie($torrent->tmdb_movie_id),
-            $category->game_meta && $torrent->igdb > 0           => new IgdbScraper()->game($torrent->igdb),
-            default                                              => null,
+            $torrent->tmdb_tv_id !== null    => new TMDBScraper()->tv($torrent->tmdb_tv_id),
+            $torrent->tmdb_movie_id !== null => new TMDBScraper()->movie($torrent->tmdb_movie_id),
+            $torrent->igdb !== null          => new IgdbScraper()->game($torrent->igdb),
+            default                          => null,
         };
 
         return to_route('torrents.show', ['id' => $id])
@@ -449,10 +449,10 @@ class TorrentController extends Controller
 
         // Meta
         match (true) {
-            $category->tv_meta && $torrent->tmdb_tv_id > 0       => new TMDBScraper()->tv($torrent->tmdb_tv_id),
-            $category->movie_meta && $torrent->tmdb_movie_id > 0 => new TMDBScraper()->movie($torrent->tmdb_movie_id),
-            $category->game_meta && $torrent->igdb > 0           => new IgdbScraper()->game($torrent->igdb),
-            default                                              => null,
+            $torrent->tmdb_tv_id !== null    => new TMDBScraper()->tv($torrent->tmdb_tv_id),
+            $torrent->tmdb_movie_id !== null => new TMDBScraper()->movie($torrent->tmdb_movie_id),
+            $torrent->igdb !== null          => new IgdbScraper()->game($torrent->igdb),
+            default                          => null,
         };
 
         // Torrent Keywords System
