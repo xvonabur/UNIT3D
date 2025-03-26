@@ -845,10 +845,10 @@ class TorrentSearch extends Component
             ->selectRaw('SUM(times_completed) as times_completed')
             ->selectRaw('MIN(category_id) as category_id')
             ->selectRaw(<<<'SQL'
-                CASE
+                MIN(CASE
                     WHEN category_id IN (SELECT id FROM categories WHERE movie_meta = 1) THEN 'movie'
                     WHEN category_id IN (SELECT id FROM categories WHERE tv_meta = 1) THEN 'tv'
-                END AS meta
+                END) AS meta
             SQL)
             ->havingNotNull('meta')
             ->where(fn ($query) => $query->where('tmdb_movie_id', '!=', 0)->orWhere('tmdb_tv_id', '!=', 0))
