@@ -536,10 +536,12 @@ readonly class TorrentSearchFiltersDTO
         if ($this->tmdbId !== null) {
             if ($this->tmdbId === 0) {
                 $filters[] = [
-                    'tmdb_movie_id IS NULL AND tmdb_tv_id IS NOT NULL',
-                    'tmdb_tv_id IS NULL AND tmdb_movie_id IS NOT NULL',
-                    'tmdb_movie_id = 0 AND tmdb_tv_id != 0',
-                    'tmdb_tv_id = 0 AND tmdb_movie_id != 0',
+                    'tmdb_movie_id IS NULL',
+                    'tmdb_movie_id = 0',
+                ];
+                $filters[] = [
+                    'tmdb_tv_id IS NULL',
+                    'tmdb_tv_id = 0',
                 ];
             } else {
                 $filters[] = [
