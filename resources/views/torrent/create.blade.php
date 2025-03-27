@@ -468,9 +468,7 @@
                             <label class="form__label form__label--floating" for="automal">
                                 MAL ID
                             </label>
-                            <span class="form__hint">
-                                Numeric digits only. Required for anime. Use 0 otherwise.
-                            </span>
+                            <span class="form__hint">Numeric digits only.</span>
                         </p>
                     </div>
                     <div class="form__group--vertical" x-show="cats[cat].type === 'game'">
