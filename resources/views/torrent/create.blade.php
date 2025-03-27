@@ -301,7 +301,7 @@
                             </label>
                             <output name="apimatch" id="apimatch" for="torrent"></output>
                         </p>
-                        <p class="form__group">
+                        <p class="form__group" x-show="tmdb_movie_exists">
                             <input type="hidden" name="tmdb_movie_id" value="0" />
                             <input
                                 type="text"
@@ -336,7 +336,7 @@
                             </label>
                             <output name="apimatch" id="apimatch" for="torrent"></output>
                         </p>
-                        <p class="form__group">
+                        <p class="form__group" x-show="tmdb_tv_exists">
                             <input type="hidden" name="tmdb_tv_id" value="0" />
                             <input
                                 type="text"
@@ -373,7 +373,7 @@
                                 This title exists on IMDB
                             </label>
                         </p>
-                        <p class="form__group">
+                        <p class="form__group" x-show="imdb_title_exists">
                             <input type="hidden" name="imdb" value="0" />
                             <input
                                 type="text"
@@ -411,7 +411,7 @@
                                 This TV show exists on TVDB
                             </label>
                         </p>
-                        <p class="form__group">
+                        <p class="form__group" x-show="tvdb_tv_exists">
                             <input type="hidden" name="tvdb" value="0" />
                             <input
                                 type="text"
@@ -448,7 +448,7 @@
                                 This anime exists on MAL
                             </label>
                         </p>
-                        <p class="form__group">
+                        <p class="form__group" x-show="mal_anime_exists">
                             <input type="hidden" name="mal" value="0" />
                             <input
                                 type="text"
@@ -488,7 +488,7 @@
                                 This game exists on IGDB
                             </label>
                         </p>
-                        <p class="form__group">
+                        <p class="form__group" x-show="igdb_game_exists">
                             <input
                                 type="text"
                                 name="igdb"
