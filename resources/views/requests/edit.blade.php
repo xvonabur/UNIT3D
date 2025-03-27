@@ -143,7 +143,7 @@
                                     This movie exists on TMDB
                                 </label>
                             </p>
-                            <p class="form__group">
+                            <p class="form__group" x-show="tmdb_movie_exists">
                                 <input type="hidden" name="tmdb_movie_id" value="0" />
                                 <input
                                     id="tmdb_movie_id"
@@ -183,7 +183,7 @@
                                     This TV show exists on TMDB
                                 </label>
                             </p>
-                            <p class="form__group">
+                            <p class="form__group" x-show="tmdb_tv_exists">
                                 <input type="hidden" name="tmdb_tv_id" value="0" />
                                 <input
                                     id="tmdb_tv_id"
@@ -224,7 +224,7 @@
                                     This title exists on IMDB
                                 </label>
                             </p>
-                            <p class="form__group">
+                            <p class="form__group" x-show="imdb_title_exists">
                                 <input type="hidden" name="imdb" value="0" />
                                 <input
                                     id="autoimdb"
@@ -262,7 +262,7 @@
                                     This TV show exists on TVDB
                                 </label>
                             </p>
-                            <p class="form__group">
+                            <p class="form__group" x-show="tvdb_tv_exists">
                                 <input type="hidden" name="tvdb" value="0" />
                                 <input
                                     id="autotvdb"
@@ -299,7 +299,7 @@
                                     This anime exists on MAL
                                 </label>
                             </p>
-                            <p class="form__group">
+                            <p class="form__group" x-show="mal_anime_exists">
                                 <input type="hidden" name="mal" value="0" />
                                 <input
                                     id="automal"
@@ -336,7 +336,7 @@
                                     This game exists on IGDB
                                 </label>
                             </p>
-                            <p class="form__group">
+                            <p class="form__group" x-show="igdb_game_exists">
                                 <input
                                     id="igdb"
                                     class="form__text"
