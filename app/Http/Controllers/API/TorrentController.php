@@ -199,6 +199,12 @@ class TorrentController extends BaseController
         $torrent->moderated_at = Carbon::now();
         $torrent->moderated_by = User::SYSTEM_USER_ID;
 
+        $mustBeNull = function (string $attribute, mixed $value, callable $fail): void {
+            if ($value !== null) {
+                $fail("The {$attribute} must be null.");
+            }
+        };
+
         // Validation
         $v = validator($torrent->toArray(), [
             'name' => [
@@ -250,62 +256,62 @@ class TorrentController extends BaseController
             ],
             'imdb' => [
                 Rule::when($category->movie_meta || $category->tv_meta, [
-                    'required',
+                    'nullable',
                     'decimal:0',
                     'min:0',
                 ]),
                 Rule::when(!($category->movie_meta || $category->tv_meta), [
-                    Rule::in([0]),
+                    $mustBeNull,
                 ]),
             ],
             'tvdb' => [
                 Rule::when($category->tv_meta, [
-                    'required',
+                    'nullable',
                     'decimal:0',
                     'min:0',
                 ]),
                 Rule::when(!$category->tv_meta, [
-                    Rule::in([0]),
+                    $mustBeNull,
                 ]),
             ],
             'tmdb_movie_id' => [
                 Rule::when($category->movie_meta, [
-                    'required',
+                    'nullable',
                     'decimal:0',
                     'min:0',
                 ]),
                 Rule::when(!$category->movie_meta, [
-                    Rule::in([0]),
+                    $mustBeNull,
                 ]),
             ],
             'tmdb_tv_id' => [
                 Rule::when($category->tv_meta, [
-                    'required',
+                    'nullable',
                     'decimal:0',
                     'min:0',
                 ]),
                 Rule::when(!$category->tv_meta, [
-                    Rule::in([0]),
+                    $mustBeNull,
                 ]),
             ],
             'mal' => [
                 Rule::when($category->movie_meta || $category->tv_meta, [
-                    'required',
+                    'nullable',
                     'decimal:0',
                     'min:0',
                 ]),
                 Rule::when(!($category->movie_meta || $category->tv_meta), [
-                    Rule::in([0]),
+                    $mustBeNull,
                 ]),
             ],
             'igdb' => [
                 Rule::when($category->game_meta, [
-                    'required',
+                    'nullable',
                     'decimal:0',
                     'min:0',
                 ]),
                 Rule::when(!$category->game_meta, [
-                    Rule::in([0]),
+                    $mustBeNull,
                 ]),
             ],
             'season_number' => [
