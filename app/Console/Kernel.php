@@ -43,6 +43,7 @@ use App\Console\Commands\AutoSoftDeleteDisabledUsers;
 use App\Console\Commands\AutoSyncPeopleToMeilisearch;
 use App\Console\Commands\AutoSyncTorrentsToMeilisearch;
 use App\Console\Commands\AutoTorrentBalance;
+use App\Console\Commands\AutoUnbookmarkCompletedTorrents;
 use App\Console\Commands\AutoUpdateUserLastActions;
 use App\Console\Commands\AutoUpsertAnnounces;
 use App\Console\Commands\AutoUpsertHistories;
@@ -75,6 +76,7 @@ class Kernel extends ConsoleKernel
 
         $schedule->command(AutoUpdateUserLastActions::class)->everyFiveSeconds();
         $schedule->command(AutoDeleteStoppedPeers::class)->everyTwoMinutes();
+        $schedule->command(AutoUnbookmarkCompletedTorrents::class)->everyFifteenMinutes();
         $schedule->command(AutoGroup::class)->daily();
         $schedule->command(AutoNerdStat::class)->hourly();
         $schedule->command(AutoCacheRandomMediaIds::class)->hourly();

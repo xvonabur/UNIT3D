@@ -69,8 +69,9 @@ class UserEarnings extends Component
     #[Computed]
     final public function bonEarnings(): \Illuminate\Support\Collection
     {
-        $outerQuery = DB::query();
+        $outerQuery = DB::query()->select(DB::raw(1));
         $innerQuery = Peer::query()
+            ->select(DB::raw(1))
             ->join('history', fn ($join) => $join->on('history.torrent_id', '=', 'peers.torrent_id')->on('history.user_id', '=', 'peers.user_id'))
             ->join('torrents', 'peers.torrent_id', '=', 'torrents.id')
             ->where('peers.seeder', '=', true)

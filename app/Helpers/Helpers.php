@@ -75,7 +75,7 @@ if (!\function_exists('href_playlist')) {
 }
 
 if (!\function_exists('href_collection')) {
-    function href_collection(App\Models\Collection $collection): string
+    function href_collection(App\Models\TmdbCollection $collection): string
     {
         $appurl = appurl();
 

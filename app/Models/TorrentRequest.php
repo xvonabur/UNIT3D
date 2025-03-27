@@ -28,7 +28,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property int                             $category_id
  * @property int|null                        $imdb
  * @property int|null                        $tvdb
- * @property int|null                        $tmdb
+ * @property int|null                        $tmdb_movie_id
+ * @property int|null                        $tmdb_tv_id
  * @property int|null                        $mal
  * @property int                             $igdb
  * @property string                          $description
@@ -72,14 +73,23 @@ class TorrentRequest extends Model
     /**
      * Get the attributes that should be cast.
      *
-     * @return array{filled_when: 'datetime', approved_when: 'datetime', tmdb: 'int', igdb: 'int', bounty: 'decimal:2', anon: 'bool'}
+     * @return array{
+     *     filled_when: 'datetime',
+     *     approved_when: 'datetime',
+     *     tmdb_movie_id: 'int',
+     *     tmdb_tv_id: 'int',
+     *     igdb: 'int',
+     *     bounty: 'decimal:2',
+     *     anon: 'bool'
+     * }
      */
     protected function casts(): array
     {
         return [
             'filled_when'   => 'datetime',
             'approved_when' => 'datetime',
-            'tmdb'          => 'int',
+            'tmdb_movie_id' => 'int',
+            'tmdb_tv_id'    => 'int',
             'igdb'          => 'int',
             'bounty'        => 'decimal:2',
             'anon'          => 'bool',
@@ -168,21 +178,21 @@ class TorrentRequest extends Model
     /**
      * Belongs To A Movie.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<Movie, $this>
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<TmdbMovie, $this>
      */
     public function movie(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
-        return $this->belongsTo(Movie::class, 'tmdb');
+        return $this->belongsTo(TmdbMovie::class, 'tmdb_movie_id');
     }
 
     /**
      * Belongs To A Tv.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<Tv, $this>
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<TmdbTv, $this>
      */
     public function tv(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
-        return $this->belongsTo(Tv::class, 'tmdb');
+        return $this->belongsTo(TmdbTv::class, 'tmdb_tv_id');
     }
 
     /**

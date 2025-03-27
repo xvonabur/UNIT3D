@@ -346,8 +346,8 @@ class Movie
      * @return array<
      *     int<0, max>,
      *     array{
-     *         movie_id: ?int,
-     *         person_id: ?int,
+     *         tmdb_movie_id: ?int,
+     *         tmdb_person_id: ?int,
      *         occupation_id: value-of<Occupation>,
      *         character: ?string,
      *         order: ?int,
@@ -360,11 +360,11 @@ class Movie
 
         foreach ($this->data['credits']['cast'] ?? [] as $person) {
             $credits[] = [
-                'movie_id'      => $this->data['id'] ?? null,
-                'person_id'     => $person['id'] ?? null,
-                'occupation_id' => Occupation::ACTOR->value,
-                'character'     => Str::limit($person['character'] ?? '', 200),
-                'order'         => $person['order'] ?? null
+                'tmdb_movie_id'  => $this->data['id'] ?? null,
+                'tmdb_person_id' => $person['id'] ?? null,
+                'occupation_id'  => Occupation::ACTOR->value,
+                'character'      => Str::limit($person['character'] ?? '', 200),
+                'order'          => $person['order'] ?? null
             ];
         }
 
@@ -377,11 +377,11 @@ class Movie
 
             if ($job !== null) {
                 $credits[] = [
-                    'movie_id'      => $this->data['id'] ?? null,
-                    'person_id'     => $person['id'] ?? null,
-                    'occupation_id' => $job->value,
-                    'character'     => null,
-                    'order'         => null
+                    'tmdb_movie_id'  => $this->data['id'] ?? null,
+                    'tmdb_person_id' => $person['id'] ?? null,
+                    'occupation_id'  => $job->value,
+                    'character'      => null,
+                    'order'          => null
                 ];
             }
         }
@@ -393,8 +393,8 @@ class Movie
      * @return array<
      *     int<0, max>,
      *     array{
-     *         recommendation_movie_id: ?int,
-     *         movie_id: ?int,
+     *         recommended_tmdb_movie_id: ?int,
+     *         tmdb_movie_id: ?int,
      *         title: ?string,
      *         vote_average: ?float,
      *         poster: ?string,
@@ -404,7 +404,7 @@ class Movie
      */
     public function getRecommendations(): array
     {
-        $movie_ids = \App\Models\Movie::query()
+        $movie_ids = \App\Models\TmdbMovie::query()
             ->select('id')
             ->whereIntegerInRaw('id', array_column($this->data['recommendations']['results'] ?? [], 'id'))
             ->pluck('id');
@@ -418,12 +418,12 @@ class Movie
 
             if ($movie_ids->contains($recommendation['id'])) {
                 $recommendations[] = [
-                    'recommendation_movie_id' => $recommendation['id'],
-                    'movie_id'                => $this->data['id'] ?? null,
-                    'title'                   => $recommendation['title'] ?? null,
-                    'vote_average'            => $recommendation['vote_average'] ?? null,
-                    'poster'                  => $this->tmdb->image('poster', $recommendation),
-                    'release_date'            => $recommendation['release_date'] ?? null,
+                    'recommended_tmdb_movie_id' => $recommendation['id'],
+                    'tmdb_movie_id'             => $this->data['id'] ?? null,
+                    'title'                     => $recommendation['title'] ?? null,
+                    'vote_average'              => $recommendation['vote_average'] ?? null,
+                    'poster'                    => $this->tmdb->image('poster', $recommendation),
+                    'release_date'              => $recommendation['release_date'] ?? null,
                 ];
             }
         }

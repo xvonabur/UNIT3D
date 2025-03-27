@@ -34,6 +34,21 @@ class UpdateTorrentRequest extends FormRequest
     }
 
     /**
+     * Prepare the data for validation.
+     */
+    protected function prepareForValidation(): void
+    {
+        $this->merge([
+            'tmdb_movie_id' => $this->has('movie_exists_on_tmdb') ? ($this->input('tmdb_movie_id') ?: null) : null,
+            'tmdb_tv_id'    => $this->has('tv_exists_on_tmdb') ? ($this->input('tmdb_tv_id') ?: null) : null,
+            'imdb'          => $this->has('title_exists_on_imdb') ? ($this->input('imdb') ?: null) : null,
+            'tvdb'          => $this->has('tv_exists_on_tvdb') ? ($this->input('tvdb') ?: null) : null,
+            'mal'           => $this->has('anime_exists_on_mal') ? ($this->input('mal') ?: null) : null,
+            'igdb'          => $this->has('game_exists_on_igdb') ? ($this->input('igdb') ?: null) : null,
+        ]);
+    }
+
+    /**
      * Get the validation rules that apply to the request.
      *
      * @return array<string, list<\Illuminate\Validation\ConditionalRules|\Illuminate\Validation\Rules\ExcludeIf|\Illuminate\Validation\Rules\RequiredIf|\Illuminate\Validation\Rules\Unique|string>>
@@ -47,6 +62,12 @@ class UpdateTorrentRequest extends FormRequest
 
         $torrent = Torrent::withoutGlobalScope(ApprovedScope::class)->find($torrentId);
         $user = $request->user()->load('group')->loadExists('internals');
+
+        $mustBeNull = function (string $attribute, mixed $value, callable $fail): void {
+            if ($value !== null) {
+                $fail("The {$attribute} must be null.");
+            }
+        };
 
         return [
             'name' => [
@@ -90,29 +111,70 @@ class UpdateTorrentRequest extends FormRequest
                 'exists:distributors,id',
             ],
             'imdb' => [
-                'required',
-                'decimal:0',
-                'min:0',
+                Rule::when($category->movie_meta || $category->tv_meta, [
+                    'required_with:title_exists_on_imdb',
+                    'nullable',
+                    'decimal:0',
+                    'min:0',
+                ]),
+                Rule::when(!($category->movie_meta || $category->tv_meta), [
+                    $mustBeNull,
+                ]),
             ],
             'tvdb' => [
-                'required',
-                'decimal:0',
-                'min:0',
+                Rule::when($category->tv_meta, [
+                    'required_with:tv_exists_on_tvdb',
+                    'nullable',
+                    'decimal:0',
+                    'min:0',
+                ]),
+                Rule::when(!$category->tv_meta, [
+                    $mustBeNull,
+                ]),
             ],
-            'tmdb' => [
-                'required',
-                'decimal:0',
-                'min:0',
+            'tmdb_movie_id' => [
+                Rule::when($category->movie_meta, [
+                    'required_with:movie_exists_on_tmdb',
+                    'nullable',
+                    'decimal:0',
+                    'min:0',
+                ]),
+                Rule::when(!$category->movie_meta, [
+                    $mustBeNull,
+                ]),
+            ],
+            'tmdb_tv_id' => [
+                Rule::when($category->tv_meta, [
+                    'required_with:tv_exists_on_tmdb',
+                    'nullable',
+                    'decimal:0',
+                    'min:0',
+                ]),
+                Rule::when(!$category->tv_meta, [
+                    $mustBeNull,
+                ]),
             ],
             'mal' => [
-                'required',
-                'decimal:0',
-                'min:0',
+                Rule::when($category->movie_meta || $category->tv_meta, [
+                    'required_with:anime_exists_on_mal',
+                    'nullable',
+                    'decimal:0',
+                    'min:0',
+                ]),
+                Rule::when(!($category->movie_meta || $category->tv_meta), [
+                    $mustBeNull,
+                ]),
             ],
             'igdb' => [
-                'required',
-                'decimal:0',
-                'min:0',
+                Rule::when($category->game_meta, [
+                    'required_with:game_exists_on_igdb',
+                    'nullable',
+                    'decimal:0',
+                    'min:0',
+                ]),
+                Rule::when(!$category->game_meta, [
+                    $mustBeNull,
+                ]),
             ],
             'season_number' => [
                 Rule::when($category->tv_meta, 'required'),

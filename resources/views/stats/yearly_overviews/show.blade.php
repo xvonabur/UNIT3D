@@ -56,7 +56,7 @@
                     <x-movie.poster
                         :movie="$work->movie"
                         :categoryId="$work->category_id"
-                        :tmdb="$work->tmdb"
+                        :tmdb="$work->tmdb_movie_id"
                     />
                     <figcaption
                         class="top10-poster__download-count"
@@ -76,7 +76,7 @@
                     <x-movie.poster
                         :movie="$work->movie"
                         :categoryId="$work->category_id"
-                        :tmdb="$work->tmdb"
+                        :tmdb="$work->tmdb_movie_id"
                     />
                     <figcaption
                         class="top10-poster__download-count"
@@ -96,7 +96,7 @@
                     <x-tv.poster
                         :tv="$work->tv"
                         :categoryId="$work->category_id"
-                        :tmdb="$work->tmdb"
+                        :tmdb="$work->tmdb_tv_id"
                     />
                     <figcaption
                         class="top10-poster__download-count"
@@ -116,7 +116,7 @@
                     <x-tv.poster
                         :tv="$work->tv"
                         :categoryId="$work->category_id"
-                        :tmdb="$work->tmdb"
+                        :tmdb="$work->tmdb_tv_id"
                     />
                     <figcaption
                         class="top10-poster__download-count"

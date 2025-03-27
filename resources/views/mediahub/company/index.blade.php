@@ -20,5 +20,5 @@
 @endsection
 
 @section('main')
-    @livewire('company-search')
+    @livewire('tmdb-company-search')
 @endsection

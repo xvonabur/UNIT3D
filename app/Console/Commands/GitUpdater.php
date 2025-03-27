@@ -346,7 +346,7 @@ class GitUpdater extends Command
     private function php(): void
     {
         $this->header('Restarting PHP');
-        $this->process('systemctl restart php8.3-fpm');
+        $this->process('systemctl restart php8.4-fpm');
         $this->done();
     }
 

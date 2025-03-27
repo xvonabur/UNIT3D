@@ -98,7 +98,7 @@
                                                 <x-movie.poster
                                                     :movie="$ranking->movie"
                                                     :categoryId="$ranking->category_id"
-                                                    :tmdb="$ranking->tmdb"
+                                                    :tmdb="$ranking->tmdb_movie_id"
                                                 />
 
                                                 @break
@@ -106,7 +106,7 @@
                                                 <x-tv.poster
                                                     :tv="$ranking->tv"
                                                     :categoryId="$ranking->category_id"
-                                                    :tmdb="$ranking->tmdb"
+                                                    :tmdb="$ranking->tmdb_tv_id"
                                                 />
 
                                                 @break
@@ -150,7 +150,7 @@
                                                 <x-movie.poster
                                                     :movie="$ranking->movie"
                                                     :categoryId="$ranking->category_id"
-                                                    :tmdb="$ranking->tmdb"
+                                                    :tmdb="$ranking->tmdb_movie_id"
                                                 />
 
                                                 @break
@@ -158,7 +158,7 @@
                                                 <x-tv.poster
                                                     :tv="$ranking->tv"
                                                     :categoryId="$ranking->category_id"
-                                                    :tmdb="$ranking->tmdb"
+                                                    :tmdb="$ranking->tmdb_tv_id"
                                                 />
 
                                                 @break
@@ -188,7 +188,7 @@
                             <x-movie.poster
                                 :movie="$work->movie"
                                 :categoryId="$work->category_id"
-                                :tmdb="$work->tmdb"
+                                :tmdb="$work->tmdb_movie_id"
                             />
                             <figcaption
                                 class="top10-poster__download-count"
@@ -206,7 +206,7 @@
                             <x-tv.poster
                                 :tv="$work->tv"
                                 :categoryId="$work->category_id"
-                                :tmdb="$work->tmdb"
+                                :tmdb="$work->tmdb_tv_id"
                             />
                             <figcaption
                                 class="top10-poster__download-count"

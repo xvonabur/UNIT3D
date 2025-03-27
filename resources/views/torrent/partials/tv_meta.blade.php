@@ -5,7 +5,7 @@
 
     <a
         class="meta__title-link"
-        href="{{ route('torrents.similar', ['category_id' => $category->id, 'tmdb' => $tmdb]) }}"
+        href="{{ $tmdb ? route('torrents.similar', ['category_id' => $category->id, 'tmdb' => $tmdb]) : '#' }}"
     >
         <h1 class="meta__title">
             {{ $meta->name ?? 'No Meta Found' }}
@@ -14,7 +14,7 @@
     </a>
     <a
         class="meta__poster-link"
-        href="{{ route('torrents.similar', ['category_id' => $category->id, 'tmdb' => $tmdb]) }}"
+        href="{{ $tmdb ? route('torrents.similar', ['category_id' => $category->id, 'tmdb' => $tmdb]) : '#' }}"
     >
         <img
             src="{{ $meta?->poster ? tmdb_image('poster_big', $meta->poster) : 'https://via.placeholder.com/400x600' }}"
@@ -33,7 +33,7 @@
                             'category_id' => $category->id,
                             'title' => rawurlencode(($meta?->name ?? '') . ' ' . substr($meta->first_air_date ?? '', 0, 4) ?? ''),
                             'imdb' => $torrent->imdb ?? '' ?: $meta->imdb_id ?? '' ?: '',
-                            'tmdb' => $meta?->id ?? '',
+                            'tmdb_tv_id' => $meta?->id ?? '',
                             'mal' => $torrent->mal ?? '',
                             'tvdb' => $torrent->tvdb ?? '' ?: $meta->tvdb_id ?? '' ?: '',
                             'igdb' => $torrent->igdb ?? '',
@@ -50,7 +50,7 @@
                             'category_id' => $category->id,
                             'title' => rawurlencode(($meta?->name ?? '') . ' ' . substr($meta->first_air_date ?? '', 0, 4) ?? ''),
                             'imdb' => $torrent->imdb ?? '' ?: $meta->imdb_id ?? '' ?: '',
-                            'tmdb' => $meta?->id ?? '',
+                            'tmdb_tv_id' => $meta?->id ?? '',
                             'mal' => $torrent->mal ?? '',
                             'tvdb' => $torrent->tvdb ?? '' ?: $meta->tvdb_id ?? '' ?: '',
                             'igdb' => $torrent->igdb ?? '',
@@ -68,7 +68,7 @@
                     >
                         @csrf
                         <input type="hidden" name="meta" value="tv" />
-                        <input type="hidden" name="tv_id" value="{{ $meta->id }}" />
+                        <input type="hidden" name="tmdb_tv_id" value="{{ $meta->id }}" />
                         <button
                             style="cursor: pointer"
                             title="Receive notifications every time a new torrent is uploaded."
@@ -99,7 +99,7 @@
         </ul>
     </div>
     <ul class="meta__ids">
-        @foreach (array_unique(array_filter([$meta->id ?? 0, $torrent->tmdb ?? 0])) as $tmdbId)
+        @foreach (array_unique(array_filter([$meta->id ?? 0, $torrent->tmdb_tv_id ?? 0])) as $tmdbId)
             <li class="meta__tmdb">
                 <a
                     class="meta-id-tag"

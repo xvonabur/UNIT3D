@@ -18,7 +18,7 @@ namespace App\Http\Controllers;
 
 use App\DTO\TorrentSearchFiltersDTO;
 use App\Models\Category;
-use App\Models\Genre;
+use App\Models\TmdbGenre;
 use App\Models\Group;
 use App\Models\Resolution;
 use App\Models\Rss;
@@ -56,7 +56,7 @@ class RssController extends Controller
             'categories'  => Category::select(['id', 'name', 'position'])->orderBy('position')->get(),
             'types'       => Type::select(['id', 'name', 'position'])->orderBy('position')->get(),
             'resolutions' => Resolution::select(['id', 'name', 'position'])->orderBy('position')->get(),
-            'genres'      => Genre::orderBy('name')->get(),
+            'genres'      => TmdbGenre::orderBy('name')->get(),
             'user'        => $request->user(),
         ]);
     }
@@ -221,7 +221,7 @@ class RssController extends Controller
             'categories'  => Category::select(['id', 'name', 'position'])->orderBy('position')->get(),
             'types'       => Type::select(['id', 'name', 'position'])->orderBy('position')->get(),
             'resolutions' => Resolution::select(['id', 'name', 'position'])->orderBy('position')->get(),
-            'genres'      => Genre::orderBy('name')->get(),
+            'genres'      => TmdbGenre::orderBy('name')->get(),
             'user'        => $user,
             'rss'         => $rss,
         ]);

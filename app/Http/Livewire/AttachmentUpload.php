@@ -53,7 +53,7 @@ class AttachmentUpload extends Component
 
         $fileName = uniqid('', true).'.'.$this->attachment->getClientOriginalExtension();
 
-        $this->attachment->storeAs('attachments', $fileName, 'attachments');
+        $this->attachment->storeAs('', $fileName, 'attachment-files');
 
         $attachment = new TicketAttachment();
         $attachment->user_id = $this->user->id;

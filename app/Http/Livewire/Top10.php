@@ -79,22 +79,23 @@ class Top10 extends Component
     {
         $this->validate();
 
+        $metaIdColumn = match ($this->metaType) {
+            'tv_meta' => 'tmdb_tv_id',
+            default   => 'tmdb_movie_id',
+        };
+
         return cache()->remember(
             'top10-'.$this->interval.'-'.($this->from ?? '').'-'.($this->until ?? '').'-'.$this->metaType,
             0, //3600,
             fn () => Torrent::query()
-                ->when(
-                    $this->metaType === 'tv_meta',
-                    fn ($query) => $query->with('tv'),
-                    fn ($query) => $query->with('movie'),
-                )
-                ->select([
-                    'tmdb',
+                ->with('movie', 'tv')
+                ->addSelect([
+                    $metaIdColumn,
                     DB::raw('MIN(category_id) as category_id'),
                     DB::raw('COUNT(*) as download_count'),
                 ])
                 ->join('history', 'history.torrent_id', '=', 'torrents.id')
-                ->where('tmdb', '!=', 0)
+                ->where($metaIdColumn, '!=', 0)
                 ->when($this->interval === 'day', fn ($query) => $query->whereBetween('history.completed_at', [now()->subDay(), now()]))
                 ->when($this->interval === 'week', fn ($query) => $query->whereBetween('history.completed_at', [now()->subWeek(), now()]))
                 ->when($this->interval === 'month', fn ($query) => $query->whereBetween('history.completed_at', [now()->subMonth(), now()]))
@@ -104,10 +105,10 @@ class Top10 extends Component
                 ->whereRelation('category', $this->metaType, '=', true)
                 // Small torrents screw the stats since users download them only to farm bon.
                 ->where('torrents.size', '>', 1024 * 1024 * 1024)
-                ->groupBy('tmdb')
+                ->groupBy($metaIdColumn)
                 ->orderByRaw('COUNT(*) DESC')
                 ->limit(250)
-                ->get('tmdb')
+                ->get($metaIdColumn)
         );
     }
 
@@ -120,12 +121,17 @@ class Top10 extends Component
     {
         $this->validate();
 
+        $metaIdColumn = match ($this->metaType) {
+            'tv_meta' => 'tmdb_tv_id',
+            default   => 'tmdb_movie_id',
+        };
+
         return cache()->remember(
             'weekly-charts:'.$this->metaType,
             24 * 3600,
             fn () => Torrent::query()
                 ->withoutGlobalScopes()
-                ->with($this->metaType === 'movie_meta' ? 'movie' : 'tv')
+                ->with('movie', 'tv')
                 ->fromSub(
                     History::query()
                         ->withoutGlobalScopes()
@@ -133,15 +139,15 @@ class Top10 extends Component
                         ->join('categories', fn (JoinClause $join) => $join->on('torrents.category_id', '=', 'categories.id')->where($this->metaType, '=', true))
                         ->select([
                             DB::raw('FROM_DAYS(TO_DAYS(history.created_at) - MOD(TO_DAYS(history.created_at) - 1, 7)) AS week_start'),
-                            'tmdb',
+                            $metaIdColumn,
                             DB::raw('MIN(categories.id) as category_id'),
                             DB::raw('COUNT(*) AS download_count'),
                             DB::raw('ROW_NUMBER() OVER (PARTITION BY FROM_DAYS(TO_DAYS(history.created_at) - MOD(TO_DAYS(history.created_at) - 1, 7)) ORDER BY COUNT(*) DESC) AS place'),
                         ])
-                        ->where('tmdb', '!=', 0)
+                        ->where($metaIdColumn, '!=', 0)
                         // Small torrents screw the stats since users download them only to farm bon.
                         ->where('torrents.size', '>', 1024 * 1024 * 1024)
-                        ->groupBy('week_start', 'tmdb'),
+                        ->groupBy('week_start', $metaIdColumn),
                     'ranked_groups',
                 )
                 ->where('place', '<=', 10)
@@ -164,6 +170,11 @@ class Top10 extends Component
     {
         $this->validate();
 
+        $metaIdColumn = match ($this->metaType) {
+            'tv_meta' => 'tmdb_tv_id',
+            default   => 'tmdb_movie_id',
+        };
+
         return cache()->remember(
             'monthly-charts:'.$this->metaType,
             24 * 3600,
@@ -177,15 +188,15 @@ class Top10 extends Component
                         ->join('categories', fn (JoinClause $join) => $join->on('torrents.category_id', '=', 'categories.id')->where($this->metaType, '=', true))
                         ->select([
                             DB::raw('EXTRACT(YEAR_MONTH FROM history.created_at) AS the_year_month'),
-                            'tmdb',
+                            $metaIdColumn,
                             DB::raw('MIN(categories.id) as category_id'),
                             DB::raw('COUNT(*) AS download_count'),
                             DB::raw('ROW_NUMBER() OVER (PARTITION BY EXTRACT(YEAR_MONTH FROM history.created_at) ORDER BY COUNT(*) DESC) AS place'),
                         ])
-                        ->where('tmdb', '!=', 0)
+                        ->where($metaIdColumn, '!=', 0)
                         // Small torrents screw the stats since users download them only to farm bon.
                         ->where('torrents.size', '>', 1024 * 1024 * 1024)
-                        ->groupBy('the_year_month', 'tmdb'),
+                        ->groupBy('the_year_month', $metaIdColumn),
                     'ranked_groups',
                 )
                 ->where('place', '<=', 10)
