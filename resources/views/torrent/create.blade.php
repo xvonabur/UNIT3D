@@ -42,7 +42,7 @@
     <section
         class="upload panelV2"
         x-data="{
-            cat: {{ (int) $category_id }},
+            cat: {{ old('category_id', (int) $category_id) }},
             cats: JSON.parse(atob('{{ base64_encode(json_encode($categories)) }}')),
             tmdb_movie_exists: true,
             tmdb_tv_exists: true,
