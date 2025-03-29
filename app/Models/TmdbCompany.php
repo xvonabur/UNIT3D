@@ -60,7 +60,7 @@ class TmdbCompany extends Model
      */
     public function movieTorrents(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
-        return $this->belongsToMany(Torrent::class, 'tmdb_company_tmdb_movie', 'tmdb_movie_id', 'tmdb_company_id', 'id', 'tmdb_movie_id')->whereRelation('category', 'movie_meta', '=', true);
+        return $this->belongsToMany(Torrent::class, 'tmdb_company_tmdb_movie', 'tmdb_company_id', 'tmdb_movie_id', 'id', 'tmdb_movie_id')->whereRelation('category', 'movie_meta', '=', true);
     }
 
     /**
@@ -68,6 +68,6 @@ class TmdbCompany extends Model
      */
     public function tvTorrents(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
-        return $this->belongsToMany(Torrent::class, 'tmdb_company_tmdb_tv', 'tmdb_tv_id', 'tmdb_company_id', 'id', 'tmdb_tv_id')->whereRelation('category', 'tv_meta', '=', true);
+        return $this->belongsToMany(Torrent::class, 'tmdb_company_tmdb_tv', 'tmdb_company_id', 'tmdb_tv_id', 'id', 'tmdb_tv_id')->whereRelation('category', 'tv_meta', '=', true);
     }
 }
