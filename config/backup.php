@@ -46,8 +46,11 @@ return [
                 'exclude' => [
                     base_path('vendor'),
                     base_path('node_modules'),
-                    base_path('storage'),
-                    base_path('public/vendor/joypixels'),
+                    base_path('storage/framework'),
+                    base_path('storage/logs'),
+                    base_path('storage/backups'),
+                    base_path('public/vendor'),
+                    base_path('public/build'),
                 ],
 
                 /*
