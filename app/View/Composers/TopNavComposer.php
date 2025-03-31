@@ -93,7 +93,7 @@ class TopNavComposer
             'downloadCount' => cache()->remember(
                 "users:{$user->id}:download-count",
                 60,
-                fn () => $user->history()->where('actual_downloaded', '>', 0)->count(),
+                fn () => $user->history()->withoutGlobalScopes()->where('actual_downloaded', '>', 0)->count(),
             ),
             'user' => $user,
         ]);
