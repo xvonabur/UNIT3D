@@ -368,12 +368,12 @@ readonly class TorrentSearchFiltersDTO
                         fn ($query) => $query
                             ->where(
                                 fn ($query) => $query
-                                    ->whereRelation('movie_meta', '=', true)
+                                    ->whereRelation('category', 'movie_meta', '=', true)
                                     ->whereIn('tmdb_movie_id', Wish::select('tmdb_movie_id')->where('user_id', '=', $this->user->id))
                             )
                             ->orWhere(
                                 fn ($query) => $query
-                                    ->whereRelation('tv_meta', '=', true)
+                                    ->whereRelation('category', 'tv_meta', '=', true)
                                     ->whereIn('tmdb_tv_id', Wish::select('tmdb_tv_id')->where('user_id', '=', $this->user->id))
                             )
                     )
