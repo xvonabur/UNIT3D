@@ -95,7 +95,7 @@ class QuickSearchController extends Controller
                     'id'    => $hit['id'],
                     'name'  => $hit[$type]['name'],
                     'year'  => $hit[$type]['year'],
-                    'image' => $hit[$type]['poster'] ? tmdb_image('poster_small', $hit[$type]['poster']) : ($hit['name'][0] ?? '').($hit['name'][1] ?? ''),
+                    'image' => $hit[$type]['poster'] ? tmdb_image('poster_small', $hit[$type]['poster']) : mb_substr($hit['name'], 0, 2),
                     'url'   => route('torrents.similar', ['category_id' => $hit['category']['id'], 'tmdb' => $hit["{$type}_id"]]),
                     'type'  => $hit['category']['name'],
                 ];
@@ -104,7 +104,7 @@ class QuickSearchController extends Controller
                     'id'    => $hit['id'],
                     'name'  => $hit['name'],
                     'year'  => $hit['birthday'],
-                    'image' => $hit['still'] ? tmdb_image('poster_small', $hit['still']) : ($hit['name'][0] ?? '').(str($hit['name'])->explode(' ')->last()[0] ?? ''),
+                    'image' => $hit['still'] ? tmdb_image('poster_small', $hit['still']) : mb_substr($hit['name'], 0, 1).mb_substr(str($hit['name'])->explode(' ')->last() ?? '', 0, 1),
                     'url'   => route('mediahub.persons.show', ['id' => $hit['id']]),
                     'type'  => 'Person',
                 ];
