@@ -111,9 +111,9 @@ class TmdbMovie extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany<TmdbCollection, $this>
      */
-    public function collection(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    public function collections(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
-        return $this->belongsToMany(TmdbCollection::class)->take(1);
+        return $this->belongsToMany(TmdbCollection::class);
     }
 
     /**

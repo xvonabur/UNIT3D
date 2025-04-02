@@ -44,7 +44,7 @@
                         </h3>
                         <p class="collection__description">
                             {{ __('mediahub.includes') }}
-                            {{ $collection->movie->pluck('title')->implode(',') }}
+                            {{ $collection->movies->pluck('title')->implode(',') }}
                         </p>
                     </article>
                 </li>

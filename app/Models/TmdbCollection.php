@@ -52,7 +52,7 @@ class TmdbCollection extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany<TmdbMovie, $this>
      */
-    public function movie(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    public function movies(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
         return $this->belongsToMany(TmdbMovie::class);
     }

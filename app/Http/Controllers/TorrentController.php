@@ -119,7 +119,10 @@ class TorrentController extends Controller
                 'genres',
                 'credits' => ['person', 'occupation'],
                 'companies',
-                'collection',
+                'collections.movies' => fn ($query) => $query
+                    ->select('tmdb_movies.id', 'tmdb_movies.title', 'tmdb_movies.poster', 'tmdb_movies.release_date')
+                    ->withMin('torrents', 'category_id')
+                    ->has('torrents'),
                 'recommendedMovies' => fn ($query) => $query
                     ->select('tmdb_movies.id', 'tmdb_movies.title', 'tmdb_movies.poster', 'tmdb_movies.release_date')
                     ->withMin('torrents', 'category_id')

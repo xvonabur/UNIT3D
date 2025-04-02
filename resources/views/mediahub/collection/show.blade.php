@@ -68,7 +68,7 @@
             </div>
         </header>
         <div class="panel__body torrent-search--poster__results">
-            @foreach ($collection->movie->sortBy('release_date') as $movie)
+            @foreach ($collection->movies->sortBy('release_date') as $movie)
                 <x-movie.poster
                     :movie="$movie"
                     :category-id="$movie->torrents()->first()->category_id"
