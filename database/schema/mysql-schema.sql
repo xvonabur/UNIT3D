@@ -1179,6 +1179,16 @@ CREATE TABLE `personal_freeleeches` (
   CONSTRAINT `personal_freeleech_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `playlist_categories`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `playlist_categories` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `position` smallint NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `playlist_torrents`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
@@ -1203,6 +1213,7 @@ DROP TABLE IF EXISTS `playlists`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `playlists` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `playlist_category_id` int unsigned NOT NULL,
   `user_id` int unsigned NOT NULL,
   `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -1218,6 +1229,8 @@ CREATE TABLE `playlists` (
   KEY `playlists_is_pinned_index` (`is_pinned`),
   KEY `playlists_is_featured_index` (`is_featured`),
   KEY `playlists_user_id_foreign` (`user_id`),
+  KEY `playlists_playlist_category_id_foreign` (`playlist_category_id`),
+  CONSTRAINT `playlists_playlist_category_id_foreign` FOREIGN KEY (`playlist_category_id`) REFERENCES `playlist_categories` (`id`) ON UPDATE CASCADE,
   CONSTRAINT `playlists_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -2973,3 +2986,4 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (340,'2025_03_16_18
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (341,'2025_03_17_122748_add_tmdb_prefix_to_metadata_tables',3);
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (342,'2025_03_23_203227_add_automatically_unbookmark_torrents_user_setting',4);
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (343,'2025_03_25_093436_update_metadata_id_default_to_null',5);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (344,'2025_03_29_215845_create_playlist_categories',6);

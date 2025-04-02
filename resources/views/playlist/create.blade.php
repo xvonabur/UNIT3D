@@ -47,6 +47,24 @@
                     </label>
                 </p>
                 <p class="form__group">
+                    <select
+                        id="playlist_category_id"
+                        class="form__select"
+                        name="playlist_category_id"
+                        required
+                    >
+                        <option hidden selected disabled value=""></option>
+                        @foreach ($playlistCategories as $playlistCategory)
+                            <option class="form__option" value="{{ $playlistCategory->id }}">
+                                {{ $playlistCategory->name }}
+                            </option>
+                        @endforeach
+                    </select>
+                    <label class="form__label form__label--floating" for="playlist_category_id">
+                        {{ __('torrent.category') }}
+                    </label>
+                </p>
+                <p class="form__group">
                     @livewire('bbcode-input', ['name' => 'description', 'label' => __('common.description'), 'required' => true])
                 </p>
                 <p class="form__group">

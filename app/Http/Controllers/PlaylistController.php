@@ -20,6 +20,7 @@ use App\Http\Requests\StorePlaylistRequest;
 use App\Http\Requests\UpdatePlaylistRequest;
 use App\Models\TmdbMovie;
 use App\Models\Playlist;
+use App\Models\PlaylistCategory;
 use App\Models\TmdbTv;
 use App\Repositories\ChatRepository;
 use App\Traits\TorrentMeta;
@@ -55,7 +56,9 @@ class PlaylistController extends Controller
      */
     public function create(): \Illuminate\Contracts\View\Factory|\Illuminate\View\View
     {
-        return view('playlist.create');
+        return view('playlist.create', [
+            'playlistCategories' => PlaylistCategory::query()->orderBy('position')->get(),
+        ]);
     }
 
     /**
@@ -136,7 +139,10 @@ class PlaylistController extends Controller
     {
         abort_unless($request->user()->id === $playlist->user_id || $request->user()->group->is_modo, 403);
 
-        return view('playlist.edit', ['playlist' => $playlist]);
+        return view('playlist.edit', [
+            'playlist'           => $playlist,
+            'playlistCategories' => PlaylistCategory::query()->orderBy('position')->get(),
+        ]);
     }
 
     /**

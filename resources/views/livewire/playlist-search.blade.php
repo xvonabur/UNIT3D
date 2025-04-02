@@ -33,6 +33,26 @@
                 </div>
             </div>
             <div class="panel__action">
+                <div class="form__group">
+                    <select
+                        id="playlist_category_id"
+                        class="form__select"
+                        wire:model.live.debounce.250ms="playlistCategoryId"
+                        required
+                    >
+                        <option selected value="__any">Any</option>
+                        @foreach ($playlistCategories as $playlistCategory)
+                            <option class="form__option" value="{{ $playlistCategory->id }}">
+                                {{ $playlistCategory->name }}
+                            </option>
+                        @endforeach
+                    </select>
+                    <label class="form__label form__label--floating" for="playlist_category_id">
+                        {{ __('torrent.category') }}
+                    </label>
+                </div>
+            </div>
+            <div class="panel__action">
                 <a class="form__button form__button--text" href="{{ route('playlists.create') }}">
                     {{ __('common.add') }}
                 </a>

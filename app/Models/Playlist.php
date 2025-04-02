@@ -24,6 +24,7 @@ use Illuminate\Database\Eloquent\Model;
  * App\Models\Playlist.
  *
  * @property int                             $id
+ * @property int                             $playlist_category_id
  * @property int                             $user_id
  * @property string                          $name
  * @property string                          $description
