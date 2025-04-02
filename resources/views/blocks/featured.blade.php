@@ -57,7 +57,7 @@
                                 ->with('genres', 'networks', 'seasons')
                                 ->find($feature->torrent->tmdb_tv_id ?? 0),
                             $feature->torrent->category->movie_meta => App\Models\TmdbMovie::query()
-                                ->with('genres', 'companies', 'collection')
+                                ->with('genres', 'companies')
                                 ->find($feature->torrent->tmdb_movie_id ?? 0),
                             $feature->torrent->category->game_meta => App\Models\Game::query()
                                 ->with('genres')

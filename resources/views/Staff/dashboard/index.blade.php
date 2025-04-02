@@ -252,6 +252,15 @@
                         {{ __('staff.blocked-ips') }}
                     </a>
                 </p>
+                <p class="form__group form__group--horizontal">
+                    <a
+                        class="form__button form__button--text"
+                        href="{{ route('staff.playlist_categories.index') }}"
+                    >
+                        <i class="{{ config('other.font-awesome') }} fa-list"></i>
+                        Playlist Categories
+                    </a>
+                </p>
             </div>
         </section>
         <section class="panelV2 panel--grid-item">

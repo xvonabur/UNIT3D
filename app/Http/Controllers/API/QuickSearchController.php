@@ -52,7 +52,9 @@ class QuickSearchController extends Controller
         if (preg_match('/^(\d+)$/', $query, $matches)) {
             $filters[] = [
                 'tmdb_movie_id = '.$matches[1],
+                'tmdb_movie.name = '.$matches[1],
                 'tmdb_tv_id = '.$matches[1],
+                'tmdb_tv.name = '.$matches[1],
             ];
             $searchById = true;
         }

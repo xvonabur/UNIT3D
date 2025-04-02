@@ -318,6 +318,15 @@
     will-change: backdrop-filter, background;
 }
 
+.meta-chip--value-only {
+    grid-template-areas: 'image value';
+
+    .meta-chip__value {
+        height: auto;
+        align-self: center;
+    }
+}
+
 .meta-chip:hover {
     backdrop-filter: var(--meta-chip-backdrop-filter-hover);
     -webkit-backdrop-filter: var(--meta-chip-backdrop-filter-hover);
@@ -389,6 +398,13 @@
 
 .meta-chip__value a:hover {
     color: var(--meta-chip-value-hover-fg);
+}
+
+.meta-chip__list {
+    display: flex;
+    margin-left: 8px;
+    flex-direction: column;
+    column-gap: 12px;
 }
 
 @media screen and (max-width: 767px) {

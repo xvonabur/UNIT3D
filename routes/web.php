@@ -1057,6 +1057,18 @@ Route::middleware('language')->group(function (): void {
             });
         });
 
+        // Playlist Categories System
+        Route::prefix('playlist-categories')->group(function (): void {
+            Route::name('playlist_categories.')->group(function (): void {
+                Route::get('/', [App\Http\Controllers\Staff\PlaylistCategoryController::class, 'index'])->name('index');
+                Route::get('/create', [App\Http\Controllers\Staff\PlaylistCategoryController::class, 'create'])->name('create');
+                Route::post('/', [App\Http\Controllers\Staff\PlaylistCategoryController::class, 'store'])->name('store');
+                Route::get('/{playlistCategory}/edit', [App\Http\Controllers\Staff\PlaylistCategoryController::class, 'edit'])->name('edit');
+                Route::patch('/{playlistCategory}', [App\Http\Controllers\Staff\PlaylistCategoryController::class, 'update'])->name('update');
+                Route::delete('/{playlistCategory}', [App\Http\Controllers\Staff\PlaylistCategoryController::class, 'destroy'])->name('destroy');
+            });
+        });
+
         // Polls System
         Route::prefix('polls')->group(function (): void {
             Route::name('polls.')->group(function (): void {
