@@ -299,6 +299,77 @@
                     </h3>
                 </a>
             </article>
+
+            @if ($meta?->collections?->isNotEmpty())
+                <article class="meta__collection">
+                    <details>
+                        <summary class="meta-chip">
+                            <i
+                                class="{{ config('other.font-awesome') }} fa-rectangle-history meta-chip__icon"
+                            ></i>
+                            <h2 class="meta-chip__name">Collection</h2>
+                            <h3 class="meta-chip__value">
+                                {{ $meta?->collections?->first()?->name }}
+                            </h3>
+                        </summary>
+                        <div class="meta-chip__list">
+                            <article class="meta__collection-item">
+                                <a
+                                    class="meta-chip meta-chip--value-only"
+                                    href="{{ route('mediahub.collections.show', ['id' => $meta?->collections?->first()?->id]) }}"
+                                >
+                                    @if ($meta?->collections?->first()->poster)
+                                        <img
+                                            class="meta-chip__image"
+                                            src="{{ tmdb_image('poster_small', $meta?->collections?->first()->poster) }}"
+                                            alt=""
+                                        />
+                                    @else
+                                        <i
+                                            class="{{ config('other.font-awesome') }} fa-rectangle-history meta-chip__icon"
+                                        ></i>
+                                    @endif
+                                    <h3 class="meta-chip__value">View all</h3>
+                                </a>
+                            </article>
+                            @foreach ($meta?->collections?->first()->movies as $movie)
+                                <article class="meta__collection-item">
+                                    <a
+                                        class="meta-chip meta-chip--value-only"
+                                        href="{{ route('torrents.similar', ['tmdb' => $movie->id, 'category_id' => $category->id]) }}"
+                                    >
+                                        @if ($movie->poster)
+                                            <img
+                                                class="meta-chip__image"
+                                                src="{{ tmdb_image('poster_small', $movie->poster) }}"
+                                                alt=""
+                                            />
+                                        @else
+                                            <i
+                                                class="{{ config('other.font-awesome') }} fa-film meta-chip__icon"
+                                            ></i>
+                                        @endif
+                                        @if ($movie->is($meta))
+                                            <h3 class="meta-chip__value">
+                                                <strong>
+                                                    {{ $movie->title }}
+                                                    ({{ $movie->release_date->format('Y') }})
+                                                </strong>
+                                            </h3>
+                                        @else
+                                            <h3 class="meta-chip__value">
+                                                {{ $movie->title }}
+                                                ({{ $movie->release_date->format('Y') }})
+                                            </h3>
+                                        @endif
+                                    </a>
+                                </article>
+                            @endforeach
+                        </div>
+                    </details>
+                </article>
+            @endif
+
             @foreach ($meta?->companies ?? [] as $company)
                 <article class="meta__company">
                     <a

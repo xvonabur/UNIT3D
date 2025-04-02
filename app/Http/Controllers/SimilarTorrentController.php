@@ -45,7 +45,8 @@ class SimilarTorrentController extends Controller
                 $meta = TmdbMovie::with([
                     'genres',
                     'credits' => ['person', 'occupation'],
-                    'companies'
+                    'companies',
+                    'collections.movies',
                 ])
                     ->findOrFail($tmdbId);
                 $tmdb = $tmdbId;

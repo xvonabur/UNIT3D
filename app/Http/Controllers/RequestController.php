@@ -78,7 +78,7 @@ class RequestController extends Controller
                     'genres',
                     'credits' => ['person', 'occupation'],
                     'companies',
-                    'collection'
+                    'collections.movies'
                 ])
                     ->find($torrentRequest->tmdb_movie_id),
                 ($torrentRequest->category->game_meta && $torrentRequest->igdb) => IgdbGame::with([

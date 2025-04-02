@@ -86,7 +86,7 @@ class ProcessMovieJob implements ShouldQueue
             $collection = (new Client\Collection($movieScraper->data['belongs_to_collection']['id']))->getCollection();
 
             TmdbCollection::upsert($collection, 'id');
-            $movie->collection()->sync([$collection['id']]);
+            $movie->collections()->sync([$collection['id']]);
         }
 
         // People
