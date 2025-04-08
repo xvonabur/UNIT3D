@@ -46,6 +46,7 @@
             </address>
             <div
               v-if="message.bot && message.bot.id >= 1 && (!message.user || message.user.id < 2)"
+              class="bbcode-rendered"
               :style="`font-style: italic; white-space: nowrap;`"
               v-html="message.message"
             ></div>
@@ -107,7 +108,7 @@
           </menu>
           <section
             v-if="message.user && message.user.id > 1"
-            class="chatbox-message__content"
+            class="chatbox-message__content bbcode-rendered"
             v-html="message.message"
           ></section>
         </article>
