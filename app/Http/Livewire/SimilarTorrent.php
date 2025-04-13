@@ -21,6 +21,7 @@ use App\Models\Category;
 use App\Models\Distributor;
 use App\Models\History;
 use App\Models\IgdbGame;
+use App\Models\Playlist;
 use App\Models\TmdbMovie;
 use App\Models\Region;
 use App\Models\Resolution;
@@ -401,6 +402,33 @@ class SimilarTorrent extends Component
             ->get();
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Collection<int, Playlist>
+     */
+    #[Computed]
+    final public function playlists(): \Illuminate\Database\Eloquent\Collection
+    {
+        return Playlist::query()
+            ->when($this->category->movie_meta, fn ($query) => $query->whereRelation('torrents', 'tmdb_movie_id', '=', $this->tmdbId))
+            ->when($this->category->tv_meta, fn ($query) => $query->whereRelation('torrents', 'tmdb_tv_id', '=', $this->tmdbId))
+            ->when($this->category->game_meta, fn ($query) => $query->whereRelation('torrents', 'igdb_game_id', '=', $this->tmdbId))
+            ->when(!($this->category->movie_meta || $this->category->tv_meta || $this->category->game_meta), fn ($query) => $query->whereRaw('0 = 1'))
+            ->get();
+    }
+
+    /**
+     * @return ?\Illuminate\Database\Eloquent\Collection<int, TmdbMovie>
+     */
+    #[Computed]
+    final public function collectionMovies(): ?\Illuminate\Database\Eloquent\Collection
+    {
+        if (!$this->work instanceof TmdbMovie) {
+            return null;
+        }
+
+        return $this->work->collections->first()?->movies;
+    }
+
     final public function alertConfirm(): void
     {
         if (!auth()->user()->group->is_modo) {
@@ -547,6 +575,8 @@ class SimilarTorrent extends Component
             'resolutions'       => $this->resolutions,
             'regions'           => $this->regions,
             'distributors'      => $this->distributors,
+            'playlists'         => $this->playlists,
+            'collectionMovies'  => $this->collectionMovies,
         ]);
     }
 }

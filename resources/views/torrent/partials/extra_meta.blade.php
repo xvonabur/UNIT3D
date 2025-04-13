@@ -1,46 +1,31 @@
-<section
-    class="panelV2"
-    x-data="{
-        tab: window.location.hash ? window.location.hash.substring(1) : 'recommendations',
-    }"
-    id="tab_wrapper"
->
-    <!-- The tabs navigation -->
-    <h2 class="panel__heading">Relations</h2>
+<section class="panelV2" x-data="tabs" data-default-tab="recommendations" id="tab_wrapper">
+    <header class="panel__header">
+        <h2 class="panel__heading">Relations</h2>
+        <div class="panel__actions" x-data="posterRow">
+            <div class="panel__action">
+                <button class="form__standard-icon-button" x-bind="scrollLeft">
+                    <i class="{{ \config('other.font-awesome') }} fa-angle-left"></i>
+                </button>
+            </div>
+            <div class="panel__action">
+                <button class="form__standard-icon-button" x-bind="scrollRight">
+                    <i class="{{ \config('other.font-awesome') }} fa-angle-right"></i>
+                </button>
+            </div>
+        </div>
+    </header>
     <menu class="panel__tabs">
-        <li
-            class="panel__tab"
-            role="tab"
-            x-bind:class="tab === 'recommendations' && 'panel__tab--active'"
-            x-on:click="tab = 'recommendations'; window.location.hash = 'recommendations'"
-        >
-            Recommendations
-        </li>
-        <li
-            class="panel__tab"
-            role="tab"
-            x-bind:class="tab === 'collection' && 'panel__tab--active'"
-            x-on:click="tab = 'collection'; window.location.hash = 'collection'"
-        >
-            Collection
-        </li>
-        <li
-            class="panel__tab"
-            role="tab"
-            x-bind:class="tab === 'playlists' && 'panel__tab--active'"
-            x-on:click="tab = 'playlists'; window.location.hash = 'playlists'"
-        >
-            Playlists
-        </li>
+        <li class="panel__tab" x-bind="tabButton" data-tab="recommendations">Recommendations</li>
+        <li class="panel__tab" x-bind="tabButton" data-tab="collection">Collection</li>
+        <li class="panel__tab" x-bind="tabButton" data-tab="playlists">Playlists</li>
     </menu>
-    <!-- The tabs content -->
-    <div x-show="tab === 'recommendations'">
+    <div x-bind="tabPanel" data-tab="recommendations">
         @include('torrent.partials.recommendations')
     </div>
-    <div x-show="tab === 'collection'" x-cloak>
+    <div x-bind="tabPanel" data-tab="collection" x-cloak>
         @include('torrent.partials.collection')
     </div>
-    <div x-show="tab === 'playlists'" x-cloak>
+    <div x-bind="tabPanel" data-tab="playlists" x-cloak>
         @include('torrent.partials.playlists')
     </div>
 </section>
