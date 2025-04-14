@@ -486,12 +486,12 @@ Restarting the queue allows any queued jobs to continue without issues._
 
 Below are some common issues and their suggested solutions:
 
-| **Symptom**                | **Solution**                                          |
-|----------------------------|-------------------------------------------------------|
-| 500 Internal Server Error  | Run `php artisan optimize:clear`                      |
-| Database Connection Issues | Verify your `.env` credentials                        |
-| Missing Files              | Re-run `rsync` with the `--checksum` option           |
-| Permission Denied          | Reapply ACL permissions                               |
+| **Symptom**                | **Solution**                                              |
+|----------------------------|-----------------------------------------------------------|
+| 500 Internal Server Error  | Run `php artisan optimize:clear`                          |
+| Database Connection Issues | Verify your `.env` credentials                            |
+| Missing Files              | Re-run `rsync` with the `--checksum` option               |
+| Permission Denied          | Reapply ACL permissions                                   |
 | Queue Workers Inactive     | Restart all workers with `sudo supervisorctl restart all` |
 
 
