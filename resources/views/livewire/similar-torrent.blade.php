@@ -1080,7 +1080,7 @@
 
                             @break
                         @case($category->tv_meta)
-                            @forelse ($playlists as $tv)
+                            @forelse ($playlists as $playlist)
                                 <x-playlist.card :$playlist />
                             @empty
                                 No playlists found
