@@ -82,9 +82,9 @@ class GitUpdater extends Command
     /**
      * Path to the log file.
      *
-     * @var string|null
+     * @var string
      */
-    private ?string $logFile;
+    private string $logFile;
 
     /**
      * Execute the console command.

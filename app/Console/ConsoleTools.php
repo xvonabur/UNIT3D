@@ -74,8 +74,8 @@ trait ConsoleTools
     /**
      * Display an error message.
      *
-     * @param string|array    $string
-     * @param int|string|null $verbosity
+     * @param string|array<string> $string
+     * @param int|string|null      $verbosity
      */
     public function error($string, $verbosity = null): void
     {
@@ -91,8 +91,8 @@ trait ConsoleTools
     /**
      * Display an info message.
      *
-     * @param string|array    $string
-     * @param int|string|null $verbosity
+     * @param string|array<string> $string
+     * @param int|string|null      $verbosity
      */
     public function info($string, $verbosity = null): void
     {
@@ -176,6 +176,8 @@ trait ConsoleTools
 
     /**
      * Execute multiple shell commands.
+     *
+     * @param array<string> $commands
      */
     protected function execCommands(array $commands, bool $silent = false): void
     {
@@ -206,8 +208,8 @@ trait ConsoleTools
     /**
      * Display a stylized alert box.
      *
-     * @param string|array    $string
-     * @param int|string|null $verbosity
+     * @param string|array<string> $string
+     * @param int|string|null      $verbosity
      */
     public function alert($string, $verbosity = null): void
     {
@@ -228,14 +230,21 @@ trait ConsoleTools
 
     /**
      * Render a stylized alert box with type detection.
+     *
+     * @param string      $message The message to display
+     * @param string|null $type    Optional alert type (success, error, warning, info)
      */
-    protected function renderAlert(string $message): void
+    protected function renderAlert(string $message, ?string $type = null): void
     {
-        $type = 'info';
+        if ($type === null) {
+            $detectedType = 'info';
 
-        if (preg_match('/^(success|error|warning|info):/i', $message, $matches)) {
-            $type = strtolower($matches[1]);
-            $message = trim(substr($message, \strlen($matches[1]) + 1));
+            if (preg_match('/^(success|error|warning|info):/i', $message, $matches)) {
+                $detectedType = strtolower($matches[1]);
+                $message = trim(substr($message, \strlen($matches[1]) + 1));
+            }
+
+            $type = $detectedType;
         }
 
         $style = match ($type) {
