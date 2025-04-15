@@ -1189,6 +1189,26 @@ CREATE TABLE `playlist_categories` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `playlist_suggestions`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `playlist_suggestions` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `playlist_id` bigint unsigned NOT NULL,
+  `torrent_id` int unsigned NOT NULL,
+  `user_id` int unsigned NOT NULL,
+  `message` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `playlist_suggestions_playlist_id_foreign` (`playlist_id`),
+  KEY `playlist_suggestions_torrent_id_foreign` (`torrent_id`),
+  KEY `playlist_suggestions_user_id_foreign` (`user_id`),
+  CONSTRAINT `playlist_suggestions_playlist_id_foreign` FOREIGN KEY (`playlist_id`) REFERENCES `playlists` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `playlist_suggestions_torrent_id_foreign` FOREIGN KEY (`torrent_id`) REFERENCES `torrents` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `playlist_suggestions_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `playlist_torrents`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
@@ -2940,3 +2960,4 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (343,'2025_03_25_09
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (344,'2025_03_29_215845_create_playlist_categories',1);
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (345,'2025_04_03_085022_drop_season_and_episodes',1);
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (346,'2025_04_07_152108_split_recommendations_into_movie_and_tv',1);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (347,'2025_04_15_090705_create_playlist_suggestions',1);
