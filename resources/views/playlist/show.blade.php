@@ -270,7 +270,28 @@
         </div>
     </section>
     <section class="panelV2">
-        <h2 class="panel__heading">{{ __('torrent.torrents') }}</h2>
+        <header class="panel__header">
+            <h2 class="panel__heading">{{ __('torrent.torrents') }}</h2>
+            <div class="panel__actions">
+                <form
+                    class="panel__action"
+                    action="{{ route('playlists.show', ['playlist' => $playlist]) }}"
+                >
+                    <div class="form__group">
+                        <input
+                            class="form__text"
+                            type="text"
+                            name="search"
+                            placeholder=" "
+                            value="{{ $search }}"
+                        />
+                        <label class="form__label form__label--floating">
+                            {{ __('common.search') }}
+                        </label>
+                    </div>
+                </form>
+            </div>
+        </header>
         <div class="panel__body playlist__torrents">
             @foreach ($torrents as $torrent)
                 <div class="playlist__torrent-container">

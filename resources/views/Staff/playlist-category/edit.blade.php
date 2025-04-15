@@ -58,6 +58,19 @@
                     </label>
                 </p>
                 <p class="form__group">
+                    <textarea
+                        id="description"
+                        name="description"
+                        class="form__textarea"
+                        placeholder=" "
+                    >
+{{ $playlistCategory->description }}</textarea
+                    >
+                    <label class="form__label form__label--floating" for="description">
+                        {{ __('common.description') }}
+                    </label>
+                </p>
+                <p class="form__group">
                     <button class="form__button form__button--filled">
                         {{ __('common.submit') }}
                     </button>

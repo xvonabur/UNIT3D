@@ -113,6 +113,7 @@ class PlaylistController extends Controller
                     WHEN category_id IN (SELECT id from categories where no_meta = TRUE) THEN 'no'
                 END as meta
             SQL)
+            ->when($request->has('search'), fn ($query) => $query->where('name', 'LIKE', '%'.str_replace(' ', '%', $request->search).'%'))
             ->with(['category', 'resolution', 'type', 'user.group'])
             ->orderBy('name')
             ->paginate(26);
@@ -129,6 +130,7 @@ class PlaylistController extends Controller
             },
             'latestPlaylistTorrent' => $playlist->torrents()->orderByPivot('created_at', 'desc')->first(),
             'torrents'              => $torrents,
+            'search'                => $request->search,
         ]);
     }
 

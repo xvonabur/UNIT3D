@@ -1186,6 +1186,7 @@ CREATE TABLE `playlist_categories` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
   `position` smallint NOT NULL,
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` text COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -2961,3 +2962,4 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (344,'2025_03_29_21
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (345,'2025_04_03_085022_drop_season_and_episodes',1);
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (346,'2025_04_07_152108_split_recommendations_into_movie_and_tv',1);
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (347,'2025_04_15_090705_create_playlist_suggestions',1);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (347,'2025_04_15_075631_add_description_to_playlist_categories',1);
