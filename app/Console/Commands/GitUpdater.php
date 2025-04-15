@@ -210,6 +210,7 @@ Press CTRL + C ANYTIME to abort!
                 }
 
                 $this->header('Database Migrations');
+
                 if ($this->io->confirm('Run new database migrations?', true)) {
                     $this->runMigrations();
                 }
@@ -217,6 +218,7 @@ Press CTRL + C ANYTIME to abort!
                 $this->clearApplicationCache();
 
                 $this->header('Composer Packages');
+
                 if ($this->io->confirm('Install/update Composer packages?', true)) {
                     $this->installComposerPackages();
                 }
@@ -226,6 +228,7 @@ Press CTRL + C ANYTIME to abort!
                 $this->setApplicationCache();
 
                 $this->header('Frontend Assets');
+
                 if ($this->io->confirm('Compile frontend assets?', true)) {
                     $this->compileAssets();
                 }
