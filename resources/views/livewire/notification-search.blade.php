@@ -151,6 +151,34 @@
                                 <input
                                     class="form__checkbox"
                                     type="checkbox"
+                                    wire:model.live.prefetch="playlist_suggestions"
+                                    value="1"
+                                />
+                                <i
+                                    class="{{ config('other.font-awesome') }} fa-comment-dots text-success"
+                                ></i>
+                                {{ __('playlist.playlist-suggestions') }}
+                            </label>
+                        </p>
+                        <p class="form__group">
+                            <label class="form__label">
+                                <input
+                                    class="form__checkbox"
+                                    type="checkbox"
+                                    wire:model.live.prefetch="playlist_suggestion_rejections"
+                                    value="1"
+                                />
+                                <i
+                                    class="{{ config('other.font-awesome') }} fa-comment-dots text-success"
+                                ></i>
+                                {{ __('playlist.playlist-suggestion-rejections') }}
+                            </label>
+                        </p>
+                        <p class="form__group">
+                            <label class="form__label">
+                                <input
+                                    class="form__checkbox"
+                                    type="checkbox"
                                     wire:model.live.prefetch="posts"
                                     value="1"
                                 />

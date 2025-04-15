@@ -455,6 +455,16 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     /**
+     * Has Many Playlist Suggestions.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<PlaylistSuggestion, $this>
+     */
+    public function playlistSuggestions(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(PlaylistSuggestion::class);
+    }
+
+    /**
      * Has Many Sent PM's.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany<PrivateMessage, $this>

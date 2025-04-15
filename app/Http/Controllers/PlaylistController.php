@@ -121,7 +121,7 @@ class PlaylistController extends Controller
         $this->scopeMeta($torrents);
 
         return view('playlist.show', [
-            'playlist' => $playlist->load('user.group'),
+            'playlist' => $playlist->load(['user.group', 'suggestions' => ['user.group', 'torrent']]),
             'meta'     => match (true) {
                 $randomTorrent?->category?->tv_meta    => TmdbTv::find($randomTorrent->tmdb_tv_id),
                 $randomTorrent?->category?->movie_meta => TmdbMovie::find($randomTorrent->tmdb_movie_id),

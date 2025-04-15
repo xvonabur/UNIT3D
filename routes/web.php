@@ -317,6 +317,13 @@ Route::middleware('language')->group(function (): void {
             });
         });
 
+        Route::prefix('playlist/{playlist}/suggestions')->group(function (): void {
+            Route::name('playlists.suggestions.')->group(function (): void {
+                Route::post('/', [App\Http\Controllers\PlaylistSuggestionController::class, 'store'])->name('store');
+                Route::patch('/{playlistSuggestion}', [App\Http\Controllers\PlaylistSuggestionController::class, 'update'])->name('update');
+            });
+        });
+
         Route::prefix('playlist-torrents')->group(function (): void {
             Route::name('playlist_torrents.')->group(function (): void {
                 Route::post('/', [App\Http\Controllers\PlaylistTorrentController::class, 'store'])->name('store');
