@@ -16,7 +16,7 @@ Built-in backups, located in `.../storage/backups/UNT3D`, offer an efficient way
 
 #### Managing your built-in backup routine
 
-You'll find the built-in backups dashboard link in the Staff dashboard menu or by navigating to `yourSite.tld/dashboard/backups`. This is the front-end management screen to give you a quick view into the status, health, size and, quantity of backups. Accross the top bar there are quick options to `Create Full Backup`, `Create Database Backup` and, `Create Files Backup` that enable running un-scheduled backups without the need to log into your server. Using this dashboard helps track whether the options set in the configuration do fulfill the requirements in just a glance.
+You'll find the built-in backups dashboard link in the Staff dashboard menu or by navigating to `yourSite.tld/dashboard/backups`. This is the front-end management screen to give you a quick view into the status, health, size and, quantity of backups. Across the top bar there are quick options to `Create Full Backup`, `Create Database Backup` and, `Create Files Backup` that enable running un-scheduled backups without the need to log into your server. Using this dashboard helps track whether the options set in the configuration do fulfill the requirements in just a glance.
 
 Located at `.../config/backup.php`, is the configuration file to manage the built-in routine which can be modified to suit your needs.
 
@@ -34,7 +34,7 @@ Located at `.../config/backup.php`, is the configuration file to manage the buil
   - Example: base_path()
 
 - **Databases**: The names of the connections to the databases that should be backed up MySQL, PostgreSQL, SQLite and Mongo databases are supported.
-  - The content of the database dump may be customized for each connectiony adding a 'dump' key to the connection settings in `.../config/database.php`.
+  - The content of the database dump may be customized for each connection by adding a 'dump' key to the connection settings in `.../config/database.php`.
 
         'mysql' => [
                ...
@@ -69,7 +69,7 @@ Located at `.../config/backup.php`, is the configuration file to manage the buil
      - You can also use your own notification classes, just make sure the class is named after one of the `Spatie\Backup\Events` classes.
 
 - **Notifiable**: Here you can specify the notifiable to which the notifications should be sent. The default notifiable will use the variables specified in this config file.
-  - The default configuration has available options for 'mail' and 'slack' preconfigured.
+  - The default settings include built-in support for both mail and slack notifications.
 
 - **Monitor_backups**: Here you can specify which backups should be monitored. If a backup does not meet the specified requirements the `UnHealthyBackupWasFound` event will be fired. Here is where you can set both standard time period between backups and the maximum amount of storage to use before considering unhealthy.
 
@@ -447,7 +447,7 @@ If reinstalling Node.js dependencies and running a build process is part of your
 
 Run this only if you do not have a valid node_modules folder or if your assets require rebuilding.
 
-Note: Running this command with sudo may cause permission issues (such as EACCES errors), so if possible, consider running it as a non-root user or ensure that the permissions are correctly set after installation.
+Note: Running this command with sudo may cause permission issues (such as EACCES errors) so if possible consider running it as a non-root user or ensure that the permissions are correctly set after installation.
 
 When to Use:
 Use the optional command if your project uses Bun for dependency management and asset building and if you need to ensure that your dependencies and built assets are updated. 
