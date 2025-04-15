@@ -2961,5 +2961,5 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (343,'2025_03_25_09
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (344,'2025_03_29_215845_create_playlist_categories',1);
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (345,'2025_04_03_085022_drop_season_and_episodes',1);
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (346,'2025_04_07_152108_split_recommendations_into_movie_and_tv',1);
-INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (347,'2025_04_15_090705_create_playlist_suggestions',1);
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (347,'2025_04_15_075631_add_description_to_playlist_categories',1);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (348,'2025_04_15_090705_create_playlist_suggestions',1);
