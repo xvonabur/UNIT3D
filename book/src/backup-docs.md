@@ -275,14 +275,14 @@ Choose the command that best fits your restoration needs. If you only need to re
 If you prefer an alternative method, you can create a zipped backup of your current www folder, then restore it from the zip archive. Follow these steps:
 
 ---
+> [!NOTE]
+> Be careful, the steps below are an alternative method for backing up the entire ```/var/www``` folder! Only continue if you understand what you are doing.
 
-<div style="border: 2px solid #e74c3c; background-color: #f9e6e6; padding: 10px; border-radius: 5px; margin: 15px 0;">
-  <strong>🚨 READ:</strong> Be careful, the steps below are an alternative method for backing up the entire <code>/var/www</code> folder! Only continue if you understand what you are doing.
-</div>
 
 ---
 
-**Note:** If you haven't already created a temporary backup directory, run:
+If you haven't already created a temporary backup directory, run:
+
 ```bash
 mkdir ~/tempBackup
 ```
