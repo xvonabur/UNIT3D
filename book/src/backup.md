@@ -16,18 +16,13 @@ You'll find the built-in backups dashboard link in the Staff dashboard menu or b
 Located at `.../config/backup.php`, is the configuration file to manage the built-in routine which can be modified to suit your needs.
 
 - **Name**:  The name of this application. You can use this name to monitor the backups.
-
 - **Source**: Set up as an associative array. Within you'll find a 'files' key with child keys detailed below.
-  - **Include**: The list of directories and files that will be included in the backup.
-  - **Exclude**: These directories and files will be excluded from the backup. Directories used by the backup process will automatically be excluded.
-
+- **Include**: The list of directories and files that will be included in the backup.
+- **Exclude**: These directories and files will be excluded from the backup. Directories used by the backup process will automatically be excluded.
 - **Follow__links**: Determines if symlinks should be followed.
-
 - **Ignore_unreadable_directories**: Determines if it should avoid unreadable folders.
-
 - **Relative_path**: This path is used to make directories in resulting zip-file relative. Set to `null` to include complete absolute path
-  - Example: base_path()
-
+  - e.g. `base_path()`
 - **Databases**: The names of the connections to the databases that should be backed up MySQL, PostgreSQL, SQLite and Mongo databases are supported.
   - The content of the database dump may be customized for each connection by adding a 'dump' key to the connection settings in `.../config/database.php`.
 
