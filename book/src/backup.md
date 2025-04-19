@@ -10,7 +10,7 @@
 
 ### Introduction
 
-This guide explains how to restore a UNIT3D backup on your server. It covers installing required tools, uncompressing the backup using your app key, copying files to their correct locations, fixing file permissions, and resetting caches with PHP Artisan.
+This guide outlines the process of creating and restoring a UNIT3D backup, including decryption with your APP_KEY, file restoration, permission management, and cache reset procedures.
 
 ### Built-In Backups
 
@@ -166,13 +166,13 @@ p7zip-full is used for handling compatibility and encryption issues when uncompr
 ---
 
 ## Step 2: Retrieve Your Application Key
-Your backup file is encrypted with your app’s APP_KEY. Open the .env file to locate it.
+Your backup file is encrypted with your `APP_KEY`. Open the .env file to locate it.
 
 ```bash
 sudo nano /var/www/html/.env
 ```
 
-Copy the APP_KEY value (look for line starting with 'APP_KEY=')
+Copy the `APP_KEY` value (look for line starting with 'APP_KEY=')
 
 or
 
