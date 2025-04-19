@@ -1,11 +1,18 @@
 # Backup Restoration Tutorial for UNIT3D 
 
+> [!WARNING]
+> **Always test backup restoration procedures on a non-critical environment before applying to production.**  
+> Incorrect restoration can lead to data loss or service disruption.
+
+| Category       | Severity   | Downtime |
+| -------------  |:----------:| ------------:|
+| :wrench: Maintenance | Critical | 15 minutes  |
+
+### Introduction
+
 This guide explains how to restore a UNIT3D backup on your server. It covers installing required tools, uncompressing the backup using your app key, copying files to their correct locations, fixing file permissions, and resetting caches with PHP Artisan.
 
-> [!WARNING]
-> Prior to executing this backup restoration procedure on live or sensitive data, it is strongly recommended that you first test the process on a non-critical server or with non-essential files. This step helps you understand the process and minimize risks.
-
-## Built-In Backups
+### Built-In Backups
 
 Built-in backups, located in `.../storage/backups/UNT3D`, offer an efficient way to migrate your development codebase to production by leveraging these backups directly. Simply pick one of the three most recent backups, copy it to your home directory, and retrieve your site master key from your `.env` file (the `APP_KEY`). Next, uncompress the backup using `p7zip` (you'll be prompted for the key) and extract any additional ZIP files (typically containing files and a database). Finally, restore the files to your server and manually import the database to ensure your server runs only the committed code.
 
