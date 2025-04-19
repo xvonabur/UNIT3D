@@ -25,7 +25,8 @@ Located at `.../config/backup.php`, is the configuration file to manage the buil
   - e.g. `base_path()`
 - **Databases**: The names of the connections to the databases that should be backed up MySQL, PostgreSQL, SQLite and Mongo databases are supported.
   - The content of the database dump may be customized for each connection by adding a 'dump' key to the connection settings in `.../config/database.php`.
-
+    
+    ```php
         'mysql' => [
                ...
               'dump' => [
@@ -35,14 +36,19 @@ Located at `.../config/backup.php`, is the configuration file to manage the buil
                     ]
               ],
           ],
-  - If you are using only InnoDB tables on a MySQL server, you can also supply the useSingleTransaction option to avoid table locking.
+    ```
 
+  - If you are using only InnoDB tables on a MySQL server, you can also supply the useSingleTransaction option to avoid table locking.
+    
+    ```php
         'mysql' => [
                ...
              'dump' => [
                   'useSingleTransaction' => true,
               ],
         ],
+    ```
+       
     For a complete list of available customization options, see: https://github.com/spatie/db-dumper
   - **Database_dump_compressor**: The database dump can be compressed to decrease disk space usage. If you do not want any compressor at all, set it to null.
       - Out of the box Laravel-backup supplies: `Spatie\DbDumper\Compressors\GzipCompressor::class`
