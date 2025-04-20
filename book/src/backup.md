@@ -1,4 +1,4 @@
-# Backup
+# Backups
 
 > [!WARNING]
 > **Always test backup restoration procedures on a non-critical environment before applying to production.**  
@@ -10,7 +10,7 @@
 
 ### Introduction
 
-This guide outlines the process of creating and restoring a UNIT3D backup, including decryption with your APP_KEY, file restoration, permission management, and cache reset procedures.
+UNIT3D includes backup tooling that can create backups and manage the routine. This guide outlines the backups dashboard, the configuration file handling backups, and the process of creating and restoring a UNIT3D backup—including decryption with your APP_KEY, file restoration, permission management, and cache‑reset procedures.
 
 ### Built-In Backups
 
@@ -119,7 +119,6 @@ php artisan backup:list
 - **Fix File Permissions:** Ensure correct ownership and permissions with `chown`, `chmod`, and related commands.
 - **Reset Caches:** Clear caches and restart PHP Artisan and PHP-FPM to finalize restoration.
 
-_This tutorial is crafted for anyone looking to restore a backup on UNIT3D, manage backup recovery for a UNIT3D private tracker, or implement PHP Laravel backup restoration. If you've been searching for solutions like "restore backup UNIT3D," "PHP Laravel backup restoration," "UNIT3D private tracker restore," or "backup recovery for UNIT3D," this guide offers practical and detailed instructions to help you._
 
 ---
 
@@ -150,7 +149,7 @@ _This tutorial is crafted for anyone looking to restore a backup on UNIT3D, mana
 
 ---
 
-## Step 1: Install Required Tools
+## 1 Install Required Tools
 
 First, ensure you have the tools needed to extract the backup.
 
@@ -165,7 +164,7 @@ p7zip-full is used for handling compatibility and encryption issues when uncompr
 
 ---
 
-## Step 2: Retrieve Your Application Key
+## 2 Retrieve Your Application Key
 Your backup file is encrypted with your `APP_KEY`. Open the .env file to locate it.
 
 ```bash
@@ -186,9 +185,9 @@ You will use this key when extracting the backup.
 
 ---
 
-## Step 3: Uncompress the Backup
+## 3 Uncompress the Backup
 
-### 1. Create a Temporary Directory
+### 3.1 Create a Temporary Directory
 Create a temporary directory to work in and navigate into it:
 
 ```bash
@@ -196,7 +195,7 @@ mkdir ~/tempBackup
 cd ~/tempBackup
 ```
 
-### 2. Copy the Backup File
+### 3.2 Copy the Backup File
 Copy your backup file from its location (e.g., `.../storage/backups/UNT3D`) to the temporary directory. Adjust the file name and path as needed:
 
 ```bash
@@ -215,7 +214,7 @@ For example: `cp /var/www/html/storage/backups/UNIT3D/\[UNIT3D\]2025-03-22-17-29
 
 
 
-### 3. Extract the Backup File Using 7z
+### 3.3 Extract the Backup File Using 7z
 Use `7z` to extract the encrypted backup file. When prompted, enter your `APP_KEY`. The password prompt will not echo your input:
 
 ```bash
@@ -235,7 +234,7 @@ When prompted during extraction, enter the password (note: your input will not b
 base64:bT70DC4Ck7taYqP6ugqKIYbAbiEFbgECSdc03MwtXg=
 ```
 
-### 4. Unzip the Extracted Archive
+### 3.4 Unzip the Extracted Archive
 If the extraction process produces a standard ZIP file (e.g., `backup.zip`), extract it with:
 
 ```bash
@@ -251,7 +250,7 @@ If the extraction process produces a standard ZIP file (e.g., `backup.zip`), ext
 
 ---
 
-## Step 4: Restore the Files
+## 4 Restore the Files
 After extraction, your backup files will be available in the temporary folder. Now, copy them back to your web server directory.
 
 Copy the Entire html Folder:
@@ -278,13 +277,11 @@ Choose the command that best fits your restoration needs. If you only need to re
 ---
 
 
-## Step 4.1: Alternate Restoration Method Using entire /var/www folder! 
-
-If you prefer an alternative method, you can create a zipped backup of your current www folder, then restore it from the zip archive. Follow these steps:
+## Manual Backup Method
 
 ---
 > [!NOTE]
-> Be careful, the steps below are an alternative method for backing up the entire ```/var/www``` folder! Only continue if you understand what you are doing.
+> Be careful, the steps below are a manual method for creating backups (not using UNIT3D tooling) and restoring them! Only continue if you understand what you are doing.
 
 
 ---
@@ -296,7 +293,7 @@ mkdir ~/tempBackup
 ```
 
 
-### 1. Create a Zip Archive of the www Folder
+### 1 Create a Zip Archive of the www Folder
 First, create a zipped archive of your entire `/var/www` folder and save it to your temporary backup directory:
 
 ```bash
@@ -307,7 +304,7 @@ This command compresses your entire `/var/www` folder into a zip file and saves 
 
 The file will be named with a timestamp for reference. For example: `www_backup_20250322062714.zip`
 
-### 2. Unzip the Archive into a New Restoration Folder
+### 2 Unzip the Archive into a New Restoration Folder
 
 Create a new folder (e.g., restore_www_TIMESTAMP) in your temporary backup directory and unzip the archive into it:
 
@@ -327,7 +324,7 @@ mkdir ~/tempBackup/restore_www_$TIMESTAMP
 
 > Ensure that the same timestamp is used for both creating and unzipping the archive. Alternatively, you can manually specify a consistent name.
 
-### 3. Copy the Restored Files to the Correct Location
+### 3 Copy the Restored Files to the Correct Location
 Once you have verified the restored files in the new folder, copy the entire contents back to your live directory:
 
 ```bash
@@ -367,7 +364,7 @@ _The -a flag preserves file permissions, ownership, and timestamps._
 
 ---
 
-## Step 5: Fix File Permissions
+## 5 Fix File Permissions
 Once the files are restored, adjust the file permissions to ensure your web server can access them correctly.
 
 ```bash
@@ -411,7 +408,7 @@ sudo bun run build: Runs the build process to compile or bundle assets as needed
 
 ---
 
-## Step 6: Reset PHP Artisan and PHP-FPM
+## 6 Reset PHP Artisan and PHP-FPM
 Finally, reset caches and queues with PHP Artisan and restart your PHP-FPM service.
 
 ```bash
