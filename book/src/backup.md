@@ -12,6 +12,11 @@
 
 UNIT3D includes backup tooling that can create backups and manage the routine. This guide outlines the backups dashboard, the configuration file handling backups, and the process of creating and restoring a UNIT3D backup—including decryption with your APP_KEY, file restoration, permission management, and cache‑reset procedures.
 
+
+> [!NOTE]
+> Note: While incredibly handy, it is not recommended to use the built-in backup routine for sites above <<ENTER A RECOMMENDED THRESHOLD>> as backups might incur timeouts or if deduplication is a requirement.
+> 
+
 ### Built-In Backups
 
 Built-in backups, located in `.../storage/backups/UNT3D`, offer an efficient way to migrate your development codebase to production by leveraging these backups directly. Simply pick one of the three most recent backups, copy it to your home directory, and retrieve your site master key from your `.env` file (the `APP_KEY`). Next, uncompress the backup using `p7zip` (you'll be prompted for the key) and extract any additional ZIP files (typically containing files and a database). Finally, restore the files to your server and manually import the database to ensure your server runs only the committed code.
