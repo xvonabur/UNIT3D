@@ -14,7 +14,7 @@ UNIT3D includes backup tooling that can create backups and manage the routine. T
 
 
 > [!NOTE]
-> Note: While incredibly handy, it is not recommended to use the built-in backup routine for sites above **[! ENTER A RECOMMENDED THRESHOLD]** as backups might incur timeouts or if greater features, such as deduplication, are required.
+> Note: While incredibly handy, it is not recommended to use the built-in backup routine for sites above certain threshold as backups might incur timeouts or if greater features, such as deduplication, are required.
 > 
 
 ### Built-In Backups
