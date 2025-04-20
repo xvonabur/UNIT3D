@@ -10,7 +10,7 @@
 
 ### Introduction
 
-UNIT3D includes backup tooling that can create backups and manage the routine. This guide outlines the backups dashboard, the configuration file handling backups, and the process of creating and restoring a UNIT3D backup—including decryption with the APP_KEY, file restoration, permission management, and cache‑reset procedures.
+UNIT3D includes backup tooling that can create backups and manage the routine. This guide outlines the backups dashboard, the configuration file handling backups, and the process of creating and restoring a UNIT3D backup, including decryption with the `APP_KEY`, file restoration, permission management, and cache‑reset procedures.
 
 
 > [!NOTE]
@@ -115,7 +115,7 @@ php artisan backup:list
 
 ---
 
-## Tutorial Wrap-Up
+## Wrap-Up
 
 - **Install Required Tools:** Set up 7-Zip and other utilities.
 - **Retrieve Application Key:** Extract the `APP_KEY` from the `.env` file.
@@ -130,12 +130,12 @@ php artisan backup:list
 ## Index
 
 - [Prerequisites](#prerequisites)
-- [Step 1: Install Required Tools](#step-1-install-required-tools)
-- [Step 2: Retrieve Application Key](#step-2-retrieve-application-key)
-- [Step 3: Uncompress the Backup](#step-3-uncompress-the-backup)
-- [Step 4: Restore the Files](#step-4-restore-the-files)
-- [Step 5: Fix File Permissions](#step-5-fix-file-permissions)
-- [Step 6: Reset PHP Artisan and PHP-FPM](#step-6-reset-php-artisan-and-php-fpm)
+- [1. Install Required Tools](#1-install-required-tools)
+- [2. Retrieve the Application Key](#2-retrieve-the-application-key)
+- [3. Uncompress the Backup](#3-uncompress-the-backup)
+- [4. Restore the Files](#4-restore-the-files)
+- [5. Fix File Permissions](#5-fix-file-permissions)
+- [6. Reset PHP Artisan and PHP-FPM](#6-reset-php-artisan-and-php-fpm)
 - [Troubleshooting](#troubleshooting)
 
 ---
@@ -154,7 +154,7 @@ php artisan backup:list
 
 ---
 
-## 1 Install Required Tools
+## 1. Install Required Tools
 
 First, ensure the tools needed to extract the backup are in place by using `apt` to update and install `p7zip-full`.
 
@@ -169,7 +169,7 @@ sudo apt install p7zip-full -y
 
 ---
 
-## 2 Retrieve the Application Key
+## 2. Retrieve the Application Key
 The backup file is encrypted with the `APP_KEY`. Open the `.env` file to locate it.
 
 ```sh
@@ -190,7 +190,7 @@ This key will be needed when uncompressing the backup.
 
 ---
 
-## 3 Uncompress the Backup
+## 3. Uncompress the Backup
 
 ### 3.1 Create a Temporary Directory
 Create a temporary directory to work in and navigate into it:
@@ -259,7 +259,7 @@ If the extraction process produces a standard ZIP file (e.g., `backup.zip`), ext
 
 ---
 
-## 4 Restore the Files
+## 4. Restore the Files
 After extraction, backup files will be available in the temporary directory. Now, copy them back to the web server directory.
 
 Copy the Entire `html` Directory:
@@ -373,7 +373,7 @@ _The -a flag preserves file permissions, ownership, and timestamps._
 
 ---
 
-## 5 Fix File Permissions
+## 5. Fix File Permissions
 Once the files are restored, adjust the file permissions to ensure the web server can access them correctly.
 
 ```sh
@@ -417,7 +417,7 @@ sudo rm -rf node_modules && sudo bun install && sudo bun run build
 
 ---
 
-## 6 Reset PHP Artisan and PHP-FPM
+## 6. Reset PHP Artisan and PHP-FPM
 Finally, reset caches and queues with PHP Artisan and restart the PHP-FPM service.
 
 ```sh
