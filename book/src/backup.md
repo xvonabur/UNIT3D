@@ -10,8 +10,7 @@
 
 ### Introduction
 
-UNIT3D includes backup tooling that can create backups and manage the routine. This guide outlines the backups dashboard, the configuration file handling backups, and the process of creating and restoring a UNIT3D backup, including decryption with the `APP_KEY`, file restoration, permission management, and cache‑reset procedures.
-
+UNIT3D includes backup tooling that can create backups and manage the routine. This guide covers the backup dashboard, configuration file handling backups, the process of creating and restoring a UNIT3D backup, including decryption with the application key, file restoration, permission setup, and cache reset.
 
 > [!NOTE]
 > Note: While incredibly handy, it is not recommended to use the built-in backup routine for sites above certain threshold as backups might incur timeouts or if greater features, such as deduplication, are required.
@@ -27,15 +26,15 @@ The built‑in backups dashboard link can be found in the Staff dashboard menu o
 
 The configuration file that manages the built‑in backup routine is located at `.../config/backup.php`; administrators can modify this to suit specific needs.
 
-- `Name`:  The name of this application. You can use this name to monitor the backups.
-- `Source`: Set up as an associative array. Within you'll find a 'files' key with child keys detailed below.
-- `Include`: The list of directories and files that will be included in the backup.
-- `Exclude`: These directories and files will be excluded from the backup. Directories used by the backup process will automatically be excluded.
-- `Follow__links`: Determines if symlinks should be followed.
-- `Ignore_unreadable_directories`: Determines if it should avoid unreadable directories.
-- `Relative_path`: This path is used to make directories in resulting zip-file relative. Set to `null` to include complete absolute path
+- `name`:  The name of this application. You can use this name to monitor the backups.
+- `source`: Set up as an associative array. Within you'll find a 'files' key with child keys detailed below.
+- `include`: The list of directories and files that will be included in the backup.
+- `exclude`: These directories and files will be excluded from the backup. Directories used by the backup process will automatically be excluded.
+- `follow_links`: Determines if symlinks should be followed.
+- `ignore_unreadable_directories`: Determines if it should avoid unreadable directories.
+- `relative_path`: This path is used to make directories in resulting zip-file relative. Set to `null` to include complete absolute path
   - e.g. `base_path()`
-- `Databases`: The names of the connections to the databases that should be backed up MySQL, PostgreSQL, SQLite and Mongo databases are supported.
+- `databases`: The names of the connections to the databases that should be backed up MySQL, PostgreSQL, SQLite and Mongo databases are supported.
   - The content of the database dump may be customized for each connection by adding a 'dump' key to the connection settings in `.../config/database.php`.
     
     ```php
@@ -62,36 +61,36 @@ The configuration file that manages the built‑in backup routine is located at 
     ```
        
     For a complete list of available customization options, see: https://github.com/spatie/db-dumper
-  - `Database_dump_compressor`: The database dump can be compressed to decrease disk space usage. If you do not want any compressor at all, set it to null.
+  - `database_dump_compressor`: The database dump can be compressed to decrease disk space usage. If you do not want any compressor at all, set it to null.
       - Out of the box Laravel-backup supplies: `Spatie\DbDumper\Compressors\GzipCompressor::class`
       - You can also create custom compressor. More info on that here: https://github.com/spatie/db-dumper#using-compression
 
-- `Destination`: Options to modify settings of destination archive/locations
-  - `Filename_prefix`: The filename prefix used for the backup zip file.
-  - `Disks`: The disk names on which the backups will be stored.
+- `destination`: Options to modify settings of destination archive/locations
+  - `filename_prefix`: The filename prefix used for the backup zip file.
+  - `disks`: The disk names on which the backups will be stored.
 
-- `Temporary_directory`: The directory where the temporary files will be stored.
+- `temporary_directory`: The directory where the temporary files will be stored.
 
-- `Notifications`: You can get notified when specific events occur. Out of the box you can use 'mail' and 'slack'.
+- `notifications`: You can get notified when specific events occur. Out of the box you can use 'mail' and 'slack'.
      - For Slack you need to install laravel/slack-notification-channel.
      - You can also use your own notification classes, just make sure the class is named after one of the `Spatie\Backup\Events` classes.
 
-- `Notifiable`: Here you can specify the notifiable to which the notifications should be sent. The default notifiable will use the variables specified in this config file.
+- `notifiable`: Here you can specify the notifiable to which the notifications should be sent. The default notifiable will use the variables specified in this config file.
   - The default settings include built-in support for both mail and slack notifications.
 
-- `Monitor_backups`: Here you can specify which backups should be monitored. If a backup does not meet the specified requirements the `UnHealthyBackupWasFound` event will be fired. Here is where you can set both standard time period between backups and the maximum amount of storage to use before considering unhealthy.
+- `monitor_backups`: Here you can specify which backups should be monitored. If a backup does not meet the specified requirements the `UnHealthyBackupWasFound` event will be fired. Here is where you can set both standard time period between backups and the maximum amount of storage to use before considering unhealthy.
 
-- `Cleanup`: The strategy that will be used to cleanup old backups. The default strategy  will keep all backups for a certain amount of days. After that period only a daily backup will be kept. After that period only weekly backups will be kept and so on. No matter how you configure it the default strategy will never delete the newest backup.
-  - `Keep_all_backups_for_days`: The number of days for which backups must be kept.
-  - `Keep_daily_backups_for_days`: The number of days for which daily backups must be kept.
-  - `Keep_weekly_backups_for_weeks`: The number of weeks for which one weekly backup must be kept.
-  - `Keep_monthly_backups_for_months`: The number of months for which one monthly backup must be kept.
-  - `Keep_yearly_backups_for_years`: The number of years for which one yearly backup must be kept.
-  - `Delete_oldest_backups_when_using_more_megabytes_than`: After cleaning up the backups remove the oldest backup until this amount of megabytes has been reached.
+- `cleanup`: The strategy that will be used to cleanup old backups. The default strategy  will keep all backups for a certain amount of days. After that period only a daily backup will be kept. After that period only weekly backups will be kept and so on. No matter how you configure it the default strategy will never delete the newest backup.
+  - `keep_all_backups_for_days`: The number of days for which backups must be kept.
+  - `keep_daily_backups_for_days`: The number of days for which daily backups must be kept.
+  - `keep_weekly_backups_for_weeks`: The number of weeks for which one weekly backup must be kept.
+  - `keep_monthly_backups_for_months`: The number of months for which one monthly backup must be kept.
+  - `keep_yearly_backups_for_years`: The number of years for which one yearly backup must be kept.
+  - `delete_oldest_backups_when_using_more_megabytes_than`: After cleaning up the backups remove the oldest backup until this amount of megabytes has been reached.
 
-- `Security`: This option sets the encryption properties for the outer archive of your backups.
-  - `Password`: Set by default to use the `APP_KEY` variable from the `.env` file.
-  - `Encryption`: Set by default to use the encryption helper.
+- `security`: This option sets the encryption properties for the outer archive of your backups.
+  - `password`: Set by default to use the `APP_KEY` variable from the `.env` file.
+  - `encryption`: Set by default to use the encryption helper.
 
 ---
 
