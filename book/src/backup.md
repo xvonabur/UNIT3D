@@ -2,9 +2,6 @@
 
 UNIT3D offers built in backup tools, available through the web dashboard or via Artisan commands, allowing you to create, manage, and restore your application snapshots.
 
-> [!IMPORTANT]  
-> Not recommended for large sites or when you need deduplication or distributed storage, as it may cause timeouts and performance issues.
-
 ## 1. Configuration
 
  **Customize** `config/backup.php` in your editor and adjust settings as needed; inline notes outline the available configuration parameters.
@@ -89,15 +86,30 @@ UNIT3D offers built in backup tools, available through the web dashboard or via 
 
 ## 2. Create a Backup
 
-**Note:** You can access the built-in Backups dashboard from the Staff menu. It shows each backup’s status, health, size, and count, and lets administrators launch unscheduled full, database, or files-only backups instantly. Another approach is to use the command line.
+You can access the built-in Backups dashboard from the Staff menu. It shows each backup’s status, health, size, and count, and lets administrators launch unscheduled full, database, or files-only backups instantly. Another approach is to use the command line.
 
-- **Run** the Artisan command:
+> [!IMPORTANT]  
+> Backups initiated via the Staff Dashboard buttons may timeout on very large installations. 
+
+- The following artisan commands are available: 
 
    ```sh
    php artisan backup:run
    ```
+   
+   Creates a timestamped ZIP of application files and database.
 
-   Creates a timestamped ZIP containing files and database dumps.
+   ```sh
+   php artisan backup:run --only-db
+   ```
+
+   Creates a timestamped ZIP containing only the database.
+
+   ```sh
+   php artisan backup:run --only-files
+   ```
+
+   Creates a timestamped ZIP containing only application files.
 
 
 ## 3. Viewing Backup List
@@ -179,28 +191,3 @@ UNIT3D offers built in backup tools, available through the web dashboard or via 
    sudo systemctl restart php8.4-fpm
    sudo php artisan queue:restart
    ```
-
-## 6. Optional Manual Backup Method
-
-> [!NOTE]
-> Use only as a fallback.
-
-1. **Create ZIP** of entire `/var/www`:
-
-   ```sh
-   sudo 7za a -tzip -r ~/tempBackup/www_backup_$(date +%Y%m%d%H%M%S).zip /var/www
-   ```
-
-2. **Unzip** into a restore directory:
-
-   ```sh
-   TIMESTAMP=20250322062714
-   mkdir ~/tempBackup/restore_www_$TIMESTAMP
-   7z x ~/tempBackup/www_backup_$TIMESTAMP.zip -d ~/tempBackup/restore_www_$TIMESTAMP
-   ```
-
-3. **Copy** back to live path:
-
-   ```sh
-   sudo cp -a ~/tempBackup/restore_www_$TIMESTAMP/var/www/html/. /var/www/html/
-   ```   
