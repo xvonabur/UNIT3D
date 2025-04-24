@@ -151,18 +151,37 @@ You can access the built-in Backups dashboard from the Staff menu. It shows each
    7z x backup.zip
    ```
 
-5. **Copy** restored files to webroot:
+> [!NOTE]
+> **Full backups will contain two parts; the files backup and a database backup or dump file.**
+
+Restoring the files backup:
+
+1. **Copy** restored files to webroot:
 
    ```sh
    sudo cp -a ~/tempBackup/var/www/html/. /var/www/html/
    ```
 
-6. **Fix** file permissions:
+2. **Fix** file permissions:
 
    ```sh
    sudo chown -R www-data:www-data /var/www/html
    sudo find /var/www/html -type f -exec chmod 664 {} \;
    sudo find /var/www/html -type d -exec chmod 775 {} \;
+   ```
+
+Restoring the database backup:
+
+1. **Retrieve** your database credentials:
+
+   ```sh
+   grep '^DB_' /var/www/html/.env
+   ```
+
+2. **Restore** your database:
+
+   ```sh
+   mysql -u unit3d -p unit3d < db-dumps/mysql-unit3d.sql 
    ```
 
 ## 5. Reset & Cleanup
