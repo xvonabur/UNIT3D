@@ -181,7 +181,7 @@ Restoring the database backup:
 2. **Restore** your database:
 
    ```sh
-   mysql -u unit3d -p unit3d < db-dumps/mysql-unit3d.sql 
+   mysql -u unit3d -p unit3d < ~/tempBackup/db-dumps/mysql-unit3d.sql 
    ```
 
 ## 5. Reset & Cleanup
