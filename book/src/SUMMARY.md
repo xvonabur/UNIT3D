@@ -1,6 +1,7 @@
 # Summary
 
 - [Introduction](README.md)
+- [Backups](backups.md)
 - [Basic Tuning](basic_tuning.md)
 - [Local Development Arch Linux](local_development_arch_linux.md)
 - [Local Development MacOS](local_development_macos.md)
