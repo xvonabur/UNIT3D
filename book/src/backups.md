@@ -154,7 +154,7 @@ You can access the built-in Backups dashboard from the Staff menu. It shows each
 > [!NOTE]
 > **Full backups will contain two parts; the files backup and a database backup or dump file.**
 
-**Restoring the files backup:**
+### **Restoring the files backup:**
 
 1. **Copy** restored files to webroot:
 
@@ -170,7 +170,7 @@ You can access the built-in Backups dashboard from the Staff menu. It shows each
    sudo find /var/www/html -type d -exec chmod 775 {} \;
    ```
 
-**Restoring the database backup:**
+### **Restoring the database backup:**
 
 1. **Retrieve** your database credentials:
 
