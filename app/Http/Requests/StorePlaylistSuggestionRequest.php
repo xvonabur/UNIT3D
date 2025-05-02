@@ -14,32 +14,28 @@ declare(strict_types=1);
  * @license    https://www.gnu.org/licenses/agpl-3.0.en.html/ GNU Affero General Public License v3.0
  */
 
-namespace App\Http\Requests\Staff;
+namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Request;
 
-class UpdatePlaylistCategoryRequest extends FormRequest
+class StorePlaylistSuggestionRequest extends FormRequest
 {
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string, list<string>>
+     * @return array<string, array<string>>
      */
-    public function rules(): array
+    public function rules(Request $request): array
     {
         return [
-            'name' => [
+            'torrent_url' => [
                 'required',
-                'string',
+                'max:65535',
             ],
-            'position' => [
-                'required',
-                'numeric',
-                'decimal:0',
-            ],
-            'description' => [
-                'required',
-                'string',
+            'message' => [
+                'sometimes',
+                'max:65535',
             ],
         ];
     }
