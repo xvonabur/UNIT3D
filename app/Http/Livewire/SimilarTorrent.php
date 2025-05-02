@@ -409,6 +409,16 @@ class SimilarTorrent extends Component
     final public function playlists(): \Illuminate\Database\Eloquent\Collection
     {
         return Playlist::query()
+            ->withCount('torrents')
+            ->when(
+                ! auth()->user()->group->is_modo,
+                fn ($query) => $query
+                    ->where(
+                        fn ($query) => $query
+                            ->where('is_private', '=', 0)
+                            ->orWhere(fn ($query) => $query->where('is_private', '=', 1)->where('user_id', '=', auth()->id()))
+                    )
+            )
             ->when($this->category->movie_meta, fn ($query) => $query->whereRelation('torrents', 'tmdb_movie_id', '=', $this->tmdbId))
             ->when($this->category->tv_meta, fn ($query) => $query->whereRelation('torrents', 'tmdb_tv_id', '=', $this->tmdbId))
             ->when($this->category->game_meta, fn ($query) => $query->whereRelation('torrents', 'igdb_game_id', '=', $this->tmdbId))
