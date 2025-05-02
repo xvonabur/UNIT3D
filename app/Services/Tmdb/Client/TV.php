@@ -294,19 +294,6 @@ class TV
      */
     public null|array $data;
 
-    /**
-     * @var null|array{
-     *   results: ?array<
-     *     int<0, max>,
-     *     array{
-     *       iso_3166_1: ?string,
-     *       rating: ?string,
-     *     }
-     *   >
-     * }
-     */
-    public null|array $ratings;
-
     public TMDB $tmdb;
 
     /**
@@ -323,19 +310,11 @@ class TV
             ])
             ->json();
 
-        $this->ratings = Http::acceptJson()
-            ->withUrlParameters(['id' => $id])
-            ->get('https://api.TheMovieDB.org/3/tv/{id}/content_ratings', [
-                'api_key' => config('api-keys.tmdb'),
-            ])
-            ->json();
-
         $this->tmdb = new TMDB();
     }
 
     /**
      * @return ?array{
-     *     certification: ?string,
      *     backdrop: ?string,
      *     episode_run_time: mixed,
      *     first_air_date: mixed,
@@ -362,25 +341,7 @@ class TV
     public function getTv(): ?array
     {
         if (isset($this->data['id'], $this->data['name'])) {
-            $certification = null;
-            $contentRatings = [];
-
-            if (isset($this->ratings['results'])) {
-                foreach ($this->ratings['results'] as $countryData) {
-                    if (!empty($countryData['iso_3166_1']) && !empty($countryData['rating'])) {
-                        $contentRatings[$countryData['iso_3166_1']] = $countryData['rating'];
-
-                        if ($countryData['iso_3166_1'] === 'US') {
-                            $certification = $countryData['rating'];
-
-                            break;
-                        }
-                    }
-                }
-            }
-
             return [
-                'certification'      => $certification,
                 'backdrop'           => $this->tmdb->image('backdrop', $this->data),
                 'episode_run_time'   => $this->tmdb->ifHasItems('episode_run_time', $this->data),
                 'first_air_date'     => $this->tmdb->ifExists('first_air_date', $this->data),
