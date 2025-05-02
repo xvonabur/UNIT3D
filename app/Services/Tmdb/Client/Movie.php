@@ -229,23 +229,6 @@ class Movie
      *                 type: ?string,
      *             },
      *         >,
-     *     },
-     *     release_dates: ?array{
-     *         id: ?int,
-     *         results: ?array<
-     *             int<0, max>,
-     *             array{
-     *                 iso_3166_1: ?string,
-     *                 release_dates: ?array<
-     *                     int<0, max>,
-     *                     array{
-     *                         certification: ?string,
-     *                         iso_639_1: ?string,
-     *                         release_date: ?string,
-     *                     },
-     *                 >,
-     *             },
-     *         >,
      *     }
      *  }
      */
@@ -263,7 +246,7 @@ class Movie
             ->get('https://api.TheMovieDB.org/3/movie/{id}', [
                 'api_key'            => config('api-keys.tmdb'),
                 'language'           => config('app.meta_locale'),
-                'append_to_response' => 'videos,images,credits,external_ids,keywords,recommendations,alternative_titles,release_dates,content_ratings',
+                'append_to_response' => 'videos,images,credits,external_ids,keywords,recommendations,alternative_titles',
             ])
             ->json();
 
@@ -274,8 +257,6 @@ class Movie
      * @throws Exception
      * @return ?array{
      *     adult: bool,
-     *     certification: ?string,
-     *     content_ratings: array<string, string>,
      *     backdrop: ?string,
      *     budget: ?int,
      *     homepage: ?string,
@@ -300,24 +281,6 @@ class Movie
     {
         if ($this->data !== null && \array_key_exists('title', $this->data) && \is_string($this->data['title'])) {
             $titleSort = null;
-            $certification = null;
-            $contentRatings = [];
-
-            if (isset($this->data['release_dates']['results'])) {
-                foreach ($this->data['release_dates']['results'] as $countryData) {
-                    if (isset($countryData['iso_3166_1'], $countryData['release_dates'])) {
-                        foreach ($countryData['release_dates'] as $releaseDate) {
-                            if (!empty($releaseDate['certification'])) {
-                                $contentRatings[$countryData['iso_3166_1']] = $releaseDate['certification'];
-
-                                if ($countryData['iso_3166_1'] === 'US') {
-                                    $certification = $releaseDate['certification'];
-                                }
-                            }
-                        }
-                    }
-                }
-            }
 
             if ($this->data['release_date'] !== null) {
                 $re = '/((?<nameSort>.*)(?<separator>\:|and)(?<remaining>.*)|(?<name>.*))/m';
@@ -334,8 +297,6 @@ class Movie
 
             return [
                 'adult'             => $this->data['adult'] ?? false,
-                'certification'     => $certification,
-                'content_ratings'   => $contentRatings,
                 'backdrop'          => $this->tmdb->image('backdrop', $this->data),
                 'budget'            => $this->data['budget'] ?? null,
                 'homepage'          => $this->data['homepage'] ?? null,
