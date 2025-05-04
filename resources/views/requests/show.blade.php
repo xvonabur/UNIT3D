@@ -51,7 +51,7 @@
 
                     @break
                     {{-- Pending --}}
-                @case($torrentRequest->torrent_id !== null && $torrentRequest->approved_by === null)
+                @case($torrentRequest->torrent_id !== null && $torrentRequest->approved_when === null)
                     @include('requests.partials.report')
                     @includeWhen($user->group->is_modo, 'requests.partials.edit')
                     @includeWhen($user->group->is_modo, 'requests.partials.delete')
@@ -111,7 +111,7 @@
                             {{ __('request.claimed') }}
 
                             @break
-                        @case($torrentRequest->torrent !== null && $torrentRequest->approved_by === null)
+                        @case($torrentRequest->torrent !== null && $torrentRequest->approved_when === null)
                             <i class="fas fa-circle text-purple"></i>
                             {{ __('request.pending') }}
 
@@ -207,7 +207,7 @@
                         </dd>
                     </div>
                 </dl>
-                @if ($torrentRequest->approved_by === null && ($torrentRequest->user_id == $user->id || auth()->user()->group->is_modo))
+                @if ($torrentRequest->approved_when === null && ($torrentRequest->user_id == $user->id || auth()->user()->group->is_modo))
                     <div class="panel__body">
                         <div class="form__group">
                             <form
