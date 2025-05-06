@@ -14,10 +14,10 @@ declare(strict_types=1);
  * @license    https://www.gnu.org/licenses/agpl-3.0.en.html/ GNU Affero General Public License v3.0
  */
 
-use App\Http\Requests\Staff\StoreMassActionRequest;
+use App\Http\Requests\Staff\StoreMassPrivateMessageRequest;
 
 beforeEach(function (): void {
-    $this->subject = new StoreMassActionRequest();
+    $this->subject = new StoreMassPrivateMessageRequest();
 });
 
 test('authorize', function (): void {
@@ -30,6 +30,13 @@ test('rules', function (): void {
     $actual = $this->subject->rules();
 
     $this->assertValidationRules([
+        'group_ids' => [
+            'required',
+            'array',
+        ],
+        'group_ids.*' => [
+            'exists:groups,id',
+        ],
         'subject' => [
             'required',
             'string',
