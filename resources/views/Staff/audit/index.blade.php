@@ -19,7 +19,7 @@
     </li>
 @endsection
 
-@section('page', 'page__audit-log--index')
+@section('page', 'page__staff-audit--index')
 
 @section('main')
     <section class="panelV2">

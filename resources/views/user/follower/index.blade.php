@@ -19,6 +19,8 @@
     @include('user.buttons.user')
 @endsection
 
+@section('page', 'page__user-follower--index')
+
 @section('main')
     @if (auth()->user()->isAllowed($user, 'follower', 'show_follower'))
         <section class="panelV2">

@@ -30,6 +30,8 @@
     @include('user.buttons.user')
 @endsection
 
+@section('page', 'page__user-two-factor-auth--edit')
+
 @section('main')
     @livewire('two-factor-auth-form')
 @endsection

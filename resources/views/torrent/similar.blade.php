@@ -27,6 +27,8 @@
     </li>
 @endsection
 
+@section('page', 'page__torrent-similar--index')
+
 @section('main')
     @switch(true)
         @case($category->movie_meta)

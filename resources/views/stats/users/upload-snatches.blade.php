@@ -19,7 +19,7 @@
     @include('partials.statsusermenu')
 @endsection
 
-@section('page', 'page__stats--seedtime')
+@section('page', 'page__stats--upload-snatches')
 
 @section('main')
     <section class="panelV2">

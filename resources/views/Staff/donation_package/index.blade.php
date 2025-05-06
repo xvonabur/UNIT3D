@@ -9,6 +9,8 @@
     <li class="breadcrumb--active">Packages</li>
 @endsection
 
+@section('page', 'page__staff-donation-package--index')
+
 @section('main')
     <section class="panelV2">
         <header class="panel__header">

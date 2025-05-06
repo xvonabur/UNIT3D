@@ -16,7 +16,7 @@
     </li>
 @endsection
 
-@section('page', 'page__media-language--create')
+@section('page', 'page__staff-media-language--create')
 
 @section('main')
     <section class="panelV2">

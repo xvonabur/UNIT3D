@@ -31,7 +31,7 @@
     @endfor
 @endsection
 
-@section('page', 'page__stats--overview')
+@section('page', 'page__yearly-overview--show')
 
 @section('main')
     <section class="panelV2">

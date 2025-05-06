@@ -24,7 +24,7 @@
     @include('user.buttons.user')
 @endsection
 
-@section('page', 'page__bonus--tips')
+@section('page', 'page__user-post-tip--index')
 
 @section('main')
     <section class="panelV2">

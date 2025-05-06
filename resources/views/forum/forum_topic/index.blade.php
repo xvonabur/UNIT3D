@@ -31,7 +31,7 @@
     @include('forum.partials.buttons')
 @endsection
 
-@section('page', 'page__forum--display')
+@section('page', 'page__forum-topic--index')
 
 @section('content')
     @livewire('forum-topic-search', ['forum' => $forum])

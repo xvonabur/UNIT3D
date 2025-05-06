@@ -14,7 +14,7 @@
     </li>
 @endsection
 
-@section('page', 'page__dashboard')
+@section('page', 'page__staff-dashboard--index')
 
 @section('main')
     <div class="dashboard__menus">

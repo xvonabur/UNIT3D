@@ -11,6 +11,8 @@
     </li>
 @endsection
 
+@section('page', 'page__playlist--show')
+
 @section('sidebar')
     <section class="panelV2">
         <h2 class="panel__heading">{{ __('common.actions') }}</h2>

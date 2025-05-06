@@ -15,7 +15,7 @@
     <li class="breadcrumb--active">{{ __('torrent.uploader') }} {{ __('common.stats') }}</li>
 @endsection
 
-@section('page', 'page__uploader-index')
+@section('page', 'page__staff-uploader-index')
 
 @section('main')
     <section class="panelV2">

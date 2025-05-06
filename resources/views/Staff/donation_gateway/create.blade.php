@@ -12,6 +12,8 @@
     <li class="breadcrumb--active">Create Gateway</li>
 @endsection
 
+@section('page', 'page__staff-donation-gateway--create')
+
 @section('main')
     <section class="panelV2">
         <header class="panel__header">

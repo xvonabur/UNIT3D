@@ -17,6 +17,8 @@
     <li class="breadcrumb--active">Torrent Trumps</li>
 @endsection
 
+@section('page', 'page__staff-torrent-trump--index')
+
 <section class="panelV2">
     <header class="panel__header">
         <h2 class="panel__heading">Torrent Trumps</h2>

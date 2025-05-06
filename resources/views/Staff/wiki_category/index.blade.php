@@ -9,6 +9,8 @@
     <li class="breadcrumb--active">Wiki Categories</li>
 @endsection
 
+@section('page', 'page__staff-wiki-category--index')
+
 @section('main')
     @foreach ($wikiCategories as $category)
         <section class="panelV2">

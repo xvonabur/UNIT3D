@@ -23,7 +23,7 @@
     @include('Staff.partials.user-info-search')
 @endsection
 
-@section('page', 'page__bans-log--index')
+@section('page', 'page__staff-ban--index')
 
 @section('main')
     <section class="panelV2">

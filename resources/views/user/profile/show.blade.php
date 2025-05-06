@@ -23,6 +23,8 @@
     @include('user.buttons.user')
 @endsection
 
+@section('page', 'page__user-profile--show')
+
 @if (auth()->user()->isAllowed($user))
     @section('main')
         <section class="panelV2">

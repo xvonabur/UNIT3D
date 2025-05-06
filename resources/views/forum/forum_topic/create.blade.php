@@ -36,6 +36,8 @@
     @include('forum.partials.buttons')
 @endsection
 
+@section('page', 'page__forum-topic--create')
+
 @section('main')
     <section class="panelV2">
         <h2 class="panel__heading">{{ __('forum.create-new-topic') }}</h2>

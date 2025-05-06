@@ -25,7 +25,7 @@
     </li>
 @endsection
 
-@section('page', 'page__blocked-ips--index')
+@section('page', 'page__staff-blocked-ip--index')
 
 @section('main')
     @livewire('block-ip-address')

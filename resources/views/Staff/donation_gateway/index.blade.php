@@ -9,6 +9,8 @@
     <li class="breadcrumb--active">Gateways</li>
 @endsection
 
+@section('page', 'page__staff-donation-gateway--index')
+
 @section('main')
     <section class="panelV2">
         <header class="panel__header">

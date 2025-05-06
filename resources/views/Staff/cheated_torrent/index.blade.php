@@ -19,7 +19,7 @@
     <li class="breadcrumb--active">Cheated Torrents</li>
 @endsection
 
-@section('page', 'page__cheated-torrents--index')
+@section('page', 'page__staff-cheated-torrent--index')
 
 @section('main')
     <section class="panelV2">
