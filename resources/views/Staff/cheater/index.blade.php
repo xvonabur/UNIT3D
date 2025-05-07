@@ -24,7 +24,7 @@
     </li>
 @endsection
 
-@section('page', 'page__cheaters--index')
+@section('page', 'page__staff-cheater--index')
 
 @section('main')
     <section class="panelV2">

@@ -12,6 +12,8 @@
     <li class="breadcrumb--active">Edit Package</li>
 @endsection
 
+@section('page', 'page__staff-donation-package--edit')
+
 @section('main')
     <section class="panelV2">
         <header class="panel__header">

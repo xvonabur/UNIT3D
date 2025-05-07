@@ -14,7 +14,7 @@
     </li>
 @endsection
 
-@section('page', 'page__conversation--show')
+@section('page', 'page__user-conversation--show')
 
 @section('main')
     @foreach ($conversation->messages as $message)

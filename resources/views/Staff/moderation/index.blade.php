@@ -15,7 +15,7 @@
     </li>
 @endsection
 
-@section('page', 'page__moderation')
+@section('page', 'page__staff-moderation--index')
 
 @section('main')
     <section class="panelV2">

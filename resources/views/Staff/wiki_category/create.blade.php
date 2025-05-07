@@ -16,7 +16,7 @@
     </li>
 @endsection
 
-@section('page', 'page__wiki-categories--create')
+@section('page', 'page__staff-wiki-category--create')
 
 @section('main')
     <section class="panelV2">

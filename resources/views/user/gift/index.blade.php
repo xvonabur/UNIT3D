@@ -24,7 +24,7 @@
     @include('user.buttons.user')
 @endsection
 
-@section('page', 'page__bonus--gifts')
+@section('page', 'page__user-gift--index')
 
 @section('main')
     <section class="panelV2">

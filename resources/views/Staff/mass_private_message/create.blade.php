@@ -25,7 +25,7 @@
     </li>
 @endsection
 
-@section('page', 'page__mass-pm--index')
+@section('page', 'page__staff-mass-private-message--create')
 
 @section('main')
     <section class="panelV2">

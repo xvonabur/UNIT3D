@@ -17,7 +17,7 @@
     </li>
 @endsection
 
-@section('page', 'page__stats--overview')
+@section('page', 'page__yearly-overview--index')
 
 @section('main')
     <section class="panelV2">

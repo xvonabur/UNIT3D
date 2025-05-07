@@ -12,6 +12,8 @@
     <li class="breadcrumb--active">Create Package</li>
 @endsection
 
+@section('page', 'page__staff-donation-package--create')
+
 @section('main')
     <section class="panelV2">
         <header class="panel__header">

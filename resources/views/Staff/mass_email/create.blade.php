@@ -25,7 +25,7 @@
     </li>
 @endsection
 
-@section('page', 'page__mass_email--index')
+@section('page', 'page__staff-mass-email--create')
 
 @section('main')
     <section class="panelV2">

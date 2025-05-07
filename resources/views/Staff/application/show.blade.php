@@ -24,7 +24,7 @@
     </li>
 @endsection
 
-@section('page', 'page__application--show')
+@section('page', 'page__staff-application--show')
 
 @section('main')
     <section class="panelV2">

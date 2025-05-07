@@ -22,6 +22,8 @@
     @include('user.buttons.user')
 @endsection
 
+@section('page', 'page__user-general-setting--index')
+
 @section('main')
     <section class="panelV2">
         <h2 class="panel__heading">General {{ __('user.settings') }}</h2>

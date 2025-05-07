@@ -19,7 +19,7 @@
     </li>
 @endsection
 
-@section('page', 'page__wiki-category-admin--edit')
+@section('page', 'page__staff-wiki-category--edit')
 
 @section('main')
     <section class="panelV2">

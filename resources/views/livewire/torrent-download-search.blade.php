@@ -17,6 +17,8 @@
     <li class="breadcrumb--active">Torrent Downloads</li>
 @endsection
 
+@section('page', 'page__staff-torrent-download--index')
+
 <div style="display: flex; flex-direction: column; row-gap: 1rem">
     <section class="panelV2">
         <header class="panel__header">

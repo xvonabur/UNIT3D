@@ -19,7 +19,7 @@
     </li>
 @endsection
 
-@section('page', 'page__media-language--edit')
+@section('page', 'page__staff-media-language--edit')
 
 @section('main')
     <section class="panelV2">

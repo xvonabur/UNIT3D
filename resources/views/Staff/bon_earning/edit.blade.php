@@ -16,6 +16,8 @@
     </li>
 @endsection
 
+@section('page', 'page__staff-bon-earning--edit')
+
 @section('main')
     <section class="panelV2">
         <h2 class="panel__heading">

@@ -9,6 +9,8 @@
     <li class="breadcrumb--active">{{ __('bon.bon') }} {{ __('bon.exchange') }}</li>
 @endsection
 
+@section('page', 'page__staff-bon-exchange--index')
+
 @section('main')
     <section class="panelV2">
         <header class="panel__header">

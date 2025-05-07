@@ -23,7 +23,7 @@
     @include('forum.partials.buttons')
 @endsection
 
-@section('page', 'page__forum--category')
+@section('page', 'page__category-topic--index')
 
 @section('content')
     @livewire('forum-category-topic-search', ['category' => $category])

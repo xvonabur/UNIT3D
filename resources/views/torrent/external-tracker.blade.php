@@ -47,6 +47,8 @@
     </li>
 @endsection
 
+@section('page', 'page__torrent-external-tracker--show')
+
 @section('main')
     @if ($externalTorrent === true)
         <section class="panelV2">

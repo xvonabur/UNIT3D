@@ -19,6 +19,8 @@
     @include('user.buttons.user')
 @endsection
 
+@section('page', 'page__user-following--index')
+
 @section('main')
     @if (auth()->id() === $user->id || auth()->user()->group->is_modo)
         <section class="panelV2">

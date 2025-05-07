@@ -9,7 +9,7 @@
     <li class="breadcrumb--active">Internals</li>
 @endsection
 
-@section('page', 'page__internals--index')
+@section('page', 'page__staff-internal--index')
 
 @section('main')
     <section class="panelV2">

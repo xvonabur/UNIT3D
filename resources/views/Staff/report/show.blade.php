@@ -22,7 +22,7 @@
     <li class="breadcrumb--active">{{ __('common.report') }} Details</li>
 @endsection
 
-@section('page', 'page__poll--show')
+@section('page', 'page__staff-report--show')
 
 @section('main')
     @if ($report->torrent)

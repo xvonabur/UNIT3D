@@ -24,6 +24,8 @@
     </li>
 @endsection
 
+@section('page', 'page__torrent--show')
+
 @section('main')
     @switch(true)
         @case($torrent->category->movie_meta)

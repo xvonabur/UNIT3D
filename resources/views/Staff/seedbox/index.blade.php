@@ -25,7 +25,7 @@
     </li>
 @endsection
 
-@section('page', 'page__seedbox--index')
+@section('page', 'page__staff-seedbox--index')
 
 @section('main')
     <section class="panelV2">

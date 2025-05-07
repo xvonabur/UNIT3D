@@ -21,6 +21,8 @@
     @include('user.buttons.user')
 @endsection
 
+@section('page', 'page__user-invite-tree--index')
+
 @section('main')
     <section class="panelV2">
         <h2 class="panel__heading">Invite Tree</h2>
