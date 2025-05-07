@@ -21,19 +21,19 @@
     @if ($user->can_request ?? $user->group->can_request)
         @switch(true)
             @case($torrentRequest->category->movie_meta)
-                @include('torrent.partials.movie_meta', ['torrent' => $torrentRequest, 'category' => $torrentRequest->category, 'tmdb' => $torrentRequest->tmdb_movie_id])
+                @include('torrent.partials.movie-meta', ['torrent' => $torrentRequest, 'category' => $torrentRequest->category, 'tmdb' => $torrentRequest->tmdb_movie_id])
 
                 @break
             @case($torrentRequest->category->tv_meta)
-                @include('torrent.partials.tv_meta', ['torrent' => $torrentRequest, 'category' => $torrentRequest->category, 'tmdb' => $torrentRequest->tmdb_tv_id])
+                @include('torrent.partials.tv-meta', ['torrent' => $torrentRequest, 'category' => $torrentRequest->category, 'tmdb' => $torrentRequest->tmdb_tv_id])
 
                 @break
             @case($torrentRequest->category->game_meta)
-                @include('torrent.partials.game_meta', ['torrent' => $torrentRequest, 'category' => $torrentRequest->category, 'igdb' => $torrentRequest->igdb])
+                @include('torrent.partials.game-meta', ['torrent' => $torrentRequest, 'category' => $torrentRequest->category, 'igdb' => $torrentRequest->igdb])
 
                 @break
             @default
-                @include('torrent.partials.no_meta', ['torrent' => $torrentRequest, 'category' => $torrentRequest->category])
+                @include('torrent.partials.no-meta', ['torrent' => $torrentRequest, 'category' => $torrentRequest->category])
 
                 @break
         @endswitch
@@ -93,7 +93,7 @@
                 </span>
             </li>
             <li class="request__requester">
-                <x-user_tag :user="$torrentRequest->user" :anon="$torrentRequest->anon" />
+                <x-user-tag :user="$torrentRequest->user" :anon="$torrentRequest->anon" />
             </li>
             <li class="request__created-at">
                 <time
@@ -147,7 +147,7 @@
                     <div class="key-value__group">
                         <dt>{{ __('request.claimed') }} by</dt>
                         <dd>
-                            <x-user_tag
+                            <x-user-tag
                                 :user="$torrentRequest->claim->user"
                                 :anon="$torrentRequest->claim->anon"
                             />
@@ -175,7 +175,7 @@
                     <div class="key-value__group">
                         <dt>{{ __('request.filled') }} by</dt>
                         <dd>
-                            <x-user_tag
+                            <x-user-tag
                                 :user="$torrentRequest->filler"
                                 :anon="$torrentRequest->filled_anon"
                             />
@@ -273,7 +273,7 @@
                         @foreach ($torrentRequest->bounties as $bounty)
                             <tr @if($loop->iteration > 10) x-show="isToggledOn" x-cloak @endif>
                                 <td>
-                                    <x-user_tag :user="$bounty->user" :anon="$bounty->anon" />
+                                    <x-user-tag :user="$bounty->user" :anon="$bounty->anon" />
                                 </td>
                                 <td>{{ $bounty->seedbonus }}</td>
                                 <td>

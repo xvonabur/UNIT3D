@@ -46,10 +46,10 @@
                         <tr>
                             <td>{{ $ban->id }}</td>
                             <td>
-                                <x-user_tag :anon="false" :user="$ban->banneduser" />
+                                <x-user-tag :anon="false" :user="$ban->banneduser" />
                             </td>
                             <td>
-                                <x-user_tag :anon="false" :user="$ban->staffuser" />
+                                <x-user-tag :anon="false" :user="$ban->staffuser" />
                             </td>
                             <td>{{ $ban->ban_reason }}</td>
                             <td>{{ $ban->unban_reason }}</td>

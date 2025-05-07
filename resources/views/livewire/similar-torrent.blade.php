@@ -973,7 +973,7 @@
                                 <td>{{ $torrentRequest->type->name }}</td>
                                 <td>{{ $torrentRequest->resolution->name ?? 'Unknown' }}</td>
                                 <td>
-                                    <x-user_tag
+                                    <x-user-tag
                                         :user="$torrentRequest->user"
                                         :anon="$torrentRequest->anon"
                                     />

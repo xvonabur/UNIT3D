@@ -45,7 +45,7 @@
                                     />
                                 </td>
                                 <td>
-                                    <x-user_tag :anon="false" :user="$follower" />
+                                    <x-user-tag :anon="false" :user="$follower" />
                                 </td>
                                 <td>{{ $follower->follow->created_at }}</td>
                             </tr>

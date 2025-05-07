@@ -35,7 +35,7 @@
                     @foreach ($uploaders as $uploader)
                         <tr>
                             <td>
-                                <x-user_tag :anon="false" :user="$uploader" />
+                                <x-user-tag :anon="false" :user="$uploader" />
                             </td>
                             <td>{{ $uploader->total_uploads }}</td>
                             <td>{{ $uploader->recent_uploads }}</td>

@@ -51,7 +51,7 @@
                         <tr>
                             <td>{{ $donation->created_at }}</td>
                             <td>
-                                <x-user_tag :user="$donation->user" :anon="false" />
+                                <x-user-tag :user="$donation->user" :anon="false" />
                             </td>
                             <td style="max-width: 80ch; word-wrap: break-word; white-space: normal">
                                 {{ $donation->transaction }}

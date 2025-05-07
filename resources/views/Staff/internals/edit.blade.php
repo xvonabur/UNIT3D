@@ -151,7 +151,7 @@
                         <tr>
                             <td>{{ $user->pivot->position }}</td>
                             <td>
-                                <x-user_tag :user="$user" :anon="false" />
+                                <x-user-tag :user="$user" :anon="false" />
                             </td>
                             <td>
                                 <time

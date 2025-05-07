@@ -91,9 +91,9 @@
                                 <td>
                                     @if (null !== ($user = \App\Models\User::find($peer['user_id'])))
                                         @if ($torrent === null)
-                                            <x-user_tag :user="$user" :anon="true" />
+                                            <x-user-tag :user="$user" :anon="true" />
                                         @else
-                                            <x-user_tag
+                                            <x-user-tag
                                                 :user="$user"
                                                 :anon="
                                                     $user->privacy?->hidden

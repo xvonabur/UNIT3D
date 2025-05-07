@@ -134,7 +134,7 @@
             @foreach ($uploaders as $uploader)
                 <article class="user-stat-card">
                     <h3 class="user-stat-card__username">
-                        <x-user_tag :user="$uploader->user" :anon="false" />
+                        <x-user-tag :user="$uploader->user" :anon="false" />
                     </h3>
                     <h4 class="user-stat-card__stat">
                         {{ $uploader->value }} {{ __('user.uploads') }}
@@ -154,7 +154,7 @@
             @foreach ($requesters as $requester)
                 <article class="user-stat-card">
                     <h3 class="user-stat-card__username">
-                        <x-user_tag :user="$requester->user" :anon="false" />
+                        <x-user-tag :user="$requester->user" :anon="false" />
                     </h3>
                     <h4 class="user-stat-card__stat">
                         {{ $requester->value }} {{ __('request.requests') }}
@@ -174,7 +174,7 @@
             @foreach ($fillers as $filler)
                 <article class="user-stat-card">
                     <h3 class="user-stat-card__username">
-                        <x-user_tag :user="$filler->filler" :anon="false" />
+                        <x-user-tag :user="$filler->filler" :anon="false" />
                     </h3>
                     <h4 class="user-stat-card__stat">
                         {{ $filler->value }} {{ __('notification.request-fills') }}
@@ -194,7 +194,7 @@
             @foreach ($commenters as $commenter)
                 <article class="user-stat-card">
                     <h3 class="user-stat-card__username">
-                        <x-user_tag :user="$commenter->user" :anon="false" />
+                        <x-user-tag :user="$commenter->user" :anon="false" />
                     </h3>
                     <h4 class="user-stat-card__stat">
                         {{ $commenter->value }} {{ __('user.comments') }}
@@ -214,7 +214,7 @@
             @foreach ($posters as $poster)
                 <article class="user-stat-card">
                     <h3 class="user-stat-card__username">
-                        <x-user_tag :user="$poster->user" :anon="false" />
+                        <x-user-tag :user="$poster->user" :anon="false" />
                     </h3>
                     <h4 class="user-stat-card__stat">
                         {{ $poster->value }} {{ __('common.posts') }}
@@ -234,7 +234,7 @@
             @foreach ($thankers as $thanker)
                 <article class="user-stat-card">
                     <h3 class="user-stat-card__username">
-                        <x-user_tag :user="$thanker->user" :anon="false" />
+                        <x-user-tag :user="$thanker->user" :anon="false" />
                     </h3>
                     <h4 class="user-stat-card__stat">
                         {{ $thanker->value }} {{ __('torrent.thanks') }}
@@ -285,7 +285,7 @@
                 <ul class="overview__staff-list">
                     @foreach ($group->users as $user)
                         <li class="overview__staff-list-item">
-                            <x-user_tag :user="$user" :anon="false" />
+                            <x-user-tag :user="$user" :anon="false" />
                         </li>
                     @endforeach
                 </ul>

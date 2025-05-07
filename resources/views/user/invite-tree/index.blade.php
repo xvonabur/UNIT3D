@@ -53,7 +53,7 @@
                     @forelse ($invites as $invite)
                         <tr>
                             <td style="padding-left: {{ 24 * $invite->depth + 14 }}px">
-                                <x-user_tag :user="$invite->receiver" :anon="false">
+                                <x-user-tag :user="$invite->receiver" :anon="false">
                                     @if ($user->warnings_count > 1)
                                         <x-slot:appended-icons>
                                             <i
@@ -62,7 +62,7 @@
                                             ></i>
                                         </x-slot>
                                     @endif
-                                </x-user_tag>
+                                </x-user-tag>
                             </td>
 
                             @if (auth()->user()->isAllowed($invite->receiver, 'profile', 'show_profile_torrent_ratio'))
@@ -178,7 +178,7 @@
                     <tbody>
                         <tr>
                             <td>
-                                <x-user_tag :user="$user" :anon="false">
+                                <x-user-tag :user="$user" :anon="false">
                                     @if ($user->warnings_exists)
                                         <x-slot:appended-icons>
                                             <i
@@ -187,7 +187,7 @@
                                             ></i>
                                         </x-slot>
                                     @endif
-                                </x-user_tag>
+                                </x-user-tag>
                             </td>
                             @if (auth()->user()->group->is_modo)
                                 <td></td>
@@ -196,7 +196,7 @@
                         @foreach ($inviters as $i => $inviter)
                             <tr>
                                 <td>
-                                    <x-user_tag :user="$inviter" :anon="false">
+                                    <x-user-tag :user="$inviter" :anon="false">
                                         @if ($user->warnings_exists)
                                             <x-slot:appended-icons>
                                                 <i
@@ -205,7 +205,7 @@
                                                 ></i>
                                             </x-slot>
                                         @endif
-                                    </x-user_tag>
+                                    </x-user-tag>
                                 </td>
                                 @if (auth()->user()->group->is_modo)
                                     <td>

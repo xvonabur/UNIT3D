@@ -44,7 +44,7 @@ test('staff can view mass private message creation page', function (): void {
         ->get(route('staff.mass_private_message.create'));
 
     $response->assertOk()
-        ->assertViewIs('Staff.mass_private_message.create')
+        ->assertViewIs('Staff.mass-private-message.create')
         ->assertViewHas('groups');
 });
 

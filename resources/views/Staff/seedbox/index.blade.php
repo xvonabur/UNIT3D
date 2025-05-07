@@ -46,7 +46,7 @@
                         <tr>
                             <td>{{ $loop->iteration }}</td>
                             <td>
-                                <x-user_tag :anon="false" :user="$seedbox->user" />
+                                <x-user-tag :anon="false" :user="$seedbox->user" />
                             </td>
                             <td>{{ $seedbox->ip }}</td>
                             <td>

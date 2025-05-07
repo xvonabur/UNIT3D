@@ -104,7 +104,7 @@
                     @foreach ($internalUsers as $user)
                         <tr>
                             <td>
-                                <x-user_tag :anon="false" :user="$user" />
+                                <x-user-tag :anon="false" :user="$user" />
                             </td>
                             <td>{{ $user->internals->pluck('name')->implode(', ') }}</td>
                             <td>{{ $user->total_uploads }}</td>

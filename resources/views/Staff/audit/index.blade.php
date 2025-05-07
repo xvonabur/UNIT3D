@@ -38,7 +38,7 @@
                     @foreach ($staffUsers as $staffUser)
                         <tr>
                             <td>
-                                <x-user_tag :anon="false" :user="$staffUser" />
+                                <x-user-tag :anon="false" :user="$staffUser" />
                             </td>
                             <td>{{ $staffUser->last_30_days }}</td>
                             <td>{{ $staffUser->last_60_days }}</td>
