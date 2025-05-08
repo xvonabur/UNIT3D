@@ -113,7 +113,7 @@
         @if ($application->status !== \App\Enums\ModerationStatus::PENDING)
             <h2 class="panel__heading">{{ __('common.moderated-by') }}</h2>
             <div class="panel__body">
-                <x-user_tag :anon="false" :user="$application->moderated" />
+                <x-user-tag :anon="false" :user="$application->moderated" />
             </div>
         @else
             <h2 class="panel__heading">{{ __('common.action') }}</h2>

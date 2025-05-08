@@ -47,14 +47,14 @@
                                 @if ($tip->sender === null)
                                     Deleted user
                                 @else
-                                    <x-user_tag :user="$tip->sender" :anon="false" />
+                                    <x-user-tag :user="$tip->sender" :anon="false" />
                                 @endif
                             </td>
                             <td>
                                 @if ($tip->post === null)
                                     Post Deleted
                                 @else
-                                    <x-user_tag :user="$tip->recipient" :anon="false" />
+                                    <x-user-tag :user="$tip->recipient" :anon="false" />
                                 @endif
                             </td>
                             <td>{{ $tip->bon }}</td>

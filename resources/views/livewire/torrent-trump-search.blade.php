@@ -91,7 +91,7 @@
                     <tr>
                         <td>{{ $torrentTrump->id }}</td>
                         <td>
-                            <x-user_tag :user="$torrentTrump->user" :anon="false" />
+                            <x-user-tag :user="$torrentTrump->user" :anon="false" />
                         </td>
                         <td>
                             @if ($torrentTrump->torrent->trashed())

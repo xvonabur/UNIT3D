@@ -78,7 +78,7 @@
                     @foreach ($peers as $peer)
                         <tr>
                             <td>
-                                <x-user_tag
+                                <x-user-tag
                                     :user="$peer->user"
                                     :anon="
                                         $peer->user->privacy?->hidden

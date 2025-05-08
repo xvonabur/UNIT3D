@@ -42,7 +42,7 @@
                     @foreach ($cheaters as $cheater)
                         <tr>
                             <td>
-                                <x-user_tag :anon="false" :user="$cheater" />
+                                <x-user-tag :anon="false" :user="$cheater" />
                             </td>
                             <td>
                                 <time

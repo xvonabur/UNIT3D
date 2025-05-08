@@ -89,7 +89,7 @@
                     @foreach ($histories as $history)
                         <tr>
                             <td>
-                                <x-user_tag
+                                <x-user-tag
                                     :user="$history->user"
                                     :anon="
                                         $history->user->privacy?->hidden

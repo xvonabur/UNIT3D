@@ -263,7 +263,7 @@
                     />
                 </a>
                 <p class="playlist__author">
-                    <x-user_tag :user="$playlist->user" :anon="false" />
+                    <x-user-tag :user="$playlist->user" :anon="false" />
                 </p>
                 <p class="playlist__description bbcode-rendered">
                     @bbcode($playlist->description)
@@ -340,7 +340,7 @@
                             </a>
                         </td>
                         <td>
-                            <x-user_tag :user="$playlistSuggestion->user" :anon="false" />
+                            <x-user-tag :user="$playlistSuggestion->user" :anon="false" />
                         </td>
                         <td>{{ $playlistSuggestion->message }}</td>
                         <td>

@@ -32,19 +32,19 @@
 @section('main')
     @switch(true)
         @case($category->movie_meta)
-            @include('torrent.partials.movie_meta')
+            @include('torrent.partials.movie-meta')
 
             @break
         @case($category->tv_meta)
-            @include('torrent.partials.tv_meta')
+            @include('torrent.partials.tv-meta')
 
             @break
         @case($category->game_meta)
-            @include('torrent.partials.game_meta')
+            @include('torrent.partials.game-meta')
 
             @break
         @default
-            @include('torrent.partials.no_meta')
+            @include('torrent.partials.no-meta')
 
             @break
     @endswitch

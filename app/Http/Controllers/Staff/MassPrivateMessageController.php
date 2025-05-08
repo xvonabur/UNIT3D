@@ -26,7 +26,7 @@ class MassPrivateMessageController extends Controller
 {
     public function create(): \Illuminate\Contracts\View\Factory|\Illuminate\View\View
     {
-        return view('Staff.mass_private_message.create', [
+        return view('Staff.mass-private-message.create', [
             'groups' => Group::orderBy('position')->get()
         ]);
     }

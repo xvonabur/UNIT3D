@@ -168,7 +168,7 @@
                             @foreach ($torrentDownloads as $torrentDownload)
                                 <tr>
                                     <td>
-                                        <x-user_tag
+                                        <x-user-tag
                                             :user="$torrentDownload->user"
                                             :anon="false"
                                         />
@@ -232,7 +232,7 @@
                                 <tr>
                                     <td>{{ $torrentDownload->id }}</td>
                                     <td>
-                                        <x-user_tag
+                                        <x-user-tag
                                             :user="$torrentDownload->user"
                                             :anon="false"
                                         />
