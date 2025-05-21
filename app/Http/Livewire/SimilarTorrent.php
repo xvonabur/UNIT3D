@@ -436,7 +436,7 @@ class SimilarTorrent extends Component
             return null;
         }
 
-        return $this->work->collections->first()?->movies;
+        return $this->work->collections()->first()?->movies()->get();
     }
 
     final public function alertConfirm(): void

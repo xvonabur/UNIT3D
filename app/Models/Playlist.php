@@ -61,7 +61,7 @@ class Playlist extends Model
     /**
      * Has Many Torrents.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany<Torrent, $this>
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany<Torrent, $this, PlaylistTorrent>
      */
     public function torrents(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
