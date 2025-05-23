@@ -564,7 +564,7 @@ class Torrent extends Model
     /**
      * Belongs To A Playlist.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany<Playlist, $this>
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany<Playlist, $this, PlaylistTorrent>
      */
     public function playlists(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
