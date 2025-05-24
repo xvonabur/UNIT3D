@@ -360,13 +360,14 @@ class StatsController extends Controller
      */
     public function messages(): \Illuminate\Contracts\View\Factory|\Illuminate\View\View
     {
-        $users = \App\Models\User::withCount(['messages' => function ($query) {
-                $query->where('chatroom_id', '!=', 0);  // exclude chatroom_id 0/PMs;
-            }])
+        $users = User::withCount(['messages' => function ($query): void {
+            $query->where('chatroom_id', '!=', 0);  // exclude chatroom_id 0/PMs;
+        }])
             ->orderByDesc('messages_count')
             ->whereDoesntHave('group', fn ($query) => $query->whereIn('slug', ['banned', 'validating', 'disabled', 'pruned', 'bot']))
             ->take(100)
             ->get();
+
         return view('stats.users.messages', [
             'users' => $users,
         ]);
