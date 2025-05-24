@@ -354,4 +354,19 @@ class StatsController extends Controller
                 ->get(),
         ]);
     }
+
+    /**
+     * Show Extra-Stats User Messages.
+     */
+    public function messages(): \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+    {
+        $users = \App\Models\User::withCount('messages')
+            ->orderByDesc('messages_count')
+            ->whereDoesntHave('group', fn ($query) => $query->whereIn('slug', ['banned', 'validating', 'disabled', 'pruned']))
+            ->take(100)
+            ->get();
+        return view('stats.users.messages', [
+            'users' => $users,
+        ]);
+    }
 }
