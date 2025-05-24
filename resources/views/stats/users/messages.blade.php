@@ -52,4 +52,4 @@
             </table>
         </div>
     </section>
-@endsection 
+@endsection
