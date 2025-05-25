@@ -364,6 +364,7 @@ class StatsController extends Controller
             $query->where('chatroom_id', '!=', 0);  // Exclude private chatbox messages;
         }])
             ->orderByDesc('messages_count')
+            ->where('id', '!=', User::SYSTEM_USER_ID)
             ->whereDoesntHave('group', fn ($query) => $query->whereIn('slug', ['banned', 'validating', 'disabled', 'pruned', 'bot']))
             ->take(100)
             ->get();
