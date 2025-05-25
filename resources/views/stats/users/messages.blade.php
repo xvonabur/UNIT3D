@@ -19,7 +19,7 @@
     @include('partials.statsusermenu')
 @endsection
 
-@section('page', 'page__stats--message-count')
+@section('page', 'page__stats--messages')
 
 @section('main')
     <section class="panelV2">
