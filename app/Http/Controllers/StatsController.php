@@ -354,4 +354,23 @@ class StatsController extends Controller
                 ->get(),
         ]);
     }
+
+    /**
+     * Show Extra-Stats User Messages.
+     */
+    public function messages(): \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+    {
+        $users = User::withCount(['messages' => function ($query): void {
+            $query->where('chatroom_id', '!=', 0);  // Exclude private chatbox messages;
+        }])
+            ->orderByDesc('messages_count')
+            ->where('id', '!=', User::SYSTEM_USER_ID)
+            ->whereDoesntHave('group', fn ($query) => $query->whereIn('slug', ['banned', 'validating', 'disabled', 'pruned', 'bot']))
+            ->take(100)
+            ->get();
+
+        return view('stats.users.messages', [
+            'users' => $users,
+        ]);
+    }
 }
