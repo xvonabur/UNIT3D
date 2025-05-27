@@ -97,15 +97,11 @@ class BackupPanel extends Component
 
         return $backupDestination
             ->backups()
-            ->map(function (Backup $backup) {
-                $size = method_exists($backup, 'sizeInBytes') ? $backup->sizeInBytes() : 0;
-
-                return [
-                    'path' => $backup->path(),
-                    'date' => $backup->date()->format('Y-m-d H:i:s'),
-                    'size' => Format::humanReadableSize($size),
-                ];
-            })
+            ->map(fn (Backup $backup) => [
+                'path' => $backup->path(),
+                'date' => $backup->date()->format('Y-m-d H:i:s'),
+                'size' => Format::humanReadableSize($backup->sizeInBytes()),
+            ])
             ->toArray();
     }
 
@@ -143,7 +139,7 @@ class BackupPanel extends Component
         }
 
         $fileName = pathinfo((string) $backup->path(), PATHINFO_BASENAME);
-        $size = method_exists($backup, 'sizeInBytes') ? $backup->sizeInBytes() : $backup->size();
+        $size = $backup->sizeInBytes();
 
         $downloadHeaders = [
             'Cache-Control'       => 'must-revalidate, post-check=0, pre-check=0',
