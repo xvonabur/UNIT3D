@@ -45,7 +45,9 @@ class BackupPanel extends Component
     #[Computed]
     final public function backupStatuses(): array
     {
-        return BackupDestinationStatusFactory::createForMonitorConfig(config('backup.monitor_backups'))
+        $monitorConfig = \Spatie\Backup\Config\MonitoredBackupsConfig::fromArray(config('backup.monitor_backups'));
+
+        return BackupDestinationStatusFactory::createForMonitorConfig($monitorConfig)
             ->map(fn (BackupDestinationStatus $backupDestinationStatus) => [
                 'name'      => $backupDestinationStatus->backupDestination()->backupName(),
                 'disk'      => $backupDestinationStatus->backupDestination()->diskName(),

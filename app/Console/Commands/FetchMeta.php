@@ -121,6 +121,6 @@ class FetchMeta extends Command
             }
         }
 
-        $this->alert('Meta fetch queueing complete in '.now()->floatDiffInSeconds($start).'s.');
+        $this->alert('Meta fetch queueing complete in '.(int) now()->diffInSeconds($start, true).'s.');
     }
 }

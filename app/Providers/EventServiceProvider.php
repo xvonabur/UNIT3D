@@ -62,11 +62,6 @@ class EventServiceProvider extends ServiceProvider
             AchievementUnlocked::class,
         ],
 
-        // Backups System
-        BackupZipWasCreated::class => [
-            PasswordProtectBackup::class,
-        ],
-
         // Ticket System
         TicketCreated::class => [
             NotifyUserTicketWasCreated::class,
