@@ -36,7 +36,7 @@ class ProcessBackup implements ShouldQueue
 
     public function handle(): void
     {
-        $backupJob = BackupJobFactory::createFromArray(config('backup'));
+        $backupJob = BackupJobFactory::createFromConfig(config('backup'));
 
         if ($this->option === 'only-db') {
             $backupJob->dontBackupFilesystem();
