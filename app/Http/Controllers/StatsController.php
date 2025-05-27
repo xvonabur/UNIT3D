@@ -272,7 +272,7 @@ class StatsController extends Controller
             'current'           => Carbon::now(),
             'user'              => $user,
             'user_avg_seedtime' => DB::table('history')->where('user_id', '=', $user->id)->avg('seedtime'),
-            'user_account_age'  => Carbon::now()->diffInSeconds($user->created_at),
+            'user_account_age'  => (int) Carbon::now()->diffInSeconds($user->created_at, true),
             'user_seed_size'    => $user->seedingTorrents()->sum('size'),
             'user_uploads'      => $user->torrents()->count(),
             'groups'            => Group::orderBy('position')->where('is_modo', '=', 0)->get(),
