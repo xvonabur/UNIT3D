@@ -2139,8 +2139,9 @@ CREATE TABLE `torrents` (
   `distributor_id` int DEFAULT NULL,
   `region_id` int DEFAULT NULL,
   `personal_release` tinyint(1) NOT NULL DEFAULT '0',
-  `balance` bigint DEFAULT NULL,
-  `balance_offset` bigint DEFAULT NULL,
+  `balance` bigint NOT NULL DEFAULT '0',
+  `balance_offset` bigint NOT NULL DEFAULT '0',
+  `balance_reset_at` timestamp NULL DEFAULT NULL,
   `info_hash` binary(20) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `name` (`name`),
@@ -2963,3 +2964,4 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (345,'2025_04_03_08
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (346,'2025_04_07_152108_split_recommendations_into_movie_and_tv',1);
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (347,'2025_04_15_075631_add_description_to_playlist_categories',1);
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (348,'2025_04_15_090705_create_playlist_suggestions',1);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (349,'2025_05_28_084740_update_torrent_balance',1);
