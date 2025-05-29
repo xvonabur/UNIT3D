@@ -363,6 +363,9 @@ class StatsController extends Controller
         $users = User::withCount(['messages' => function ($query): void {
             $query->where('chatroom_id', '!=', 0);  // Exclude private chatbox messages;
         }])
+            ->withSum(['messages as characters_typed' => function ($query): void {
+                $query->where('chatroom_id', '!=', 0);  // Exclude private chatbox messages;
+            }], DB::raw('CHAR_LENGTH(message)'))
             ->orderByDesc('messages_count')
             ->where('id', '!=', User::SYSTEM_USER_ID)
             ->whereDoesntHave('group', fn ($query) => $query->whereIn('slug', ['banned', 'validating', 'disabled', 'pruned', 'bot']))
