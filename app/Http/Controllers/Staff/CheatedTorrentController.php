@@ -70,7 +70,9 @@ class CheatedTorrentController extends Controller
                         ->orWhereColumn(DB::raw('DATE_SUB(NOW(), INTERVAL 1 HOUR)'), '<', 'created_at')
                         ->orWhereColumn(DB::raw('DATE_SUB(NOW(), INTERVAL 1 HOUR)'), '<', 'completed_at')
                 )
-                ->having('current_balance', '<>', 0)
+                // Tolerance of 5%
+                // @phpstan-ignore argument.type (This function works with DB::raw() even though larastan doesn't think so)
+                ->havingBetween('current_balance', [DB::raw('-0.05 * size'), DB::raw('0.05 * size')], 'and', true)
                 ->orderByDesc('times_cheated')
                 ->paginate(25),
         ]);
