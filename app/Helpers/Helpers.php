@@ -13,7 +13,6 @@ declare(strict_types=1);
  * @author     HDVinnie <hdinnovations@protonmail.com>
  * @license    https://www.gnu.org/licenses/agpl-3.0.en.html/ GNU Affero General Public License v3.0
  */
-
 if (!\function_exists('appurl')) {
     function appurl(): string
     {
