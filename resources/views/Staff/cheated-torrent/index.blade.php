@@ -61,7 +61,6 @@
                         <th>{{ __('torrent.size') }}</th>
                         <th>Balance</th>
                         <th>Times Cheated</th>
-                        <th>All-time Balance</th>
                         <th>{{ __('torrent.uploaded') }}</th>
                         <th>{{ __('common.actions') }}</th>
                     </tr>
@@ -96,9 +95,6 @@
                                 {{ \App\Helpers\StringHelper::formatBytes($torrent->current_balance) }}
                             </td>
                             <td>{{ \round($torrent->times_cheated, 3) }}</td>
-                            <td title="{{ $torrent->balance }}&nbsp;B">
-                                {{ \App\Helpers\StringHelper::formatBytes($torrent->balance) }}
-                            </td>
                             <td>
                                 <time
                                     datetime="{{ $torrent->created_at }}"
@@ -126,7 +122,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="10">No cheated torrents</td>
+                            <td colspan="9">No cheated torrents</td>
                         </tr>
                     @endforelse
                 </tbody>
