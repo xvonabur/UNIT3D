@@ -717,9 +717,9 @@
             <div class="panel__actions">
                 <div class="panel__action">
                     <span class="panel__action-text">
-                        {{ __('common.total') }}: {{ $torrents->total }} |
-                        {{ __('common.alive') }}: {{ $torrents->alive }} |
-                        {{ __('common.dead') }}: {{ $torrents->dead }}
+                        {{ __('common.total') }}: {{ $torrentHealth->total }} |
+                        {{ __('common.alive') }}: {{ $torrentHealth->alive }} |
+                        {{ __('common.dead') }}: {{ $torrentHealth->dead }}
                     </span>
                 </div>
                 <div class="panel__action">
