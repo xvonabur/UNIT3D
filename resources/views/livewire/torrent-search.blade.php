@@ -716,6 +716,13 @@
             <h2 class="panel__heading">{{ __('torrent.torrents') }}</h2>
             <div class="panel__actions">
                 <div class="panel__action">
+                    <span class="panel__action-text">
+                        {{ __('common.total') }}: {{ $torrents->total }} |
+                        {{ __('common.alive') }}: {{ $torrents->alive }} |
+                        {{ __('common.dead') }}: {{ $torrents->dead }}
+                    </span>
+                </div>
+                <div class="panel__action">
                     <div class="form__group">
                         <select id="view" class="form__select" wire:model.live="view" required>
                             <option value="list">{{ __('torrent.list') }}</option>
