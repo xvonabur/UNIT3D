@@ -391,6 +391,12 @@ parameters:
 			path: app/Http/Controllers/Staff/ChatRoomController.php
 
 		-
+			message: '#^Anonymous function should return Illuminate\\Database\\Eloquent\\Builder\<Illuminate\\Database\\Eloquent\\Model\> but returns Illuminate\\Database\\Eloquent\\Builder\<App\\Models\\History\>\.$#'
+			identifier: return.type
+			count: 1
+			path: app/Http/Controllers/Staff/CheatedTorrentController.php
+
+		-
 			message: '#^Binary operation "\+\=" between string and int results in an error\.$#'
 			identifier: assignOp.invalid
 			count: 1
@@ -479,18 +485,6 @@ parameters:
 			identifier: missingType.property
 			count: 1
 			path: app/Http/Livewire/AttachmentUpload.php
-
-		-
-			message: '#^Call to function method_exists\(\) with Spatie\\Backup\\BackupDestination\\Backup and ''sizeInBytes'' will always evaluate to true\.$#'
-			identifier: function.alreadyNarrowedType
-			count: 1
-			path: app/Http/Livewire/BackupPanel.php
-
-		-
-			message: '#^Cannot call method sizeInBytes\(\) on class\-string\|object\.$#'
-			identifier: method.nonObject
-			count: 1
-			path: app/Http/Livewire/BackupPanel.php
 
 		-
 			message: '#^Method App\\Http\\Livewire\\BackupPanel\:\:backups\(\) return type has no value type specified in iterable type array\.$#'
@@ -879,7 +873,7 @@ parameters:
 		-
 			message: '#^Parameter \#1 \$url of function parse_url expects string, bool\|string\|null given\.$#'
 			identifier: argument.type
-			count: 2
+			count: 6
 			path: config/secure-headers.php
 
 		-

@@ -31,6 +31,7 @@
                         <th>#</th>
                         <th>{{ __('common.user') }}</th>
                         <th>Messages</th>
+                        <th>Characters typed</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -46,6 +47,7 @@
                             <td>
                                 {{ $user->messages_count }}
                             </td>
+                            <td>{{ $user->characters_typed }}</td>
                         </tr>
                     @endforeach
                 </tbody>

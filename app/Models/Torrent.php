@@ -77,8 +77,9 @@ use Laravel\Scout\Searchable;
  * @property int|null                        $distributor_id
  * @property int|null                        $region_id
  * @property bool                            $personal_release
- * @property int|null                        $balance
- * @property int|null                        $balance_offset
+ * @property int                             $balance
+ * @property int                             $balance_offset
+ * @property int|null                        $balance_reset_at
  */
 class Torrent extends Model
 {

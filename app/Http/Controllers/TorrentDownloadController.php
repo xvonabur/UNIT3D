@@ -101,7 +101,7 @@ class TorrentDownloadController extends Controller
 
                 echo Bencode::bencode($dict);
             },
-            str_replace([' ', '/', '\\'], ['.', '-', '-'], '['.config('torrent.source').']'.$torrent->name.'.torrent'),
+            sanitize_filename('['.config('torrent.source').']'.$torrent->name.'.torrent'),
             ['Content-Type' => 'application/x-bittorrent']
         );
     }
