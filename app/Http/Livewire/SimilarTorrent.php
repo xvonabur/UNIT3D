@@ -421,7 +421,7 @@ class SimilarTorrent extends Component
             )
             ->when($this->category->movie_meta, fn ($query) => $query->whereRelation('torrents', 'tmdb_movie_id', '=', $this->tmdbId))
             ->when($this->category->tv_meta, fn ($query) => $query->whereRelation('torrents', 'tmdb_tv_id', '=', $this->tmdbId))
-            ->when($this->category->game_meta, fn ($query) => $query->whereRelation('torrents', 'igdb_game_id', '=', $this->tmdbId))
+            ->when($this->category->game_meta, fn ($query) => $query->whereRelation('torrents', 'igdb', '=', $this->tmdbId))
             ->when(!($this->category->movie_meta || $this->category->tv_meta || $this->category->game_meta), fn ($query) => $query->whereRaw('0 = 1'))
             ->get();
     }
