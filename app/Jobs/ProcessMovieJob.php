@@ -72,10 +72,6 @@ class ProcessMovieJob implements ShouldQueue
 
     public function handle(): void
     {
-        // TMDB caches their api responses for 8 hours, so don't abuse them
-
-        cache()->put("tmdb-movie-scraper:{$this->id}", now(), 8 * 3600);
-
         // Movie
 
         $movieScraper = new Client\Movie($this->id);
@@ -142,5 +138,9 @@ class ProcessMovieJob implements ShouldQueue
             ->where('tmdb_movie_id', '=', $this->id)
             ->whereRelation('category', 'movie_meta', '=', true)
             ->searchable();
+
+        // TMDB caches their api responses for 8 hours, so don't abuse them
+
+        cache()->put("tmdb-movie-scraper:{$this->id}", now(), 8 * 3600);
     }
 }
