@@ -31,7 +31,7 @@ class Kernel extends HttpKernel
         // Default Laravel
         \Illuminate\Foundation\Http\Middleware\PreventRequestsDuringMaintenance::class,
         \Illuminate\Foundation\Http\Middleware\ValidatePostSize::class,
-        Middleware\TrimStrings::class,
+        \Illuminate\Foundation\Http\Middleware\TrimStrings::class,
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
         //\App\Http\Middleware\TrustProxies::class,
         \Illuminate\Http\Middleware\HandleCors::class,
@@ -88,14 +88,14 @@ class Kernel extends HttpKernel
      */
     protected $middlewareAliases = [
         'admin'            => Middleware\CheckForAdmin::class,
-        'auth'             => Middleware\Authenticate::class,
+        'auth'             => \Illuminate\Auth\Middleware\Authenticate::class,
         'auth.basic'       => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'banned'           => Middleware\CheckIfBanned::class,
         'bindings'         => \Illuminate\Routing\Middleware\SubstituteBindings::class,
         'cache.headers'    => \Illuminate\Http\Middleware\SetCacheHeaders::class,
         'can'              => \Illuminate\Auth\Middleware\Authorize::class,
         'csrf'             => \Illuminate\Foundation\Http\Middleware\VerifyCsrfToken::class,
-        'guest'            => Middleware\RedirectIfAuthenticated::class,
+        'guest'            => \Illuminate\Auth\Middleware\RedirectIfAuthenticated::class,
         'language'         => Middleware\SetLanguage::class,
         'modo'             => Middleware\CheckForModo::class,
         'owner'            => Middleware\CheckForOwner::class,
