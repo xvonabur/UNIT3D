@@ -147,7 +147,9 @@ class ProcessTvJob implements ShouldQueue
 
         TmdbPerson::upsert($people, 'id');
 
-        cache()->put($cache, 8 * 3600);
+        if ($cache !== []) {
+            cache()->put($cache, 8 * 3600);
+        }
 
         TmdbCredit::where('tmdb_tv_id', '=', $this->id)->delete();
         TmdbCredit::upsert($credits, ['tmdb_person_id', 'tmdb_movie_id', 'tmdb_tv_id', 'occupation_id', 'character']);
