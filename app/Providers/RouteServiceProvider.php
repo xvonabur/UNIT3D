@@ -16,6 +16,7 @@ declare(strict_types=1);
 
 namespace App\Providers;
 
+use Illuminate\Auth\Middleware\RedirectIfAuthenticated;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Http\Request;
@@ -61,6 +62,8 @@ class RouteServiceProvider extends ServiceProvider
             Route::middleware('rss')
                 ->group(base_path('routes/rss.php'));
         });
+
+        RedirectIfAuthenticated::redirectUsing(fn () => self::HOME);
     }
 
     /**
