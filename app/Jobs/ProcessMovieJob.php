@@ -115,6 +115,7 @@ class ProcessMovieJob implements ShouldQueue
 
         $credits = $movieScraper->getCredits();
         $people = [];
+        $cache = [];
 
         foreach (array_unique(array_column($credits, 'tmdb_person_id')) as $personId) {
             // TMDB caches their api responses for 8 hours, so don't abuse them
@@ -125,12 +126,15 @@ class ProcessMovieJob implements ShouldQueue
                 continue;
             }
 
-            cache()->put($cacheKey, now(), 8 * 3600);
-
             $people[] = (new Client\Person($personId))->getPerson();
+
+            $cache[$cacheKey] = now();
         }
 
         TmdbPerson::upsert($people, 'id');
+
+        cache()->put($cache, 8 * 3600);
+
         TmdbCredit::where('tmdb_movie_id', '=', $this->id)->delete();
         TmdbCredit::upsert($credits, ['tmdb_person_id', 'tmdb_movie_id', 'tmdb_tv_id', 'occupation_id', 'character']);
 
