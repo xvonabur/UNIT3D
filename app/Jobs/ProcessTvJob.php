@@ -88,10 +88,6 @@ class ProcessTvJob implements ShouldQueue
 
     public function handle(): void
     {
-        // TMDB caches their api responses for 8 hours, so don't abuse them
-
-        cache()->put("tmdb-tv-scraper:{$this->id}", now(), 8 * 3600);
-
         // Tv
 
         $tvScraper = new Client\TV($this->id);
@@ -164,5 +160,9 @@ class ProcessTvJob implements ShouldQueue
             ->where('tmdb_tv_id', '=', $this->id)
             ->whereRelation('category', 'tv_meta', '=', true)
             ->searchable();
+
+        // TMDB caches their api responses for 8 hours, so don't abuse them
+
+        cache()->put("tmdb-tv-scraper:{$this->id}", now(), 8 * 3600);
     }
 }
