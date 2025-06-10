@@ -1,8 +1,6 @@
 <?php
-
-declare(strict_types=1);
-
-/**
+return [
+    /**
  * NOTICE OF LICENSE.
  *
  * UNIT3D Community Edition is open-sourced software licensed under the GNU Affero General Public License v3.0
@@ -13,18 +11,6 @@ declare(strict_types=1);
  * @author     HDVinnie <hdinnovations@protonmail.com>
  * @license    https://www.gnu.org/licenses/agpl-3.0.en.html/ GNU Affero General Public License v3.0
  */
-
-namespace App\Http\Middleware;
-
-use Illuminate\Cookie\Middleware\EncryptCookies as Middleware;
-
-class EncryptCookies extends Middleware
-{
-    /**
-     * The names of the cookies that should not be encrypted.
-     *
-     * @var array<int, string>
-     */
-    protected $except = [
-    ];
-}
+    'message' => 'Ваш досвід роботи на цьому сайті буде покращено, якщо ви дозволите використовувати файли cookie.',
+    'agree' => 'Дозволити файли cookie',
+];

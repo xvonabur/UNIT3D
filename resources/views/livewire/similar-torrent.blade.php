@@ -1052,44 +1052,37 @@
             </section>
         @endif
 
-        @if ($playlists->isNotEmpty())
+        @if ($playlistCategories->isNotEmpty())
             <section class="panelV2">
-                <header class="panel__header">
-                    <h2 class="panel__heading">{{ __('playlist.playlists') }}</h2>
-                    <div class="panel__actions" x-data="posterRow">
-                        <div class="panel__action">
-                            <button class="form__standard-icon-button" x-bind="scrollLeft">
-                                <i class="{{ \config('other.font-awesome') }} fa-angle-left"></i>
-                            </button>
-                        </div>
-                        <div class="panel__action">
-                            <button class="form__standard-icon-button" x-bind="scrollRight">
-                                <i class="{{ \config('other.font-awesome') }} fa-angle-right"></i>
-                            </button>
-                        </div>
-                    </div>
-                </header>
-                <div class="panel__body playlists" x-ref="posters">
-                    @switch(true)
-                        @case($category->movie_meta)
-                            @forelse ($playlists as $playlist)
-                                <x-playlist.card :$playlist />
-                            @empty
-                                No playlists found
-                            @endforelse
+                <h2 class="panel__heading">{{ __('playlist.playlists') }}</h2>
+                <div class="data-table-wrapper">
+                    <table class="data-table">
+                        <thead>
+                            <th>{{ __('common.category') }}</th>
+                            <th>{{ __('common.name') }}</th>
+                            <th>{{ __('playlist.titles') }}</th>
+                            <th>{{ __('common.author') }}</th>
+                        </thead>
+                        <tbody>
+                            @foreach ($playlistCategories as $playlistCategory)
+                                @foreach ($playlistCategory->playlists as $playlist)
+                                    <tr>
+                                        @if ($loop->first)
+                                            <td rowspan="{{ $loop->count }}">
+                                                {{ $playlist->playlistCategory->name }}
+                                            </td>
+                                        @endif
 
-                            @break
-                        @case($category->tv_meta)
-                            @forelse ($playlists as $playlist)
-                                <x-playlist.card :$playlist />
-                            @empty
-                                No playlists found
-                            @endforelse
-
-                            @break
-                        @default
-                            No playlists Found!
-                    @endswitch
+                                        <td>{{ $playlist->name }}</td>
+                                        <td>{{ $playlist->torrents_count }}</td>
+                                        <td>
+                                            <x-user-tag :user="$playlist->user" :anon="false" />
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            @endforeach
+                        </tbody>
+                    </table>
                 </div>
             </section>
         @endif

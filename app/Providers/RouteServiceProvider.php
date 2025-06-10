@@ -16,6 +16,7 @@ declare(strict_types=1);
 
 namespace App\Providers;
 
+use Illuminate\Auth\Middleware\RedirectIfAuthenticated;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Http\Request;
@@ -61,6 +62,8 @@ class RouteServiceProvider extends ServiceProvider
             Route::middleware('rss')
                 ->group(base_path('routes/rss.php'));
         });
+
+        RedirectIfAuthenticated::redirectUsing(fn () => self::HOME);
     }
 
     /**
@@ -87,6 +90,7 @@ class RouteServiceProvider extends ServiceProvider
         RateLimiter::for('authenticated-images', fn (Request $request): Limit => Limit::perMinute(200)->by('authenticated-images:'.$request->user()->id));
         RateLimiter::for('search', fn (Request $request): Limit => Limit::perMinute(100)->by('search:'.$request->user()->id));
         RateLimiter::for('tmdb', fn (): Limit => Limit::perSecond(2));
+        RateLimiter::for('igdb', fn (): Limit => Limit::perSecond(2));
     }
 
     protected function removeIndexPhpFromUrl(): void

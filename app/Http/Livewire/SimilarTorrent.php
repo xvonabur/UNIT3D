@@ -21,7 +21,7 @@ use App\Models\Category;
 use App\Models\Distributor;
 use App\Models\History;
 use App\Models\IgdbGame;
-use App\Models\Playlist;
+use App\Models\PlaylistCategory;
 use App\Models\TmdbMovie;
 use App\Models\Region;
 use App\Models\Resolution;
@@ -403,27 +403,32 @@ class SimilarTorrent extends Component
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Collection<int, Playlist>
+     * @return \Illuminate\Database\Eloquent\Collection<int, PlaylistCategory>
      */
     #[Computed]
-    final public function playlists(): \Illuminate\Database\Eloquent\Collection
+    final public function playlistCategories(): \Illuminate\Database\Eloquent\Collection
     {
-        return Playlist::query()
-            ->withCount('torrents')
-            ->when(
-                ! auth()->user()->group->is_modo,
-                fn ($query) => $query
-                    ->where(
+        return PlaylistCategory::query()
+            ->with([
+                'playlists' => fn ($query) => $query
+                    ->withCount('torrents')
+                    ->when(
+                        ! auth()->user()->group->is_modo,
                         fn ($query) => $query
-                            ->where('is_private', '=', 0)
-                            ->orWhere(fn ($query) => $query->where('is_private', '=', 1)->where('user_id', '=', auth()->id()))
+                            ->where(
+                                fn ($query) => $query
+                                    ->where('is_private', '=', 0)
+                                    ->orWhere(fn ($query) => $query->where('is_private', '=', 1)->where('user_id', '=', auth()->id()))
+                            )
                     )
-            )
-            ->when($this->category->movie_meta, fn ($query) => $query->whereRelation('torrents', 'tmdb_movie_id', '=', $this->tmdbId))
-            ->when($this->category->tv_meta, fn ($query) => $query->whereRelation('torrents', 'tmdb_tv_id', '=', $this->tmdbId))
-            ->when($this->category->game_meta, fn ($query) => $query->whereRelation('torrents', 'igdb_game_id', '=', $this->tmdbId))
-            ->when(!($this->category->movie_meta || $this->category->tv_meta || $this->category->game_meta), fn ($query) => $query->whereRaw('0 = 1'))
-            ->get();
+                    ->when($this->category->movie_meta, fn ($query) => $query->whereRelation('torrents', 'tmdb_movie_id', '=', $this->tmdbId))
+                    ->when($this->category->tv_meta, fn ($query) => $query->whereRelation('torrents', 'tmdb_tv_id', '=', $this->tmdbId))
+                    ->when($this->category->game_meta, fn ($query) => $query->whereRelation('torrents', 'igdb', '=', $this->tmdbId))
+                    ->when(!($this->category->movie_meta || $this->category->tv_meta || $this->category->game_meta), fn ($query) => $query->whereRaw('0 = 1'))
+            ])
+            ->orderBy('position')
+            ->get()
+            ->filter(fn ($category) => $category->playlists->isNotEmpty());
     }
 
     /**
@@ -576,17 +581,17 @@ class SimilarTorrent extends Component
     final public function render(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
     {
         return view('livewire.similar-torrent', [
-            'user'              => auth()->user(),
-            'similarTorrents'   => $this->torrents,
-            'personalFreeleech' => $this->personalFreeleech,
-            'torrentRequests'   => $this->torrentRequests,
-            'media'             => $this->work,
-            'types'             => $this->types,
-            'resolutions'       => $this->resolutions,
-            'regions'           => $this->regions,
-            'distributors'      => $this->distributors,
-            'playlists'         => $this->playlists,
-            'collectionMovies'  => $this->collectionMovies,
+            'user'               => auth()->user(),
+            'similarTorrents'    => $this->torrents,
+            'personalFreeleech'  => $this->personalFreeleech,
+            'torrentRequests'    => $this->torrentRequests,
+            'media'              => $this->work,
+            'types'              => $this->types,
+            'resolutions'        => $this->resolutions,
+            'regions'            => $this->regions,
+            'distributors'       => $this->distributors,
+            'playlistCategories' => $this->playlistCategories,
+            'collectionMovies'   => $this->collectionMovies,
         ]);
     }
 }
