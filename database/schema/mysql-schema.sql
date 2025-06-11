@@ -1127,10 +1127,10 @@ CREATE TABLE `password_reset_histories` (
   CONSTRAINT `password_reset_histories_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-DROP TABLE IF EXISTS `password_resets`;
+DROP TABLE IF EXISTS `password_reset_tokens`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `password_resets` (
+CREATE TABLE `password_reset_tokens` (
   `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `token` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` datetime DEFAULT NULL,
@@ -2965,3 +2965,4 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (347,'2025_04_15_07
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (348,'2025_04_15_090705_create_playlist_suggestions',1);
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (349,'2025_05_28_084740_update_torrent_balance',1);
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (350,'2025_06_11_053944_alter_users_drop_active',1);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (351,'2025_06_11_064742_rename_password_resets_to_password_reset_tokens',1);
