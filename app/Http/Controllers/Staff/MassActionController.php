@@ -40,7 +40,6 @@ class MassActionController extends Controller
         foreach (User::where('group_id', '=', $validatingGroup[0])->get() as $user) {
             $user->update([
                 'group_id'          => $memberGroup[0],
-                'active'            => 1,
                 'can_download'      => 1,
                 'email_verified_at' => now(),
             ]);

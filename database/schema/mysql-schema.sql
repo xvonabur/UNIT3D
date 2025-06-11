@@ -2446,7 +2446,6 @@ CREATE TABLE `users` (
   `two_factor_confirmed_at` timestamp NULL DEFAULT NULL,
   `passkey` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `group_id` int NOT NULL,
-  `active` tinyint(1) NOT NULL DEFAULT '0',
   `uploaded` bigint unsigned NOT NULL DEFAULT '0',
   `downloaded` bigint unsigned NOT NULL DEFAULT '0',
   `image` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -2965,3 +2964,4 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (346,'2025_04_07_15
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (347,'2025_04_15_075631_add_description_to_playlist_categories',1);
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (348,'2025_04_15_090705_create_playlist_suggestions',1);
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (349,'2025_05_28_084740_update_torrent_balance',1);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (350,'2025_06_11_053944_alter_users_drop_active',1);
