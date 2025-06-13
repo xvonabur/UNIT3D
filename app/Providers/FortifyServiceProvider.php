@@ -120,7 +120,6 @@ class FortifyServiceProvider extends ServiceProvider
                     if ($user->group_id === $validatingGroup[0]) {
                         $user->can_download = 1;
                         $user->group_id = $memberGroup[0];
-                        $user->active = true;
                         $user->save();
 
                         cache()->forget('user:'.$user->passkey);
@@ -211,7 +210,7 @@ class FortifyServiceProvider extends ServiceProvider
                 // Check if user is activated
                 $validatingGroup = cache()->rememberForever('validating_group', fn () => Group::query()->where('slug', '=', 'validating')->pluck('id'));
 
-                if ($user->active === false || $user->group_id === $validatingGroup[0]) {
+                if ($user->email_verified_at === null || $user->group_id === $validatingGroup[0]) {
                     $request->session()->invalidate();
 
                     throw ValidationException::withMessages([

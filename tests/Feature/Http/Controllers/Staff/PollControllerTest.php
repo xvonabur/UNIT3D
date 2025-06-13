@@ -39,7 +39,6 @@ test('create a poll returns an ok response', function (): void {
     ]);
     $staff = User::factory()->create([
         'group_id' => $group->id,
-        'active'   => 1,
     ]);
 
     $pollTitle = 'Test Poll Title';
@@ -84,7 +83,6 @@ test('create a poll with expiration date returns an ok response', function (): v
     ]);
     $staff = User::factory()->create([
         'group_id' => $group->id,
-        'active'   => 1,
     ]);
 
     $pollTitle = 'Test Poll Title';
@@ -157,7 +155,6 @@ test('index returns an ok response', function (): void {
     ]);
     $staff = User::factory()->create([
         'group_id' => $group->id,
-        'active'   => 1,
     ]);
 
     $response = $this->actingAs($staff)->get(route('staff.polls.index'));
