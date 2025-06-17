@@ -24,6 +24,8 @@ use App\Observers\UserObserver;
 use App\View\Composers\FooterComposer;
 use App\View\Composers\TopNavComposer;
 use Illuminate\Foundation\Http\Middleware\TrimStrings;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Vite;
@@ -99,5 +101,7 @@ class AppServiceProvider extends ServiceProvider
             'info_hash',
             'peer_id',
         ]);
+
+        Auth::viaRequest('rsskey', fn (Request $request) => User::query()->where('rsskey', '=', $request->route('rsskey'))->first());
     }
 }
