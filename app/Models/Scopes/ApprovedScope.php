@@ -27,7 +27,7 @@ class ApprovedScope implements Scope
     /**
      * Apply the scope to a given Eloquent query builder.
      *
-     * @param Builder<Torrent> $builder
+     * @param Builder<Model> $builder
      */
     public function apply(Builder $builder, Model $model): void
     {
