@@ -174,4 +174,6 @@ return [
     'yes' => 'Jā',
     'your' => 'Jūsu',
     'your-comment' => 'Jūsu komentārs',
+    'abbrev-days' => 'D ',
+    'abbrev-hours' => 'h ',
 ];
