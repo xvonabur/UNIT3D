@@ -62,7 +62,7 @@ class RequestController extends Controller
             'user'           => $request->user(),
             'canEdit'        => $request->user()->group->is_modo || TorrentRequest::query()
                 ->whereDoesntHave('bounties', fn ($query) => $query->where('user_id', '!=', $request->user()->id))
-                ->whereNull('claimed')
+                ->whereDoesntHave('claim')
                 ->whereNull('filled_by')
                 ->whereKey($torrentRequest)
                 ->exists(),
@@ -208,7 +208,7 @@ class RequestController extends Controller
                     $user->id === $torrentRequest->user_id
                     && TorrentRequest::query()
                         ->whereDoesntHave('bounties', fn ($query) => $query->where('user_id', '!=', $request->user()->id))
-                        ->whereNull('claimed')
+                        ->whereDoesntHave('claim')
                         ->whereNull('filled_by')
                         ->whereKey($torrentRequest)
                         ->exists()
@@ -247,7 +247,7 @@ class RequestController extends Controller
                 $torrentRequest->user_id === $user->id
                 && TorrentRequest::query()
                     ->whereDoesntHave('bounties', fn ($query) => $query->where('user_id', '!=', $request->user()->id))
-                    ->whereNull('claimed')
+                    ->whereDoesntHave('claim')
                     ->whereNull('filled_by')
                     ->whereKey($torrentRequest)
                     ->exists()

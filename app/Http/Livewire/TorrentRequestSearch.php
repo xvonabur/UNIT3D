@@ -209,6 +209,7 @@ class TorrentRequestSearch extends Component
 
         return TorrentRequest::with(['user:id,username,group_id', 'user.group', 'category', 'type', 'resolution'])
             ->withCount(['comments'])
+            ->withExists('claim')
             ->when(
                 $this->name !== '',
                 fn ($query) => $query
@@ -282,12 +283,12 @@ class TorrentRequestSearch extends Component
                 $query->where(function ($query): void {
                     $query->where(function ($query): void {
                         if ($this->unfilled) {
-                            $query->whereNull('torrent_id')->whereNull('claimed');
+                            $query->whereNull('torrent_id')->whereDoesntHave('claim');
                         }
                     })
                         ->orWhere(function ($query): void {
                             if ($this->claimed) {
-                                $query->whereNotNull('claimed')->whereNull('torrent_id')->whereNull('approved_when');
+                                $query->whereHas('claim')->whereNull('torrent_id')->whereNull('approved_when');
                             }
                         })
                         ->orWhere(function ($query): void {

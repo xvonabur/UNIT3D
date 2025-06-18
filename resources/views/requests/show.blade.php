@@ -42,7 +42,7 @@
 
             @switch(true)
                 {{-- Claimed --}}
-                @case($torrentRequest->claimed && $torrentRequest->torrent === null)
+                @case($torrentRequest->claim !== null && $torrentRequest->torrent === null)
                     @includeWhen($user->group->is_modo || $torrentRequest->claim->user->is($user), 'requests.partials.unclaim')
                     @includeWhen($user->group->is_modo || $torrentRequest->claim->user->is($user), 'requests.partials.fulfill')
                     @include('requests.partials.report')

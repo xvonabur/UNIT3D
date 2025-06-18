@@ -50,7 +50,6 @@ class TorrentRequestFactory extends Factory
             'user_id'       => User::factory(),
             'bounty'        => $this->faker->randomFloat(),
             'votes'         => $this->faker->randomNumber(),
-            'claimed'       => $this->faker->boolean(),
             'anon'          => $this->faker->boolean(),
             'filled_by'     => User::factory(),
             'torrent_id'    => Torrent::factory(),
