@@ -69,8 +69,8 @@
                                     </a>
                                 </td>
                                 <td>{{ $torrentRequest->category->name }}</td>
-                                <td>{{ $torrentRequest->type->name }}</td>
-                                <td>{{ $torrentRequest->resolution->name ?? 'Unknown' }}</td>
+                                <td>{{ $torrentRequest->type->name ?? 'Any' }}</td>
+                                <td>{{ $torrentRequest->resolution->name ?? 'Any' }}</td>
                                 <td>
                                     <x-user-tag
                                         :user="$torrentRequest->user"
