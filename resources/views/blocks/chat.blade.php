@@ -9,7 +9,7 @@
     :class="state.ui.fullscreen && 'chatbox--fullscreen'"
     audio="false"
 >
-    <div class="chatbox__spinner" x-show="state.ui.loading">
+    <div class="loading__spinner" x-show="state.ui.loading">
         <div class="spinner__dots">
             <div class="dot"></div>
             <div class="dot"></div>
