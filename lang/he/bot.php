@@ -14,8 +14,15 @@ declare(strict_types=1);
  */
 
 return [
-    'articles'      => 'מאמרים',
-    'meta-articles' => 'מאמרים וחדשות על הטראקר והקהילה',
-    'published-at'  => 'פורסם בתאריך ',
-    'read-more'     => 'קרא עוד',
+    'about'      => 'אודות',
+    'bot'        => 'בוט',
+    'bots'       => 'בוטים',
+    'color'      => 'צבע',
+    'command'    => 'פקודה',
+    'edit-bot'   => 'ערוך בוט',
+    'emoji-code' => 'קוד אימוג\'י',
+    'help'       => 'עזרה',
+    'icon'       => 'אייקון',
+    'info'       => 'מידע',
+    'name'       => 'שם',
 ];

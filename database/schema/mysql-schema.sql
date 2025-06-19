@@ -1443,7 +1443,7 @@ CREATE TABLE `requests` (
   `filled_anon` tinyint(1) NOT NULL DEFAULT '0',
   `approved_by` int unsigned DEFAULT NULL,
   `approved_when` datetime DEFAULT NULL,
-  `type_id` smallint unsigned NOT NULL,
+  `type_id` smallint unsigned DEFAULT NULL,
   `resolution_id` smallint unsigned DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `category_id` (`category_id`),
@@ -2981,3 +2981,4 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (349,'2025_05_28_08
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (350,'2025_06_11_053944_alter_users_drop_active',1);
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (351,'2025_06_11_064742_rename_password_resets_to_password_reset_tokens',1);
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (352,'2025_06_17_092951_create_unread_articles_table',1);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (352,'2025_06_17_084333_alter_requests_nullable_type_id',1);
