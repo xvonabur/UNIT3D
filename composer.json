@@ -30,6 +30,7 @@
         "laravel/scout": "^10.15.0",
         "laravel/tinker": "^2.10.1",
         "livewire/livewire": "^3.6.3",
+        "maennchen/zipstream-php": "^3.1",
         "marcreichel/igdb-laravel": "^5.3.1",
         "meilisearch/meilisearch-php": "^1.15.0",
         "paragonie/constant_time_encoding": "^2.7.0",
