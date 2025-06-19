@@ -184,4 +184,5 @@ return [
     'abbrev-years' => 'Y. ',
     'abbrev-days' => 'G. ',
     'subject' => 'Konu',
+    'languages' => 'Diller',
 ];

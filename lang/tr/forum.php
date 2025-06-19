@@ -71,4 +71,5 @@ return [
     'view-all' => 'Tüm Konuları Göster',
     'views' => 'Görünümler',
     'created-at' => 'Oluşturulma tarihi',
+    'delete-post-success' => 'Bu Gönderi Artık Silinmiştir!',
 ];

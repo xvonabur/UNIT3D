@@ -13,4 +13,7 @@ return [
     'ATF' => 'Fransız güney ve antartik toprakları',
     'AFG' => 'Afganistan',
     'ATG' => 'Antiga and Barbuda',
+    'AUS' => 'Avustralya',
+    'AUT' => 'Avusturya',
+    'AZE' => 'Azerbaycan',
 ];

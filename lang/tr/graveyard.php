@@ -24,4 +24,7 @@ return [
     'reward' => 'Freeleech belirteçleri',
     'current-seedtime' => 'Şuanki',
     'not-rewarded' => 'Ödül verilmedi',
+    'resurrect-complete' => 'Torrent yeniden yükleme Tamamlandı! Tohum zamanı gereksinimleri karşılandığında otomatik olarak ödüllendirileceksiniz.',
+    'resurrect-date' => 'Yenileme tarihi',
+    'resurrect-failed-own' => 'Torrent yenileme Başarısız! Kendi yüklemelerinizi yenileyemezsiniz.',
 ];

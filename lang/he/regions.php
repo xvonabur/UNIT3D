@@ -1,7 +1,6 @@
 <?php
-
-declare(strict_types=1);
-/**
+return [
+    /**
  * NOTICE OF LICENSE.
  *
  * UNIT3D Community Edition is open-sourced software licensed under the GNU Affero General Public License v3.0
@@ -12,8 +11,6 @@ declare(strict_types=1);
  * @author     EkoNesleg
  * @license    https://www.gnu.org/licenses/agpl-3.0.en.html/ GNU Affero General Public License v3.0
  */
-
-return [
     'AFG' => 'אפגניסטן',
     'AIA' => 'אנגווילה',
     'ALA' => 'איי אולנד',
@@ -136,7 +133,6 @@ return [
     'KOR' => 'קוריאה הדרומית',
     'KSA' => 'ערב הסעודית',
     'KUW' => 'כווית',
-    'KVX' => '',
     'LAO' => 'לאוס',
     'LBN' => 'לבנון',
     'LBR' => 'ליבריה',
@@ -208,7 +204,6 @@ return [
     'SEY' => 'איי סיישל',
     'SGS' => 'דרום ג\'ורג\'יה ואיי סנדוויץ\' הדרומיים',
     'SHN' => 'סנט הלנה, אסנשן וטריסטן דה קונה',
-    'SIN' => '',
     'SJM' => 'סבאלברד ויאן מאיין',
     'SLE' => 'סיירה לאון',
     'SLV' => 'אל סלבדור',
