@@ -2429,7 +2429,17 @@ CREATE TABLE `user_settings` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
   `user_id` int unsigned NOT NULL,
   `censor` tinyint(1) NOT NULL DEFAULT '0',
-  `chat_hidden` tinyint(1) NOT NULL DEFAULT '0',
+  `news_visible` tinyint(1) NOT NULL DEFAULT '1',
+  `chat_visible` tinyint(1) NOT NULL DEFAULT '1',
+  `featured_visible` tinyint(1) NOT NULL DEFAULT '1',
+  `random_media_visible` tinyint(1) NOT NULL DEFAULT '1',
+  `poll_visible` tinyint(1) NOT NULL DEFAULT '1',
+  `top_torrents_visible` tinyint(1) NOT NULL DEFAULT '1',
+  `top_users_visible` tinyint(1) NOT NULL DEFAULT '1',
+  `latest_topics_visible` tinyint(1) NOT NULL DEFAULT '1',
+  `latest_posts_visible` tinyint(1) NOT NULL DEFAULT '1',
+  `latest_comments_visible` tinyint(1) NOT NULL DEFAULT '1',
+  `online_visible` tinyint(1) NOT NULL DEFAULT '1',
   `locale` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'en',
   `style` tinyint unsigned NOT NULL DEFAULT '0',
   `torrent_layout` tinyint unsigned NOT NULL DEFAULT '0',
@@ -2982,3 +2992,4 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (350,'2025_06_11_05
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (351,'2025_06_11_064742_rename_password_resets_to_password_reset_tokens',1);
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (352,'2025_06_17_084333_alter_requests_nullable_type_id',1);
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (353,'2025_06_17_092951_create_unread_articles_table',1);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (354,'2025_06_18_000000_add_homepage_block_settings_to_user_settings_table',1);

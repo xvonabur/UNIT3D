@@ -25,7 +25,17 @@ use Illuminate\Database\Eloquent\Model;
  * @property int                             $id
  * @property int                             $user_id
  * @property bool                            $censor
- * @property bool                            $chat_hidden
+ * @property bool                            $news_visible
+ * @property bool                            $chat_visible
+ * @property bool                            $featured_visible
+ * @property bool                            $random_media_visible
+ * @property bool                            $poll_visible
+ * @property bool                            $top_torrents_visible
+ * @property bool                            $top_users_visible
+ * @property bool                            $latest_topics_visible
+ * @property bool                            $latest_posts_visible
+ * @property bool                            $latest_comments_visible
+ * @property bool                            $online_visible
  * @property string                          $locale
  * @property int                             $style
  * @property int                             $torrent_layout
@@ -47,7 +57,17 @@ class UserSetting extends Model
      *
      * @return array{
      *     censor: 'bool',
-     *     chat_hidden: 'bool',
+     *     news_visible: 'bool',
+     *     chat_visible: 'bool',
+     *     featured_visible: 'bool',
+     *     random_media_visible: 'bool',
+     *     poll_visible: 'bool',
+     *     top_torrents_visible: 'bool',
+     *     top_users_visible: 'bool',
+     *     latest_topics_visible: 'bool',
+     *     latest_posts_visible: 'bool',
+     *     latest_comments_visible: 'bool',
+     *     online_visible: 'bool',
      *     torrent_filters: 'bool',
      *     show_poster: 'bool',
      *     unbookmark_torrents_on_completion: 'bool',
@@ -57,7 +77,17 @@ class UserSetting extends Model
     {
         return [
             'censor'                            => 'bool',
-            'chat_hidden'                       => 'bool',
+            'news_visible'                      => 'bool',
+            'chat_visible'                      => 'bool',
+            'featured_visible'                  => 'bool',
+            'random_media_visible'              => 'bool',
+            'poll_visible'                      => 'bool',
+            'top_torrents_visible'              => 'bool',
+            'top_users_visible'                 => 'bool',
+            'latest_topics_visible'             => 'bool',
+            'latest_posts_visible'              => 'bool',
+            'latest_comments_visible'           => 'bool',
+            'online_visible'                    => 'bool',
             'torrent_filters'                   => 'bool',
             'show_poster'                       => 'bool',
             'unbookmark_torrents_on_completion' => 'bool',
