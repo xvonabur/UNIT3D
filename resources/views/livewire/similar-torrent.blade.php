@@ -991,7 +991,7 @@
                                 </td>
                                 <td>
                                     @switch(true)
-                                        @case($torrentRequest->claimed && $torrentRequest->torrent_id === null)
+                                        @case($torrentRequest->claim_exists && $torrentRequest->torrent_id === null)
                                             <i class="fas fa-circle text-blue"></i>
                                             {{ __('request.claimed') }}
 
