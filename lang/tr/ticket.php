@@ -16,4 +16,5 @@ return [
     'delete' => 'Sil',
     'created' => 'Oluşturuldu',
     'subject' => 'Konu',
+    'created-success' => 'Yardım destek Biletiniz Başarıyla Oluşturuldu!',
 ];

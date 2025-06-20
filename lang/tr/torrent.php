@@ -37,7 +37,7 @@ return [
     'completed_at' => 'Tarihinde tamamlandı',
     'completed-not-seeding' => 'Bu İndirmeyi Tamamladınız Ama Daha Fazla Tohum Eklemiyorsunuz',
     'created_at' => 'Adresinde düzenlendi',
-    'credited' => 'Kredili',
+    'credited' => 'Kredilendirildi',
     'current' => 'şimdiki',
     'current-filters' => 'Mevcut Filtreler',
     'currently-leeching' => 'Şu anda sülük',

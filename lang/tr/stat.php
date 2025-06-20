@@ -54,4 +54,6 @@ return [
     'last30days' => 'Son 30 gün',
     'active' => 'Aktif',
     'last60days' => 'Son 60 gün',
+    'credited' => 'Kredilendirildi',
+    'languages' => 'Diller',
 ];
