@@ -44,7 +44,7 @@ class UnreadArticle extends Model
     /**
      * Belongs to an article.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<Torrent, $this>
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<Article, $this>
      */
     public function article(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
