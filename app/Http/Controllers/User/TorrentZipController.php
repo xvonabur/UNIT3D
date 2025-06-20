@@ -91,7 +91,5 @@ class TorrentZipController extends Controller
             },
             sanitize_filename($zipFileName),
         );
-
-        return redirect()->back()->withErrors(trans('common.something-went-wrong'));
     }
 }
