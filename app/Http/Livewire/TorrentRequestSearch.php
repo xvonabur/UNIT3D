@@ -208,7 +208,7 @@ class TorrentRequestSearch extends Component
             && @preg_match($field, 'Validate regex') !== false;
 
         return TorrentRequest::with(['user:id,username,group_id', 'user.group', 'category', 'type', 'resolution'])
-            ->withCount(['comments'])
+            ->withCount(['comments', 'bounties'])
             ->withExists('claim')
             ->when(
                 $this->name !== '',

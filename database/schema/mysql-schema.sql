@@ -1432,7 +1432,6 @@ CREATE TABLE `requests` (
   `tmdb_movie_id` int unsigned DEFAULT NULL,
   `tmdb_tv_id` int unsigned DEFAULT NULL,
   `bounty` decimal(12,2) NOT NULL,
-  `votes` int NOT NULL DEFAULT '0',
   `anon` tinyint(1) NOT NULL DEFAULT '0',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
@@ -2993,3 +2992,4 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (352,'2025_06_17_08
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (353,'2025_06_17_092951_create_unread_articles_table',1);
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (354,'2025_06_18_000000_add_homepage_block_settings_to_user_settings_table',1);
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (355,'2025_06_18_040627_alter_requests_drop_claimed',1);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (356,'2025_06_21_234021_alter_requests_drop_votes',1);

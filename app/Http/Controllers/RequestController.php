@@ -134,7 +134,7 @@ class RequestController extends Controller
 
         $user->decrement('seedbonus', $request->bounty);
 
-        $torrentRequest = TorrentRequest::create(['user_id' => $request->user()->id, 'votes' => 1] + $request->validated());
+        $torrentRequest = TorrentRequest::create(['user_id' => $request->user()->id] + $request->validated());
 
         TorrentRequestBounty::create([
             'user_id'     => $user->id,

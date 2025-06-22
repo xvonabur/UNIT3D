@@ -38,9 +38,9 @@
                                 {{ __('common.author') }}
                                 @include('livewire.includes._sort-icon', ['field' => 'user_id'])
                             </th>
-                            <th wire:click="sortBy('votes')" role="columnheader button">
+                            <th wire:click="sortBy('bounties_count')" role="columnheader button">
                                 <i class="{{ config('other.font-awesome') }} fa-thumbs-up"></i>
-                                @include('livewire.includes._sort-icon', ['field' => 'votes'])
+                                @include('livewire.includes._sort-icon', ['field' => 'bounties_count'])
                             </th>
                             <th>
                                 <i
@@ -77,7 +77,7 @@
                                         :anon="$torrentRequest->anon"
                                     />
                                 </td>
-                                <td>{{ $torrentRequest->votes }}</td>
+                                <td>{{ $torrentRequest->bounties_count }}</td>
                                 <td>{{ $torrentRequest->comments_count }}</td>
                                 <td>{{ number_format($torrentRequest->bounty) }}</td>
                                 <td>
