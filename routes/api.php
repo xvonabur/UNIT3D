@@ -2,6 +2,9 @@
 
 declare(strict_types=1);
 
+use App\Enums\AuthGuard;
+use App\Enums\GlobalRateLimit;
+use App\Enums\MiddlewareGroup;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\URL;
 
@@ -34,7 +37,7 @@ if (config('unit3d.proxy_scheme')) {
 if (config('unit3d.root_url_override')) {
     URL::forceRootUrl(config('unit3d.root_url_override'));
 }
-Route::middleware(['auth:api', 'banned'])->group(function (): void {
+Route::middleware(['auth:'.AuthGuard::API->value, 'banned'])->group(function (): void {
     // Torrents System
     Route::prefix('torrents')->group(function (): void {
         Route::get('/', [App\Http\Controllers\API\TorrentController::class, 'index'])->name('api.torrents.index');
@@ -48,7 +51,7 @@ Route::middleware(['auth:api', 'banned'])->group(function (): void {
 });
 
 // Internal front-end web API routes
-Route::name('api.')->middleware(['web', 'auth', 'banned', 'verified'])->group(function (): void {
+Route::name('api.')->middleware([MiddlewareGroup::WEB->value, 'auth', 'banned', 'verified'])->group(function (): void {
     Route::prefix('bookmarks')->name('bookmarks.')->group(function (): void {
         Route::post('/{torrentId}', [App\Http\Controllers\API\BookmarkController::class, 'store'])->name('store');
         Route::delete('/{torrentId}', [App\Http\Controllers\API\BookmarkController::class, 'destroy'])->name('destroy');
@@ -59,5 +62,5 @@ Route::name('api.')->middleware(['web', 'auth', 'banned', 'verified'])->group(fu
         Route::post('/{postId}/dislike', [App\Http\Controllers\API\DislikeController::class, 'store'])->name('dislike.store');
     });
 
-    Route::get('/quicksearch', [App\Http\Controllers\API\QuickSearchController::class, 'index'])->name('quicksearch')->middleware('throttle:search')->withoutMiddleware('throttle:web');
+    Route::get('/quicksearch', [App\Http\Controllers\API\QuickSearchController::class, 'index'])->name('quicksearch')->middleware('throttle:'.GlobalRateLimit::SEARCH->value)->withoutMiddleware('throttle:'.GlobalRateLimit::WEB->value);
 });
