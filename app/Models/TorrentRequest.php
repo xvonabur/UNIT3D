@@ -35,8 +35,6 @@ use Illuminate\Database\Eloquent\Model;
  * @property string                          $description
  * @property int                             $user_id
  * @property string                          $bounty
- * @property int                             $votes
- * @property int|null                        $claimed
  * @property bool                            $anon
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
