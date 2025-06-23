@@ -47,6 +47,10 @@ return [
             'provider' => 'users',
             'hash'     => false,
         ],
+
+        'rss' => [
+            'driver' => 'rsskey',
+        ],
     ],
 
     /*

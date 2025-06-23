@@ -29,7 +29,6 @@ readonly class TorrentSearchFiltersDTO
     private ?User $user;
 
     public function __construct(
-        ?User $user = null,
         private string $name = '',
         private string $description = '',
         private string $mediainfo = '',
@@ -85,7 +84,7 @@ readonly class TorrentSearchFiltersDTO
         private ?bool $userSeeder = null,
         private ?bool $userActive = null,
     ) {
-        $this->user = $user ?? auth()->user();
+        $this->user = auth()->user();
     }
 
     /**
