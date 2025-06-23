@@ -248,11 +248,11 @@ class TorrentSearch extends Component
     final public function mount(Request $request): void
     {
         if ($request->missing('sortField')) {
-            $this->sortField = auth()->user()->settings?->torrent_sort_field ?? 'bumped_at';
+            $this->sortField = auth()->user()->settings->torrent_sort_field;
         }
 
         if ($request->missing('view')) {
-            $this->view = match (auth()->user()->settings?->torrent_layout) {
+            $this->view = match (auth()->user()->settings->torrent_layout) {
                 1       => 'card',
                 2       => 'group',
                 3       => 'poster',

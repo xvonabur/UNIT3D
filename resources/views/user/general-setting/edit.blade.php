@@ -42,7 +42,7 @@
                             <option
                                 class="form__option"
                                 value="{{ $code }}"
-                                @selected(($user->settings?->locale ?? config('app.locale')) === $code)
+                                @selected($user->settings->locale === $code)
                             >
                                 {{ $name }}
                             </option>
@@ -57,105 +57,105 @@
                             <option
                                 class="form__option"
                                 value="0"
-                                @selected(($user->settings?->style ?? config('other.default_style', 0)) === 0)
+                                @selected($user->settings->style === 0)
                             >
                                 Light
                             </option>
                             <option
                                 class="form__option"
                                 value="1"
-                                @selected(($user->settings?->style ?? config('other.default_style', 0)) === 1)
+                                @selected($user->settings->style === 1)
                             >
                                 Galactic
                             </option>
                             <option
                                 class="form__option"
                                 value="2"
-                                @selected(($user->settings?->style ?? config('other.default_style', 0)) === 2)
+                                @selected($user->settings->style === 2)
                             >
                                 Dark Blue
                             </option>
                             <option
                                 class="form__option"
                                 value="3"
-                                @selected(($user->settings?->style ?? config('other.default_style', 0)) === 3)
+                                @selected($user->settings->style === 3)
                             >
                                 Dark Green
                             </option>
                             <option
                                 class="form__option"
                                 value="4"
-                                @selected(($user->settings?->style ?? config('other.default_style', 0)) === 4)
+                                @selected($user->settings->style === 4)
                             >
                                 Dark Pink
                             </option>
                             <option
                                 class="form__option"
                                 value="5"
-                                @selected(($user->settings?->style ?? config('other.default_style', 0)) === 5)
+                                @selected($user->settings->style === 5)
                             >
                                 Dark Purple
                             </option>
                             <option
                                 class="form__option"
                                 value="6"
-                                @selected(($user->settings?->style ?? config('other.default_style', 0)) === 6)
+                                @selected($user->settings->style === 6)
                             >
                                 Dark Red
                             </option>
                             <option
                                 class="form__option"
                                 value="7"
-                                @selected(($user->settings?->style ?? config('other.default_style', 0)) === 7)
+                                @selected($user->settings->style === 7)
                             >
                                 Dark Teal
                             </option>
                             <option
                                 class="form__option"
                                 value="8"
-                                @selected(($user->settings?->style ?? config('other.default_style', 0)) === 8)
+                                @selected($user->settings->style === 8)
                             >
                                 Dark Yellow
                             </option>
                             <option
                                 class="form__option"
                                 value="9"
-                                @selected(($user->settings?->style ?? config('other.default_style', 0)) === 9)
+                                @selected($user->settings->style === 9)
                             >
                                 Cosmic Void
                             </option>
                             <option
                                 class="form__option"
                                 value="10"
-                                @selected(($user->settings?->style ?? config('other.default_style', 0)) === 10)
+                                @selected($user->settings->style === 10)
                             >
                                 Nord
                             </option>
                             <option
                                 class="form__option"
                                 value="11"
-                                @selected(($user->settings?->style ?? config('other.default_style', 0)) === 11)
+                                @selected($user->settings->style === 11)
                             >
                                 Revel (Desktop only)
                             </option>
                             <option
                                 class="form__option"
                                 value="12"
-                                @selected(($user->settings?->style ?? config('other.default_style', 0)) === 12)
+                                @selected($user->settings->style === 12)
                             >
                                 Material Design 3 Light
                             </option>
                             <option
                                 class="form__option"
                                 value="13"
-                                @selected(($user->settings?->style ?? config('other.default_style', 0)) === 13)
+                                @selected($user->settings->style === 13)
                             >
                                 Material Design 3 Dark
                             </option>
                             <option
                                 class="form__option"
                                 value="15"
-                                @selected(($user->settings?->style ?? config('other.default_style', 0)) === 15)
+                                @selected($user->settings->style === 15)
                             >
                                 Material Design 3 Navy
                             </option>
@@ -163,7 +163,7 @@
                             <option
                                 class="form__option"
                                 value="14"
-                                @selected(($user->settings?->style ?? config('other.default_style', 0)) === 14)
+                                @selected($user->settings->style === 14)
                             >
                                 Material Design 3 Amoled
                             </option>
@@ -177,7 +177,7 @@
                             name="custom_css"
                             placeholder=" "
                             type="url"
-                            value="{{ $user->settings?->custom_css }}"
+                            value="{{ $user->settings->custom_css }}"
                         />
                         <label class="form__label form__label--floating" for="custom_css">
                             External CSS Stylesheet (Stacks on top of above theme)
@@ -190,7 +190,7 @@
                             name="standalone_css"
                             placeholder=" "
                             type="url"
-                            value="{{ $user->settings?->standalone_css }}"
+                            value="{{ $user->settings->standalone_css }}"
                         />
                         <label class="form__label form__label--floating" for="standalone_css">
                             Standalone CSS Stylesheet (No site theme used)
@@ -207,7 +207,7 @@
                                 type="checkbox"
                                 name="censor"
                                 value="1"
-                                @checked($user->settings?->censor)
+                                @checked($user->settings->censor)
                             />
                             Language Censor Chat
                         </label>
@@ -223,7 +223,7 @@
                                 type="checkbox"
                                 name="news_visible"
                                 value="1"
-                                @checked($user->settings?->news_visible)
+                                @checked($user->settings->news_visible)
                             />
                             {{ __('user.homepage-block-news-visible') }}
                         </label>
@@ -236,7 +236,7 @@
                                 type="checkbox"
                                 name="chat_visible"
                                 value="1"
-                                @checked($user->settings?->chat_visible)
+                                @checked($user->settings->chat_visible)
                             />
                             {{ __('user.homepage-block-chat-visible') }}
                         </label>
@@ -249,7 +249,7 @@
                                 type="checkbox"
                                 name="featured_visible"
                                 value="1"
-                                @checked($user->settings?->featured_visible)
+                                @checked($user->settings->featured_visible)
                             />
                             {{ __('user.homepage-block-featured-visible') }}
                         </label>
@@ -262,7 +262,7 @@
                                 type="checkbox"
                                 name="random_media_visible"
                                 value="1"
-                                @checked($user->settings?->random_media_visible)
+                                @checked($user->settings->random_media_visible)
                             />
                             {{ __('user.homepage-block-random-media-visible') }}
                         </label>
@@ -275,7 +275,7 @@
                                 type="checkbox"
                                 name="poll_visible"
                                 value="1"
-                                @checked($user->settings?->poll_visible)
+                                @checked($user->settings->poll_visible)
                             />
                             {{ __('user.homepage-block-poll-visible') }}
                         </label>
@@ -288,7 +288,7 @@
                                 type="checkbox"
                                 name="top_torrents_visible"
                                 value="1"
-                                @checked($user->settings?->top_torrents_visible)
+                                @checked($user->settings->top_torrents_visible)
                             />
                             {{ __('user.homepage-block-top-torrents-visible') }}
                         </label>
@@ -301,7 +301,7 @@
                                 type="checkbox"
                                 name="top_users_visible"
                                 value="1"
-                                @checked($user->settings?->top_users_visible)
+                                @checked($user->settings->top_users_visible)
                             />
                             {{ __('user.homepage-block-top-users-visible') }}
                         </label>
@@ -314,7 +314,7 @@
                                 type="checkbox"
                                 name="latest_topics_visible"
                                 value="1"
-                                @checked($user->settings?->latest_topics_visible)
+                                @checked($user->settings->latest_topics_visible)
                             />
                             {{ __('user.homepage-block-latest-topics-visible') }}
                         </label>
@@ -327,7 +327,7 @@
                                 type="checkbox"
                                 name="latest_posts_visible"
                                 value="1"
-                                @checked($user->settings?->latest_posts_visible)
+                                @checked($user->settings->latest_posts_visible)
                             />
                             {{ __('user.homepage-block-latest-posts-visible') }}
                         </label>
@@ -340,7 +340,7 @@
                                 type="checkbox"
                                 name="latest_comments_visible"
                                 value="1"
-                                @checked($user->settings?->latest_comments_visible)
+                                @checked($user->settings->latest_comments_visible)
                             />
                             {{ __('user.homepage-block-latest-comments-visible') }}
                         </label>
@@ -353,7 +353,7 @@
                                 type="checkbox"
                                 name="online_visible"
                                 value="1"
-                                @checked($user->settings?->online_visible)
+                                @checked($user->settings->online_visible)
                             />
                             {{ __('user.homepage-block-online-visible') }}
                         </label>
@@ -371,28 +371,28 @@
                             <option
                                 class="form__option"
                                 value="0"
-                                @selected($user->settings === null || $user->settings?->torrent_layout === 0)
+                                @selected($user->settings->torrent_layout === 0)
                             >
                                 Torrent list
                             </option>
                             <option
                                 class="form__option"
                                 value="1"
-                                @selected($user->settings?->torrent_layout === 1)
+                                @selected($user->settings->torrent_layout === 1)
                             >
                                 Torrent cards
                             </option>
                             <option
                                 class="form__option"
                                 value="2"
-                                @selected($user->settings?->torrent_layout === 2)
+                                @selected($user->settings->torrent_layout === 2)
                             >
                                 Torrent groupings
                             </option>
                             <option
                                 class="form__option"
                                 value="3"
-                                @selected($user->settings?->torrent_layout === 3)
+                                @selected($user->settings->torrent_layout === 3)
                             >
                                 Torrent posters
                             </option>
@@ -411,14 +411,14 @@
                             <option
                                 class="form__option"
                                 value="bumped_at"
-                                @selected($user->settings === null || $user->settings?->torrent_sort_field === 'bumped_at')
+                                @selected($user->settings->torrent_sort_field === 'bumped_at')
                             >
                                 Most recently bumped
                             </option>
                             <option
                                 class="form__option"
                                 value="created_at"
-                                @selected($user->settings?->torrent_sort_field === 'created_at')
+                                @selected($user->settings->torrent_sort_field === 'created_at')
                             >
                                 Most recently uploaded
                             </option>
@@ -436,7 +436,7 @@
                                     type="checkbox"
                                     name="show_poster"
                                     value="1"
-                                    @checked($user->settings?->show_poster)
+                                    @checked($user->settings->show_poster)
                                 />
                                 Show Posters On Torrent List View
                             </label>
@@ -449,7 +449,7 @@
                                     type="checkbox"
                                     name="torrent_search_autofocus"
                                     value="1"
-                                    @checked($user->settings?->torrent_search_autofocus)
+                                    @checked($user->settings->torrent_search_autofocus)
                                 />
                                 Autofocus torrent search on page load
                             </label>
@@ -466,7 +466,7 @@
                                     type="checkbox"
                                     name="unbookmark_torrents_on_completion"
                                     value="1"
-                                    @checked($user->settings?->unbookmark_torrents_on_completion)
+                                    @checked($user->settings->unbookmark_torrents_on_completion)
                                 />
                                 Automatically unbookmark torrents upon completion
                             </label>

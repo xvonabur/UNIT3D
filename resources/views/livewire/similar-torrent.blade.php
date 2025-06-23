@@ -10,7 +10,7 @@
                         type="search"
                         autocomplete="off"
                         placeholder=" "
-                        @if (auth()->user()->settings?->torrent_search_autofocus)
+                        @if (auth()->user()->settings->torrent_search_autofocus)
                             autofocus
                         @endif
                     />

@@ -294,7 +294,30 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     public function settings(): \Illuminate\Database\Eloquent\Relations\HasOne
     {
-        return $this->hasOne(UserSetting::class);
+        return $this->hasOne(UserSetting::class)->withDefault([
+            'censor'                            => false,
+            'news_visible'                      => true,
+            'chat_visible'                      => true,
+            'featured_visible'                  => true,
+            'random_media_visible'              => true,
+            'poll_visible'                      => true,
+            'top_torrents_visible'              => true,
+            'top_users_visible'                 => true,
+            'latest_topics_visible'             => true,
+            'latest_posts_visible'              => true,
+            'latest_comments_visible'           => true,
+            'online_visible'                    => true,
+            'locale'                            => config('app.locale'),
+            'style'                             => config('other.default_style', 0),
+            'torrent_layout'                    => 0,
+            'torrent_filters'                   => false,
+            'custom_css'                        => null,
+            'standalone_css'                    => null,
+            'show_poster'                       => false,
+            'unbookmark_torrents_on_completion' => false,
+            'torrent_sort_field'                => 'bumped_at',
+            'torrent_search_autofocus'          => false,
+        ]);
     }
 
     /**
