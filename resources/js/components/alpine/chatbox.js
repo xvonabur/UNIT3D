@@ -524,6 +524,36 @@ document.addEventListener('alpine:init', () => {
             }
         },
 
+        leaveTarget(id) {
+            if (id !== 1) {
+                // Update the user's chatroom in the database
+                axios
+                    .post(`/api/chat/echoes/delete/target`, { target_id: id })
+                    .then((response) => {
+                        // Reassign the auth variable to the response data
+                        this.auth = response.data;
+                        document.getElementById('currentChatroom').value = '1';
+                        this.fetchRooms().then(() => {
+                            // Check if there are other chat tabs available
+                            if (this.state.chat.tab) {
+                                // Switch to the first chat tab
+                                const firstTab = this.state.chat.tab;
+                                this.changeTab('room', firstTab);
+                            } else if (this.chatrooms.length > 0) {
+                                // Default to the first chatroom from the dropdown
+                                const firstChatroom = this.chatrooms[0];
+                                this.changeRoom(firstChatroom.id);
+                            } else {
+                                console.warn('No chat tabs or chatrooms available.');
+                            }
+                        });
+                    })
+                    .catch((error) => {
+                        console.error('Error leaving room:', error);
+                    });
+            }
+        },
+
         changeBot(id) {
             if (this.state.chat.bot !== id && id != 0) {
                 this.state.chat.bot = id;
