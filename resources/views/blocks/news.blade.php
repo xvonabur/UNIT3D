@@ -1,12 +1,12 @@
 <section
     class="panelV2 blocks__news"
     x-data="{
-        show: {{ Js::from($articles->contains(fn ($article) => $article->unread_news_exists)) }},
+        show: {{ Js::from($articles->contains(fn ($article) => $article->unreads_exists)) }},
     }"
 >
     <header class="panel__header" x-on:click="show = !show" style="cursor: pointer">
         <h2 class="panel__heading panel__heading--centered">
-            @if ($articles->first()?->unread_news_exists)
+            @if ($articles->first()?->unreads_exists)
                 @joypixels(':rotating_light:')
                 {{ __('blocks.new-news') }}
                 {{ $articles->first()?->created_at?->diffForHumans() }}
@@ -29,7 +29,7 @@
             <article class="article-preview">
                 <header class="article-preview__header">
                     <h2 class="article-preview__title">
-                        @if ($article->unread_news_exists)
+                        @if ($article->unreads_exists)
                             <x-animation.notification />
                         @endif
 
