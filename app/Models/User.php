@@ -36,7 +36,7 @@ use Laravel\Fortify\TwoFactorAuthenticatable;
  * @property string                          $password
  * @property string|null                     $two_factor_secret
  * @property string|null                     $two_factor_recovery_codes
- * @property string|null                     $two_factor_confirmed_at
+ * @property \Illuminate\Support\Carbon|null $two_factor_confirmed_at
  * @property string                          $passkey
  * @property int                             $group_id
  * @property int                             $uploaded
@@ -129,18 +129,19 @@ class User extends Authenticatable implements MustVerifyEmail
     protected function casts(): array
     {
         return [
-            'seedbonus'    => 'decimal:2',
-            'last_login'   => 'datetime',
-            'last_action'  => 'datetime',
-            'disabled_at'  => 'datetime',
-            'can_comment'  => 'bool',
-            'can_download' => 'bool',
-            'can_request'  => 'bool',
-            'can_invite'   => 'bool',
-            'can_upload'   => 'bool',
-            'can_chat'     => 'bool',
-            'is_donor'     => 'bool',
-            'is_lifetime'  => 'bool',
+            'seedbonus'               => 'decimal:2',
+            'last_login'              => 'datetime',
+            'last_action'             => 'datetime',
+            'disabled_at'             => 'datetime',
+            'two_factor_confirmed_at' => 'datetime',
+            'can_comment'             => 'bool',
+            'can_download'            => 'bool',
+            'can_request'             => 'bool',
+            'can_invite'              => 'bool',
+            'can_upload'              => 'bool',
+            'can_chat'                => 'bool',
+            'is_donor'                => 'bool',
+            'is_lifetime'             => 'bool',
         ];
     }
 
