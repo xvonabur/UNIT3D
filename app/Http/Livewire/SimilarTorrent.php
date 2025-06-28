@@ -489,7 +489,7 @@ class SimilarTorrent extends Component
             }
 
             // Reset Requests
-            $torrent->requests()->update([
+            $torrent->requests()->whereNull('approved_when')->update([
                 'torrent_id' => null,
             ]);
 
