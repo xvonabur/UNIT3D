@@ -16,6 +16,7 @@ declare(strict_types=1);
 
 namespace Tests\Old;
 
+use App\Enums\AuthGuard;
 use App\Enums\ModerationStatus;
 use App\Models\Category;
 use App\Models\Resolution;
@@ -39,7 +40,7 @@ final class TorrentControllerTest extends TestCase
     {
         $user = User::factory()->create();
 
-        $response = $this->actingAs($user, 'api')->getJson('api/torrents/filter');
+        $response = $this->actingAs($user, AuthGuard::API->value)->getJson('api/torrents/filter');
 
         $response->assertOk()
             ->assertJson([
@@ -65,7 +66,7 @@ final class TorrentControllerTest extends TestCase
     {
         $user = User::factory()->create();
 
-        $response = $this->actingAs($user, 'api')->getJson(route('api.torrents.index'));
+        $response = $this->actingAs($user, AuthGuard::API->value)->getJson(route('api.torrents.index'));
 
         $response->assertOk()
             ->assertJson([
@@ -99,7 +100,7 @@ final class TorrentControllerTest extends TestCase
             'status'  => ModerationStatus::APPROVED,
         ]);
 
-        $response = $this->actingAs($user, 'api')->getJson(\sprintf('api/torrents/%s', $torrent->id));
+        $response = $this->actingAs($user, AuthGuard::API->value)->getJson(\sprintf('api/torrents/%s', $torrent->id));
 
         $response->assertOk()
             ->assertJson([
@@ -123,7 +124,7 @@ final class TorrentControllerTest extends TestCase
 
         $torrent = Torrent::factory()->make();
 
-        $response = $this->actingAs($user, 'api')->postJson('api/torrents/upload', [
+        $response = $this->actingAs($user, AuthGuard::API->value)->postJson('api/torrents/upload', [
             'torrent' => new UploadedFile(
                 base_path('tests/Resources/Pony Music - Mind Fragments (2014).torrent'),
                 'Pony Music - Mind Fragments (2014).torrent'

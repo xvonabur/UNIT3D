@@ -16,6 +16,8 @@ declare(strict_types=1);
 
 namespace App\Http;
 
+use App\Enums\GlobalRateLimit;
+use App\Enums\MiddlewareGroup;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -44,7 +46,7 @@ class Kernel extends HttpKernel
      * @var array<string, array<int, class-string|string>>
      */
     protected $middlewareGroups = [
-        'web' => [
+        MiddlewareGroup::WEB->value => [
             \Illuminate\Cookie\Middleware\EncryptCookies::class,
             \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
             \Illuminate\Session\Middleware\StartSession::class,
@@ -54,9 +56,9 @@ class Kernel extends HttpKernel
             \Illuminate\Foundation\Http\Middleware\VerifyCsrfToken::class,
             Middleware\UpdateLastAction::class,
             \HDVinnie\SecureHeaders\SecureHeadersMiddleware::class,
-            'throttle:web',
+            'throttle:'.GlobalRateLimit::WEB->value,
         ],
-        'chat' => [
+        MiddlewareGroup::CHAT->value => [
             \Illuminate\Cookie\Middleware\EncryptCookies::class,
             \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
             \Illuminate\Session\Middleware\StartSession::class,
@@ -66,16 +68,16 @@ class Kernel extends HttpKernel
             \Illuminate\Foundation\Http\Middleware\VerifyCsrfToken::class,
             Middleware\UpdateLastAction::class,
             \HDVinnie\SecureHeaders\SecureHeadersMiddleware::class,
-            'throttle:chat',
+            'throttle:'.GlobalRateLimit::CHAT->value,
         ],
-        'api' => [
-            'throttle:api',
+        MiddlewareGroup::API->value => [
+            'throttle:'.GlobalRateLimit::API->value,
         ],
-        'announce' => [
-            'throttle:announce',
+        MiddlewareGroup::ANNOUNCE->value => [
+            'throttle:'.GlobalRateLimit::ANNOUNCE->value,
         ],
-        'rss' => [
-            'throttle:rss',
+        MiddlewareGroup::RSS->value => [
+            'throttle:'.GlobalRateLimit::RSS->value,
         ],
     ];
 

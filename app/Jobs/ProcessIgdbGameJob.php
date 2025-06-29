@@ -16,6 +16,7 @@ declare(strict_types=1);
 
 namespace App\Jobs;
 
+use App\Enums\GlobalRateLimit;
 use App\Models\IgdbCompany;
 use App\Models\IgdbGame;
 use App\Models\IgdbGenre;
@@ -55,7 +56,7 @@ class ProcessIgdbGameJob implements ShouldQueue
         return [
             Skip::when(cache()->has("igdb-game-scraper:{$this->id}")),
             new WithoutOverlapping((string) $this->id)->dontRelease()->expireAfter(30),
-            new RateLimited('igdb'),
+            new RateLimited(GlobalRateLimit::IGDB),
         ];
     }
 

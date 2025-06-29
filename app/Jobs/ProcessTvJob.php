@@ -16,6 +16,7 @@ declare(strict_types=1);
 
 namespace App\Jobs;
 
+use App\Enums\GlobalRateLimit;
 use App\Models\TmdbCompany;
 use App\Models\TmdbCredit;
 use App\Models\TmdbGenre;
@@ -74,7 +75,7 @@ class ProcessTvJob implements ShouldQueue
         return [
             Skip::when(cache()->has("tmdb-tv-scraper:{$this->id}")),
             new WithoutOverlapping((string) $this->id)->dontRelease()->expireAfter(30),
-            new RateLimited('tmdb'),
+            new RateLimited(GlobalRateLimit::TMDB),
         ];
     }
 
