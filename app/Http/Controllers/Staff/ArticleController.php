@@ -104,6 +104,10 @@ class ArticleController extends Controller
             $filename = 'article-'.uniqid('', true).'.'.$image->getClientOriginalExtension();
             $path = Storage::disk('article-images')->path($filename);
             Image::make($image->getRealPath())->fit(75, 75)->encode('png', 100)->save($path);
+
+            if ($article->image !== null) {
+                Storage::disk('article-images')->delete($article->image);
+            }
         }
 
         $article->update(['image' => $filename ?? null,] + $request->validated());
