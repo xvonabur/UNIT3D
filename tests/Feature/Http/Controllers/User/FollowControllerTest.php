@@ -18,6 +18,18 @@ use App\Models\User;
 use Database\Seeders\GroupSeeder;
 use Database\Seeders\UserSeeder;
 
+test('store returns an ok response', function (): void {
+    $this->seed(UserSeeder::class);
+    $this->seed(GroupSeeder::class);
+
+    $user = User::factory()->create();
+    $userToFollow = User::factory()->create();
+
+    $response = $this->actingAs($user)->post(route('users.followers.store', ['user' => $userToFollow]));
+    $response->assertRedirect(route('users.show', ['user' => $userToFollow]))
+        ->assertSessionHas('success', \sprintf('You are now following %s', $userToFollow->username));
+});
+
 test('destroy returns an ok response', function (): void {
     $this->seed(UserSeeder::class);
     $this->seed(GroupSeeder::class);
@@ -43,16 +55,4 @@ test('index returns an ok response', function (): void {
     $response->assertViewIs('user.follower.index');
     $response->assertViewHas('followers');
     $response->assertViewHas('user', $user);
-});
-
-test('store returns an ok response', function (): void {
-    $this->seed(UserSeeder::class);
-    $this->seed(GroupSeeder::class);
-
-    $user = User::factory()->create();
-    $userToFollow = User::factory()->create();
-
-    $response = $this->actingAs($user)->post(route('users.followers.store', ['user' => $userToFollow]));
-    $response->assertRedirect(route('users.show', ['user' => $userToFollow]))
-        ->assertSessionHas('success', \sprintf('You are now following %s', $userToFollow->username));
 });
