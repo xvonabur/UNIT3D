@@ -25,6 +25,10 @@ test('destroy returns an ok response', function (): void {
     $user = User::factory()->create();
     $userToFollow = User::factory()->create();
 
+    $followResponse = $this->actingAs($user)->post(route('users.followers.store', ['user' => $userToFollow]));
+    $followResponse->assertRedirect(route('users.show', ['user' => $userToFollow]))
+        ->assertSessionHas('success', \sprintf('You are now following %s', $userToFollow->username));
+
     $response = $this->actingAs($user)->delete(route('users.followers.destroy', ['user' => $userToFollow]));
     $response->assertRedirect(route('users.show', ['user' => $userToFollow]))
         ->assertSessionHas('success', \sprintf('You are no longer following %s', $userToFollow->username));
