@@ -233,9 +233,9 @@ Route::middleware('language')->group(function (): void {
             })->scopeBindings();
         });
 
-        // Top 10 System
-        Route::prefix('top10')->name('top10.')->group(function (): void {
-            Route::get('/', [App\Http\Controllers\Top10Controller::class, 'index'])->name('index');
+        // Trending System
+        Route::prefix('trending')->name('trending.')->group(function (): void {
+            Route::get('/', [App\Http\Controllers\TrendingController::class, 'index'])->name('index');
         });
 
         // Torrents System
