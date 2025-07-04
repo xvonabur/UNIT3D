@@ -108,7 +108,6 @@ return [
     'not_in' => '所选 :attribute 无效。',
     'not_regex' => ' :attribute 的格式无效。',
     'numeric' => '该 :attribute 必须是一个数字。',
-    'password' => '密码不正确。',
     'present' => '该 :attribute 必须存在。',
     'prohibited' => '该 :attribute 字段禁止使用。',
     'prohibited_if' => '该 :attribute 字段禁止使用，当 :other 是 :value。',
