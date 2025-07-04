@@ -56,4 +56,11 @@ return [
     'flush-chat' => 'Флусх Цхатбок',
     'seedboxes' => 'Регистеред Сеедбокес',
     'application' => 'Примена',
+    'application-type' => 'Тип',
+    'application-image-proofs' => 'Пробне фотографије',
+    'application-referrer' => 'Референт',
+    'article-content' => 'Садржај',
+    'blocked-ips' => 'Блокиране IP адресе',
+    'bon-exchange' => 'Бон Размена',
+    'bon-earnings' => 'Зарада од БОН-а',
 ];

@@ -37,7 +37,7 @@ return [
     'completed_at' => 'Цомплетед ат',
     'completed-not-seeding' => 'Довршили сте ову верзију, али више не сијате',
     'created_at' => 'Направљено у',
-    'credited' => 'Цредитед',
+    'credited' => 'Приписано',
     'current' => 'Тренутни',
     'current-filters' => 'Цуррент Филтерс',
     'currently-leeching' => 'Цуррентли Леецхинг',
@@ -203,4 +203,8 @@ return [
     'view-trailer' => 'Виев траилер',
     'votes' => 'Гласова',
     'date' => 'Датум',
+    'add-to-playlist' => 'Додај на плејлисту',
+    'genre-tags' => 'Ознаке жанра',
+    'resolution' => 'Резолуција',
+    'resolutions' => 'Резолуције',
 ];

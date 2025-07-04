@@ -323,4 +323,10 @@ return [
     'warning' => 'Упозорење',
     'warning-log' => 'Дневник упозорења',
     'wishlist' => 'Висхлист',
+    'created' => 'Креирано',
+    'deactivate' => 'Деактивирај',
+    'deactivate-all' => 'Деактивирај све',
+    'delete-all' => 'Обриши све',
+    'deleted-by' => 'Обрисао/ла',
+    'deleted-on' => 'Обрисано',
 ];

@@ -237,7 +237,7 @@ return [
     'system-message' => 'DETTE ER EN AUTOMATISK SYSTEMBESKED, SVAR VENLIGST IKKE!',
     'top-10' => 'Top 10',
     'wished' => 'Ønskede',
-    'article' => 'Artikel',
+    'article' => 'Articolo',
     'and' => 'og',
     'test' => 'test',
 ];

@@ -20,7 +20,7 @@ return [
     'close-topic' => 'Закључај тему',
     'closed' => 'Затворено',
     'create-new-topic' => 'Направите нову тему',
-    'created' => 'Цреатед',
+    'created' => 'Креирано',
     'current' => 'Тренутни',
     'delete-topic' => 'Избриши ову тему',
     'denied' => 'Дениед',
@@ -70,4 +70,9 @@ return [
     'unpin' => 'Унпин',
     'view-all' => 'Прикажи све теме',
     'views' => 'Виевс',
+    'created-at' => 'Направљено у',
+    'delete-post-success' => 'Ова објава је сада обрисана!',
+    'tip-this-post' => 'Саветујте овог постерa',
+    'updated-at' => 'Ажурирано у',
+    'unsubscribe' => 'Одјави се',
 ];
