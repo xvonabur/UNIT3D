@@ -36,4 +36,7 @@ return [
     'to' => 'До',
     'unread' => 'Унреад',
     'empty-inbox' => 'Испразните инбок',
+    'all-marked-read' => 'Sve vaše poruke su označene kao pročitane!',
+    'delete-success' => 'Приватна порука је успешно обрисана!',
+    'error' => 'Шта покушаваш овде да урадиш!',
 ];

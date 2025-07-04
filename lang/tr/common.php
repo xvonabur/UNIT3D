@@ -150,7 +150,7 @@ return [
     'terms' => 'Kullanım Şartları',
     'times' => 'Zamanlar',
     'title' => 'Başlık',
-    'top-bountied' => 'En İyi Ödül',
+    'top-bountied' => 'Top bağışçı',
     'topics' => 'Başlıklar',
     'tracker-codes' => 'İzleyici kodları',
     'type' => 'tip',

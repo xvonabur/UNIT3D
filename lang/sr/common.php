@@ -198,4 +198,7 @@ return [
     'content' => 'Садржај',
     'connected' => 'Повезано',
     'dead' => 'Мртав',
+    'resolution' => 'Резолуција',
+    'languages' => 'Језици',
+    'resolutions' => 'Резолуције',
 ];

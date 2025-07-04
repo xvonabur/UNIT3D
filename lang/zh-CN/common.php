@@ -233,4 +233,11 @@ return [
     'yes' => '是',
     'your' => '你的',
     'your-comment' => '你的评论',
+    'dead' => '死种',
+    'alive' => '存活',
+    'send' => '发送',
+    'extras' => '额外',
+    'subject' => '主题',
+    'total' => '总数',
+    'test' => '测试',
 ];
