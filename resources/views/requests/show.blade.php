@@ -42,7 +42,7 @@
 
             @switch(true)
                 {{-- Claimed --}}
-                @case($torrentRequest->claimed && $torrentRequest->torrent === null)
+                @case($torrentRequest->claim !== null && $torrentRequest->torrent === null)
                     @includeWhen($user->group->is_modo || $torrentRequest->claim->user->is($user), 'requests.partials.unclaim')
                     @includeWhen($user->group->is_modo || $torrentRequest->claim->user->is($user), 'requests.partials.fulfill')
                     @include('requests.partials.report')
@@ -84,14 +84,16 @@
             </li>
             <li class="request__type">
                 <span>
-                    {{ $torrentRequest->type->name }}
+                    {{ $torrentRequest->type->name ?? 'Any' }}
                 </span>
             </li>
+
             <li class="request__resolution">
                 <span>
-                    {{ $torrentRequest->resolution->name ?? 'No Res' }}
+                    {{ $torrentRequest->resolution->name ?? 'Any' }}
                 </span>
             </li>
+
             <li class="request__requester">
                 <x-user-tag :user="$torrentRequest->user" :anon="$torrentRequest->anon" />
             </li>

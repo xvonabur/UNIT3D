@@ -10,7 +10,7 @@
                         type="search"
                         autocomplete="off"
                         placeholder=" "
-                        @if (auth()->user()->settings?->torrent_search_autofocus)
+                        @if (auth()->user()->settings->torrent_search_autofocus)
                             autofocus
                         @endif
                     />
@@ -970,8 +970,8 @@
                                     </a>
                                 </td>
                                 <td>{{ $torrentRequest->category->name }}</td>
-                                <td>{{ $torrentRequest->type->name }}</td>
-                                <td>{{ $torrentRequest->resolution->name ?? 'Unknown' }}</td>
+                                <td>{{ $torrentRequest->type->name ?? 'Any' }}</td>
+                                <td>{{ $torrentRequest->resolution->name ?? 'Any' }}</td>
                                 <td>
                                     <x-user-tag
                                         :user="$torrentRequest->user"
@@ -991,7 +991,7 @@
                                 </td>
                                 <td>
                                     @switch(true)
-                                        @case($torrentRequest->claimed && $torrentRequest->torrent_id === null)
+                                        @case($torrentRequest->claim_exists && $torrentRequest->torrent_id === null)
                                             <i class="fas fa-circle text-blue"></i>
                                             {{ __('request.claimed') }}
 
@@ -1073,7 +1073,13 @@
                                             </td>
                                         @endif
 
-                                        <td>{{ $playlist->name }}</td>
+                                        <td>
+                                            <a
+                                                href="{{ route('playlists.show', ['playlist' => $playlist]) }}"
+                                            >
+                                                {{ $playlist->name }}
+                                            </a>
+                                        </td>
                                         <td>{{ $playlist->torrents_count }}</td>
                                         <td>
                                             <x-user-tag :user="$playlist->user" :anon="false" />

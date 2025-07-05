@@ -390,6 +390,7 @@ class SimilarTorrent extends Component
     {
         return TorrentRequest::with(['user:id,username,group_id', 'user.group', 'category', 'type', 'resolution'])
             ->withCount(['comments'])
+            ->withExists('claim')
             ->when($this->category->movie_meta, fn ($query) => $query->where('tmdb_movie_id', '=', $this->tmdbId))
             ->when($this->category->tv_meta, fn ($query) => $query->where('tmdb_tv_id', '=', $this->tmdbId))
             ->when($this->category->game_meta, fn ($query) => $query->where('igdb', '=', $this->tmdbId))
@@ -488,7 +489,7 @@ class SimilarTorrent extends Component
             }
 
             // Reset Requests
-            $torrent->requests()->update([
+            $torrent->requests()->whereNull('approved_when')->update([
                 'torrent_id' => null,
             ]);
 

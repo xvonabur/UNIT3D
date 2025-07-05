@@ -16,6 +16,7 @@ declare(strict_types=1);
 
 namespace App\Jobs;
 
+use App\Enums\GlobalRateLimit;
 use App\Models\TmdbCollection;
 use App\Models\TmdbCompany;
 use App\Models\TmdbCredit;
@@ -58,7 +59,7 @@ class ProcessMovieJob implements ShouldQueue
         return [
             Skip::when(cache()->has("tmdb-movie-scraper:{$this->id}")),
             new WithoutOverlapping((string) $this->id)->dontRelease()->expireAfter(30),
-            new RateLimited('tmdb'),
+            new RateLimited(GlobalRateLimit::TMDB),
         ];
     }
 

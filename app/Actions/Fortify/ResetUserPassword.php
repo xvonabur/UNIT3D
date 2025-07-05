@@ -59,7 +59,6 @@ class ResetUserPassword implements ResetsUserPasswords
             $user->markEmailAsVerified();
         }
 
-        $user->active = true;
         $user->save();
 
         $user->passwordResetHistories()->create();

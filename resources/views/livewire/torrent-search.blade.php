@@ -9,7 +9,7 @@
                     wire:model.live="name"
                     class="form__text"
                     placeholder=" "
-                    @if (auth()->user()->settings?->torrent_search_autofocus)
+                    @if (auth()->user()->settings->torrent_search_autofocus)
                         autofocus
                     @endif
                 />
@@ -769,11 +769,11 @@
                         <thead>
                             <tr
                                 @class([
-                                    'torrent-search--list__headers' => auth()->user()->settings?->show_poster,
-                                    'torrent-search--list__no-poster-headers' => ! auth()->user()->settings?->show_poster,
+                                    'torrent-search--list__headers' => auth()->user()->settings->show_poster,
+                                    'torrent-search--list__no-poster-headers' => ! auth()->user()->settings->show_poster,
                                 ])
                             >
-                                @if (auth()->user()->settings?->show_poster)
+                                @if (auth()->user()->settings->show_poster)
                                     <th class="torrent-search--list__poster-header">Poster</th>
                                 @endif
 
