@@ -230,7 +230,7 @@
             </template>
         </menu>
         <div class="chatbox__chatroom" x-show="!state.ui.connecting">
-            <template x-if="state.chat.tab !== '' && state.chat.tab !== 'userlist'">
+            <template x-if="state.chat.tab !== ''">
                 <div class="chatroom__messages--wrapper" x-ref="messagesWrapper">
                     <ul class="chatroom__messages">
                         <template x-for="message in messages" :key="message.id">
@@ -365,8 +365,7 @@
                     </ul>
                 </div>
             </template>
-            <template x-if="state.chat.tab === 'userlist'">
-                <section class="chatroom__users">
+            <section class="chatroom__users" x-show="state.chat.showUserList">
                     <h2 class="chatroom-users__heading">Users</h2>
                     <ul class="chatroom-users__list">
                         <template x-for="user in users" :key="user.id">
@@ -406,7 +405,6 @@
                         </template>
                     </ul>
                 </section>
-            </template>
             <section class="chatroom__whispers" x-show="state.chat.showWhispers">
                 <span
                     x-show="state.chat.target < 1 && state.chat.bot < 1 && activePeer && activePeer.username != ''"
