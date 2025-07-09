@@ -466,7 +466,6 @@ document.addEventListener('alpine:init', () => {
         changeRoom(id) {
             this.state.chat.bot = 0;
             this.state.chat.target = 0;
-            this.state.chat.room = id;
             this.state.message.bot_id = null;
             this.state.message.receiver_id = null;
 
@@ -490,6 +489,8 @@ document.addEventListener('alpine:init', () => {
 
             // Set up room channel with improved connection handling
             channelHandler.setupRoom(id, this);
+
+            this.state.chat.room = id;
         },
 
         leaveRoom(id) {
