@@ -28,7 +28,6 @@ const messageHandler = {
 
     create(message, context, save = true, user_id = 1, receiver_id = null, bot_id = null) {
         if (/\[size=[0-9]{3,}\]/.test(message)) return;
-        if (context.state.chat.tab === 'userlist') return;
         if (!message || message.trim() === '') return;
 
         return axios
@@ -163,6 +162,7 @@ document.addEventListener('alpine:init', () => {
                 botCommand: '',
                 listening: 1,
                 showWhispers: true,
+                showUserList: false,
             },
             message: {
                 helpName: '',
@@ -454,8 +454,12 @@ document.addEventListener('alpine:init', () => {
                 let currentAudio = this.audibles.find((o) => o.bot && o.bot.id == newVal);
                 this.state.chat.listening = currentAudio && currentAudio.status == 1 ? 1 : 0;
             } else if (typeVal == 'list') {
-                this.state.chat.tab = newVal;
+                this.toggleUserList();
             }
+        },
+
+        toggleUserList() {
+            this.state.chat.showUserList = !this.state.chat.showUserList;
         },
 
         changeRoom(id) {
@@ -585,7 +589,6 @@ document.addEventListener('alpine:init', () => {
             if (!this._debouncedIsTyping) {
                 this._debouncedIsTyping = debounce(function (e) {
                     if (
-                        self.state.chat.tab != 'userlist' &&
                         self.state.chat.target < 1 &&
                         self.channel &&
                         self.state.chat.tab != ''
