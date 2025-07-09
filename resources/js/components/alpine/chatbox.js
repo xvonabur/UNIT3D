@@ -588,11 +588,7 @@ document.addEventListener('alpine:init', () => {
 
             if (!this._debouncedIsTyping) {
                 this._debouncedIsTyping = debounce(function (e) {
-                    if (
-                        self.state.chat.target < 1 &&
-                        self.channel &&
-                        self.state.chat.tab != ''
-                    ) {
+                    if (self.state.chat.target < 1 && self.channel && self.state.chat.tab != '') {
                         self.channel.whisper('typing', { username: e.username });
                     }
                 }, 300);
