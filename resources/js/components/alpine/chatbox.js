@@ -193,6 +193,7 @@ document.addEventListener('alpine:init', () => {
         typingTimeout: null,
         blurHandler: null,
         focusHandler: null,
+        timestampTick: 0,
 
         init() {
             this.state.chat.activeRoom = this.auth.chatroom.name;
@@ -216,6 +217,10 @@ document.addEventListener('alpine:init', () => {
                     this.state.ui.loading = false;
                     this.listenForChatter();
                     this.attachAudible();
+
+                    setInterval(() => {
+                        this.timestampTick++;
+                    }, 30000);
                 })
                 .catch((error) => {
                     console.error('Error initializing chat:', error);
@@ -465,7 +470,6 @@ document.addEventListener('alpine:init', () => {
         changeRoom(id) {
             this.state.chat.bot = 0;
             this.state.chat.target = 0;
-            this.state.chat.room = id;
             this.state.message.bot_id = null;
             this.state.message.receiver_id = null;
 
@@ -489,6 +493,8 @@ document.addEventListener('alpine:init', () => {
 
             // Set up room channel with improved connection handling
             channelHandler.setupRoom(id, this);
+
+            this.state.chat.room = id;
         },
 
         leaveRoom(id) {
@@ -763,6 +769,7 @@ document.addEventListener('alpine:init', () => {
 
         formatTime(timestamp) {
             if (!timestamp) return '';
+            this.timestampTick;
             return dayjs(timestamp).fromNow();
         },
     }));
