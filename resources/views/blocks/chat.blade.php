@@ -230,7 +230,7 @@
             </template>
         </menu>
         <div class="chatbox__chatroom" x-show="!state.ui.connecting">
-            <template x-if="state.chat.tab !== '' && state.chat.tab !== 'userlist'">
+            <template x-if="state.chat.tab !== ''">
                 <div class="chatroom__messages--wrapper" x-ref="messagesWrapper">
                     <ul class="chatroom__messages">
                         <template x-for="message in messages" :key="message.id">
@@ -365,48 +365,43 @@
                     </ul>
                 </div>
             </template>
-            <template x-if="state.chat.tab === 'userlist'">
-                <section class="chatroom__users">
-                    <h2 class="chatroom-users__heading">Users</h2>
-                    <ul class="chatroom-users__list">
-                        <template x-for="user in users" :key="user.id">
-                            <li class="chatroom-users__list-item">
-                                <span class="chatroom-users__user user-tag">
-                                    <a
-                                        class="chatroom-users__user-link user-tag__link"
-                                        :href="'/users/' + user.username"
-                                    >
-                                        <span x-text="user.username"></span>
-                                    </a>
-                                </span>
-                                <menu
-                                    class="chatroom-users__buttons"
-                                    x-show="auth.id !== user.id"
+            <section class="chatroom__users" x-show="state.chat.showUserList">
+                <h2 class="chatroom-users__heading">Users</h2>
+                <ul class="chatroom-users__list">
+                    <template x-for="user in users" :key="user.id">
+                        <li class="chatroom-users__list-item">
+                            <span class="chatroom-users__user user-tag">
+                                <a
+                                    class="chatroom-users__user-link user-tag__link"
+                                    :href="'/users/' + user.username"
                                 >
-                                    <li>
-                                        <button
-                                            class="chatroom-users__button"
-                                            title="Gift user bon"
-                                            @click.prevent="forceGift(user.username)"
-                                        >
-                                            <i class="fas fa-gift"></i>
-                                        </button>
-                                    </li>
-                                    <li>
-                                        <button
-                                            class="chatroom-users__button"
-                                            title="Send chat PM"
-                                            @click.prevent="forceMessage(user.username)"
-                                        >
-                                            <i class="fas fa-envelope"></i>
-                                        </button>
-                                    </li>
-                                </menu>
-                            </li>
-                        </template>
-                    </ul>
-                </section>
-            </template>
+                                    <span x-text="user.username"></span>
+                                </a>
+                            </span>
+                            <menu class="chatroom-users__buttons" x-show="auth.id !== user.id">
+                                <li>
+                                    <button
+                                        class="chatroom-users__button"
+                                        title="Gift user bon"
+                                        @click.prevent="forceGift(user.username)"
+                                    >
+                                        <i class="fas fa-gift"></i>
+                                    </button>
+                                </li>
+                                <li>
+                                    <button
+                                        class="chatroom-users__button"
+                                        title="Send chat PM"
+                                        @click.prevent="forceMessage(user.username)"
+                                    >
+                                        <i class="fas fa-envelope"></i>
+                                    </button>
+                                </li>
+                            </menu>
+                        </li>
+                    </template>
+                </ul>
+            </section>
             <section class="chatroom__whispers" x-show="state.chat.showWhispers">
                 <span
                     x-show="state.chat.target < 1 && state.chat.bot < 1 && activePeer && activePeer.username != ''"
