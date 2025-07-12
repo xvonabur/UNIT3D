@@ -121,10 +121,14 @@ const channelHandler = {
             })
             .listenForWhisper('typing', (e) => {
                 if (context.state.chat.target > 0 || context.state.chat.bot > 0) return;
-                context.activePeer = e;
-                clearTimeout(context.typingTimeout);
-                context.typingTimeout = setTimeout(() => {
-                    context.activePeer = false;
+                const name = e.username || e;
+                if (!context.activePeer.includes(name)) {
+                    context.activePeer.push(name);
+                }
+                clearTimeout(context.typingTimers[name]);
+                context.typingTimers[name] = setTimeout(() => {
+                    context.activePeer = context.activePeer.filter((u) => u !== name);
+                    delete context.typingTimers[name];
                 }, 15000);
             });
 
@@ -184,7 +188,8 @@ document.addEventListener('alpine:init', () => {
         pings: [],
         audibles: [],
         boot: 0,
-        activePeer: false,
+        activePeer: [],
+        typingTimers: {},
         frozen: false,
         scroll: true,
         channel: null,
@@ -650,10 +655,14 @@ document.addEventListener('alpine:init', () => {
                     if (index !== -1) this.messages.splice(index, 1);
                 } else if (e.type == 'typing') {
                     if (this.state.chat.target < 1) return;
-                    this.activePeer = e.username;
-                    clearTimeout(this.typingTimeout);
-                    this.typingTimeout = setTimeout(() => {
-                        this.activePeer = false;
+                    const name = e.username;
+                    if (!this.activePeer.includes(name)) {
+                        this.activePeer.push(name);
+                    }
+                    clearTimeout(this.typingTimers[name]);
+                    this.typingTimers[name] = setTimeout(() => {
+                        this.activePeer = this.activePeer.filter((u) => u !== name);
+                        delete this.typingTimers[name];
                     }, 15000);
                 }
             });
