@@ -404,12 +404,9 @@
             </section>
             <section class="chatroom__whispers" x-show="state.chat.showWhispers">
                 <span
-                    x-show="state.chat.target < 1 && state.chat.bot < 1 && activePeer && activePeer.username != ''"
-                >
-                    <span
-                        x-text="activePeer ? activePeer.username + ' is typing ...' : '*'"
-                    ></span>
-                </span>
+                    x-show="state.chat.target < 1 && state.chat.bot < 1 && activePeer && activePeer.length > 0"
+                    x-text="activePeer.length === 1 ? activePeer[0] + ' is typing ...' : activePeer.slice(0, -1).join(', ') + ' and ' + activePeer[activePeer.length - 1] + ' are typing ...'"
+                ></span>
             </section>
             <form
                 class="form chatroom__new-message"
