@@ -122,14 +122,9 @@ const channelHandler = {
             .listenForWhisper('typing', (e) => {
                 if (context.state.chat.target > 0 || context.state.chat.bot > 0) return;
                 const name = e.username || e;
-                if (!context.activePeer.includes(name)) {
-                    context.activePeer.push(name);
-                }
-                clearTimeout(context.typingTimers[name]);
-                context.typingTimers[name] = setTimeout(() => {
-                    context.activePeer = context.activePeer.filter((u) => u !== name);
-                    delete context.typingTimers[name];
-                }, 15000);
+                clearTimeout(context.activePeer.get(name));
+                const t = setTimeout(() => context.activePeer.delete(name), 15000);
+                context.activePeer.set(name, t);
             });
 
         context.channel.error((error) => {
@@ -188,8 +183,7 @@ document.addEventListener('alpine:init', () => {
         pings: [],
         audibles: [],
         boot: 0,
-        activePeer: [],
-        typingTimers: {},
+        activePeer: new Map(),
         frozen: false,
         scroll: true,
         channel: null,
@@ -656,14 +650,9 @@ document.addEventListener('alpine:init', () => {
                 } else if (e.type == 'typing') {
                     if (this.state.chat.target < 1) return;
                     const name = e.username;
-                    if (!this.activePeer.includes(name)) {
-                        this.activePeer.push(name);
-                    }
-                    clearTimeout(this.typingTimers[name]);
-                    this.typingTimers[name] = setTimeout(() => {
-                        this.activePeer = this.activePeer.filter((u) => u !== name);
-                        delete this.typingTimers[name];
-                    }, 15000);
+                    clearTimeout(this.activePeer.get(name));
+                    const t = setTimeout(() => this.activePeer.delete(name), 15000);
+                    this.activePeer.set(name, t);
                 }
             });
 
