@@ -405,7 +405,14 @@
             <section class="chatroom__whispers" x-show="state.chat.showWhispers">
                 <span
                     x-show="state.chat.target < 1 && state.chat.bot < 1 && activePeer && activePeer.size > 0"
-                    x-text="activePeer.size === 1 ? [...activePeer.keys()][0] + ' is typing ...' : [...activePeer.keys()].slice(0, -1).join(', ') + ' and ' + [...activePeer.keys()][activePeer.size - 1] + ' are typing ...'"
+                    x-text="
+                        activePeer.size === 1
+                            ? [...activePeer.keys()][0] + ' is typing ...'
+                            : [...activePeer.keys()].slice(0, -1).join(', ') +
+                              ' and ' +
+                              [...activePeer.keys()][activePeer.size - 1] +
+                              ' are typing ...'
+                    "
                 ></span>
             </section>
             <form
