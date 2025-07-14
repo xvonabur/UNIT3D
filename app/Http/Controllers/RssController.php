@@ -132,9 +132,9 @@ class RssController extends Controller
     {
         $user = $request->user();
 
-        $disabledGroup = cache()->rememberForever('disabled_group', fn () => Group::where('slug', '=', 'disabled')->pluck('id'));
+        $disabledGroupId = cache()->rememberForever('group:disabled:id', fn () => Group::where('slug', '=', 'disabled')->soleValue('id'));
 
-        abort_if($user->group_id === $disabledGroup[0], 404);
+        abort_if($user->group_id === $disabledGroupId, 404);
 
         $rss = Rss::query()
             ->where(
