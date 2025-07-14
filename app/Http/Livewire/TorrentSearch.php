@@ -569,7 +569,7 @@ class TorrentSearch extends Component
                 ->index(config('scout.prefix').'torrents')
                 ->search($this->name, [
                     'sort'                 => ['sticky:desc', $this->sortField.':'.$this->sortDirection,],
-                    'filter'               => [...$this->filters()->toMeilisearchFilter(), 'imdb != 0', ['tmdb_movie_id > 0', 'tmdb_tv_id > 0']],
+                    'filter'               => [...$this->filters()->toMeilisearchFilter(), 'imdb != 0', ['tmdb_movie_id != 0', 'tmdb_tv_id != 0']],
                     'matchingStrategy'     => 'all',
                     'page'                 => (int) $this->getPage(),
                     'hitsPerPage'          => min($this->perPage, 100),
