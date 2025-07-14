@@ -653,7 +653,7 @@ readonly class TorrentSearchFiltersDTO
         }
 
         if ($this->alive) {
-            $filters[] = 'seeders > 0';
+            $filters[] = 'seeders != 0';
         }
 
         if ($this->dying) {
