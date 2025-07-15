@@ -649,10 +649,10 @@ document.addEventListener('alpine:init', () => {
                     if (index !== -1) this.messages.splice(index, 1);
                 } else if (e.type == 'typing') {
                     if (this.state.chat.target < 1) return;
-                    const name = e.username;
-                    clearTimeout(this.activePeer.get(name));
-                    const t = setTimeout(() => this.activePeer.delete(name), 15000);
-                    this.activePeer.set(name, t);
+                    const username = e.username;
+                    clearTimeout(this.activePeer.get(username));
+                    const messageTimeout = setTimeout(() => this.activePeer.delete(username), 15000);
+                    this.activePeer.set(username, messageTimeout);
                 }
             });
 
