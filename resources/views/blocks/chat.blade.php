@@ -408,13 +408,12 @@
                     x-text="
                         activePeer.size > 3
                             ? 'Several people are typing...'
-                            : (activePeer.size === 1
-                                ? [...activePeer.keys()][0] + ' is typing...'
-                                : [...activePeer.keys()].slice(0, -1).join(', ') +
-                                  ' and ' +
-                                  [...activePeer.keys()][activePeer.size - 1] +
-                                  ' are typing...'
-                              )
+                            : activePeer.size === 1
+                              ? [...activePeer.keys()][0] + ' is typing...'
+                              : [...activePeer.keys()].slice(0, -1).join(', ') +
+                                ' and ' +
+                                [...activePeer.keys()][activePeer.size - 1] +
+                                ' are typing...'
                     "
                 ></span>
             </section>
