@@ -121,7 +121,7 @@ const channelHandler = {
             })
             .listenForWhisper('typing', (e) => {
                 if (context.state.chat.target > 0 || context.state.chat.bot > 0) return;
-                const username = e.username || e;
+                const username = e.username;
                 clearTimeout(context.activePeer.get(username));
                 const messageTimeout = setTimeout(() => context.activePeer.delete(username), 15000);
                 context.activePeer.set(username, messageTimeout);
