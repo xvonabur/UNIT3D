@@ -400,7 +400,11 @@
             }
         }"
                             class="order__list"
-                            style="padding-inline-start: 0; margin-block-start: 0; margin-block-end: 0;"
+                            style="
+                                padding-inline-start: 0;
+                                margin-block-start: 0;
+                                margin-block-end: 0;
+                            "
                         >
                             <template x-for="(block, index) in blocks" :key="block.key">
                                 <li
@@ -419,7 +423,9 @@
                                         list-style: none;
                                     "
                                 >
-                                    <i class="{{ config('other.font-awesome') }} fa-arrows-alt"></i>
+                                    <i
+                                        class="{{ config('other.font-awesome') }} fa-arrows-alt"
+                                    ></i>
                                     <span x-text="block.label"></span>
                                     <input
                                         type="hidden"
