@@ -651,7 +651,10 @@ document.addEventListener('alpine:init', () => {
                     if (this.state.chat.target < 1) return;
                     const username = e.username;
                     clearTimeout(this.activePeer.get(username));
-                    const messageTimeout = setTimeout(() => this.activePeer.delete(username), 15000);
+                    const messageTimeout = setTimeout(
+                        () => this.activePeer.delete(username),
+                        15000,
+                    );
                     this.activePeer.set(username, messageTimeout);
                 }
             });
