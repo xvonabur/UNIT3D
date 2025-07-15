@@ -47,7 +47,6 @@ use Illuminate\Database\Eloquent\Model;
  * @property int                             $latest_comments_block_position
  * @property bool                            $online_block_visible
  * @property int                             $online_block_position
- * @property array                           $homepage_blocks_order
  * @property string                          $locale
  * @property int                             $style
  * @property int                             $torrent_layout
