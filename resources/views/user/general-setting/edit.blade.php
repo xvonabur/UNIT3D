@@ -215,149 +215,222 @@
                 </fieldset>
                 <fieldset class="form form__fieldset">
                     <legend class="form__legend">{{ __('user.homepage-blocks') }}</legend>
-                    <p class="form__group">
-                        <label class="form__label">
-                            <input type="hidden" name="news_visible" value="0" />
-                            <input
-                                class="form__checkbox"
-                                type="checkbox"
-                                name="news_visible"
-                                value="1"
-                                @checked($user->settings->news_visible)
-                            />
-                            {{ __('user.homepage-block-news-visible') }}
-                        </label>
-                    </p>
-                    <p class="form__group">
-                        <label class="form__label">
-                            <input type="hidden" name="chat_visible" value="0" />
-                            <input
-                                class="form__checkbox"
-                                type="checkbox"
-                                name="chat_visible"
-                                value="1"
-                                @checked($user->settings->chat_visible)
-                            />
-                            {{ __('user.homepage-block-chat-visible') }}
-                        </label>
-                    </p>
-                    <p class="form__group">
-                        <label class="form__label">
-                            <input type="hidden" name="featured_visible" value="0" />
-                            <input
-                                class="form__checkbox"
-                                type="checkbox"
-                                name="featured_visible"
-                                value="1"
-                                @checked($user->settings->featured_visible)
-                            />
-                            {{ __('user.homepage-block-featured-visible') }}
-                        </label>
-                    </p>
-                    <p class="form__group">
-                        <label class="form__label">
-                            <input type="hidden" name="random_media_visible" value="0" />
-                            <input
-                                class="form__checkbox"
-                                type="checkbox"
-                                name="random_media_visible"
-                                value="1"
-                                @checked($user->settings->random_media_visible)
-                            />
-                            {{ __('user.homepage-block-random-media-visible') }}
-                        </label>
-                    </p>
-                    <p class="form__group">
-                        <label class="form__label">
-                            <input type="hidden" name="poll_visible" value="0" />
-                            <input
-                                class="form__checkbox"
-                                type="checkbox"
-                                name="poll_visible"
-                                value="1"
-                                @checked($user->settings->poll_visible)
-                            />
-                            {{ __('user.homepage-block-poll-visible') }}
-                        </label>
-                    </p>
-                    <p class="form__group">
-                        <label class="form__label">
-                            <input type="hidden" name="top_torrents_visible" value="0" />
-                            <input
-                                class="form__checkbox"
-                                type="checkbox"
-                                name="top_torrents_visible"
-                                value="1"
-                                @checked($user->settings->top_torrents_visible)
-                            />
-                            {{ __('user.homepage-block-top-torrents-visible') }}
-                        </label>
-                    </p>
-                    <p class="form__group">
-                        <label class="form__label">
-                            <input type="hidden" name="top_users_visible" value="0" />
-                            <input
-                                class="form__checkbox"
-                                type="checkbox"
-                                name="top_users_visible"
-                                value="1"
-                                @checked($user->settings->top_users_visible)
-                            />
-                            {{ __('user.homepage-block-top-users-visible') }}
-                        </label>
-                    </p>
-                    <p class="form__group">
-                        <label class="form__label">
-                            <input type="hidden" name="latest_topics_visible" value="0" />
-                            <input
-                                class="form__checkbox"
-                                type="checkbox"
-                                name="latest_topics_visible"
-                                value="1"
-                                @checked($user->settings->latest_topics_visible)
-                            />
-                            {{ __('user.homepage-block-latest-topics-visible') }}
-                        </label>
-                    </p>
-                    <p class="form__group">
-                        <label class="form__label">
-                            <input type="hidden" name="latest_posts_visible" value="0" />
-                            <input
-                                class="form__checkbox"
-                                type="checkbox"
-                                name="latest_posts_visible"
-                                value="1"
-                                @checked($user->settings->latest_posts_visible)
-                            />
-                            {{ __('user.homepage-block-latest-posts-visible') }}
-                        </label>
-                    </p>
-                    <p class="form__group">
-                        <label class="form__label">
-                            <input type="hidden" name="latest_comments_visible" value="0" />
-                            <input
-                                class="form__checkbox"
-                                type="checkbox"
-                                name="latest_comments_visible"
-                                value="1"
-                                @checked($user->settings->latest_comments_visible)
-                            />
-                            {{ __('user.homepage-block-latest-comments-visible') }}
-                        </label>
-                    </p>
-                    <p class="form__group">
-                        <label class="form__label">
-                            <input type="hidden" name="online_visible" value="0" />
-                            <input
-                                class="form__checkbox"
-                                type="checkbox"
-                                name="online_visible"
-                                value="1"
-                                @checked($user->settings->online_visible)
-                            />
-                            {{ __('user.homepage-block-online-visible') }}
-                        </label>
-                    </p>
+                    <fieldset class="form__fieldset">
+                        <legend class="form__legend">Block Visability</legend>
+                        <p class="form__group">
+                            <label class="form__label">
+                                <input type="hidden" name="news_block_visible" value="0" />
+                                <input
+                                    class="form__checkbox"
+                                    type="checkbox"
+                                    name="news_block_visible"
+                                    value="1"
+                                    @checked($user->settings->news_block_visible)
+                                />
+                                {{ __('user.homepage-block-news-visible') }}
+                            </label>
+                        </p>
+                        <p class="form__group">
+                            <label class="form__label">
+                                <input type="hidden" name="chat_block_visible" value="0" />
+                                <input
+                                    class="form__checkbox"
+                                    type="checkbox"
+                                    name="chat_block_visible"
+                                    value="1"
+                                    @checked($user->settings->chat_block_visible)
+                                />
+                                {{ __('user.homepage-block-chat-visible') }}
+                            </label>
+                        </p>
+                        <p class="form__group">
+                            <label class="form__label">
+                                <input type="hidden" name="featured_block_visible" value="0" />
+                                <input
+                                    class="form__checkbox"
+                                    type="checkbox"
+                                    name="featured_block_visible"
+                                    value="1"
+                                    @checked($user->settings->featured_block_visible)
+                                />
+                                {{ __('user.homepage-block-featured-visible') }}
+                            </label>
+                        </p>
+                        <p class="form__group">
+                            <label class="form__label">
+                                <input type="hidden" name="random_media_block_visible" value="0" />
+                                <input
+                                    class="form__checkbox"
+                                    type="checkbox"
+                                    name="random_media_block_visible"
+                                    value="1"
+                                    @checked($user->settings->random_media_block_visible)
+                                />
+                                {{ __('user.homepage-block-random-media-visible') }}
+                            </label>
+                        </p>
+                        <p class="form__group">
+                            <label class="form__label">
+                                <input type="hidden" name="poll_block_visible" value="0" />
+                                <input
+                                    class="form__checkbox"
+                                    type="checkbox"
+                                    name="poll_block_visible"
+                                    value="1"
+                                    @checked($user->settings->poll_block_visible)
+                                />
+                                {{ __('user.homepage-block-poll-visible') }}
+                            </label>
+                        </p>
+                        <p class="form__group">
+                            <label class="form__label">
+                                <input type="hidden" name="top_torrents_block_visible" value="0" />
+                                <input
+                                    class="form__checkbox"
+                                    type="checkbox"
+                                    name="top_torrents_block_visible"
+                                    value="1"
+                                    @checked($user->settings->top_torrents_block_visible)
+                                />
+                                {{ __('user.homepage-block-top-torrents-visible') }}
+                            </label>
+                        </p>
+                        <p class="form__group">
+                            <label class="form__label">
+                                <input type="hidden" name="top_users_block_visible" value="0" />
+                                <input
+                                    class="form__checkbox"
+                                    type="checkbox"
+                                    name="top_users_block_visible"
+                                    value="1"
+                                    @checked($user->settings->top_users_block_visible)
+                                />
+                                {{ __('user.homepage-block-top-users-visible') }}
+                            </label>
+                        </p>
+                        <p class="form__group">
+                            <label class="form__label">
+                                <input type="hidden" name="latest_topics_block_visible" value="0" />
+                                <input
+                                    class="form__checkbox"
+                                    type="checkbox"
+                                    name="latest_topics_block_visible"
+                                    value="1"
+                                    @checked($user->settings->latest_topics_block_visible)
+                                />
+                                {{ __('user.homepage-block-latest-topics-visible') }}
+                            </label>
+                        </p>
+                        <p class="form__group">
+                            <label class="form__label">
+                                <input type="hidden" name="latest_posts_block_visible" value="0" />
+                                <input
+                                    class="form__checkbox"
+                                    type="checkbox"
+                                    name="latest_posts_block_visible"
+                                    value="1"
+                                    @checked($user->settings->latest_posts_block_visible)
+                                />
+                                {{ __('user.homepage-block-latest-posts-visible') }}
+                            </label>
+                        </p>
+                        <p class="form__group">
+                            <label class="form__label">
+                                <input
+                                    type="hidden"
+                                    name="latest_comments_block_visible"
+                                    value="0"
+                                />
+                                <input
+                                    class="form__checkbox"
+                                    type="checkbox"
+                                    name="latest_comments_block_visible"
+                                    value="1"
+                                    @checked($user->settings->latest_comments_block_visible)
+                                />
+                                {{ __('user.homepage-block-latest-comments-visible') }}
+                            </label>
+                        </p>
+                        <p class="form__group">
+                            <label class="form__label">
+                                <input type="hidden" name="online_block_visible" value="0" />
+                                <input
+                                    class="form__checkbox"
+                                    type="checkbox"
+                                    name="online_block_visible"
+                                    value="1"
+                                    @checked($user->settings->online_block_visible)
+                                />
+                                {{ __('user.homepage-block-online-visible') }}
+                            </label>
+                        </p>
+                    </fieldset>
+                    <fieldset class="form__fieldset">
+                        <legend class="form__legend">Block Order</legend>
+                        <ul
+                            x-data="{
+            blocks: [
+                @foreach ([
+                    'news' => __('blocks.check-news'),
+                    'chat' => __('blocks.chatbox'),
+                    'featured' => __('blocks.featured-torrents'),
+                    'random_media' => 'Random Media',
+                    'poll' => 'Polls',
+                    'top_torrents' => __('blocks.top-torrents'),
+                    'top_users' => 'Top Users',
+                    'latest_topics' => __('blocks.latest-topics'),
+                    'latest_posts' => __('blocks.latest-posts'),
+                    'latest_comments' => __('blocks.latest-comments'),
+                    'online' => 'Online Users'
+                ] as $block => $label)
+                    {
+                        key: '{{ $block }}',
+                        label: '{{ $label }}',
+                        position: {{ (int) $user->settings->{$block . '_block_position'} }},
+                    },
+                @endforeach
+            ].sort((a, b) => a.position - b.position),
+            dragging: null,
+            dragOver: null,
+            move(from, to) {
+                if (from === to) return;
+                const moved = this.blocks.splice(from, 1)[0];
+                this.blocks.splice(to, 0, moved);
+                this.blocks.forEach((block, index) => block.position = index);
+            }
+        }"
+                            class="order__list"
+                            style="padding-inline-start: 0; margin-block-start: 0; margin-block-end: 0;"
+                        >
+                            <template x-for="(block, index) in blocks" :key="block.key">
+                                <li
+                                    class="order__item"
+                                    :data-block="block.key"
+                                    draggable="true"
+                                    @dragstart="dragging = index"
+                                    @dragover.prevent="dragOver = index"
+                                    @dragleave="dragOver = null"
+                                    @drop="move(dragging, index); dragging = null; dragOver = null"
+                                    :class="{'drag-over': dragOver === index}"
+                                    style="
+                                        cursor: move;
+                                        user-select: none;
+                                        padding: 4px 0;
+                                        list-style: none;
+                                    "
+                                >
+                                    <i class="{{ config('other.font-awesome') }} fa-arrows-alt"></i>
+                                    <span x-text="block.label"></span>
+                                    <input
+                                        type="hidden"
+                                        :name="block.key + '_block_position'"
+                                        :value="block.position"
+                                    />
+                                </li>
+                            </template>
+                        </ul>
+                        <small class="text-info">Drag and drop to reorder blocks.</small>
+                    </fieldset>
                 </fieldset>
                 <fieldset class="form form__fieldset">
                     <legend class="form__legend">Torrent</legend>
