@@ -216,7 +216,7 @@
                 <fieldset class="form form__fieldset">
                     <legend class="form__legend">{{ __('user.homepage-blocks') }}</legend>
                     <fieldset class="form__fieldset">
-                        <legend class="form__legend">Block Visability</legend>
+                        <legend class="form__legend">Block Visibility</legend>
                         <p class="form__group">
                             <label class="form__label">
                                 <input type="hidden" name="news_block_visible" value="0" />
