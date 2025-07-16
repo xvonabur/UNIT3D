@@ -3,50 +3,53 @@
 @section('page', 'page__home')
 
 @section('main')
-    @if ($user->settings->news_visible)
-        @include('blocks.news')
-    @endif
+    @foreach ($blocks as $block)
+        @switch($block)
+            @case('news')
+                @include('blocks.news')
 
-    @if ($user->settings->chat_visible)
-        <div id="vue">
-            @include('blocks.chat')
-        </div>
-        @vite('resources/js/unit3d/chat.js')
-    @endif
+                @break
+            @case('chat')
+                @include('blocks.chat')
+                @vite('resources/js/unit3d/chat.js')
 
-    @if ($user->settings->featured_visible)
-        @include('blocks.featured')
-    @endif
+                @break
+            @case('featured')
+                @include('blocks.featured')
 
-    @if ($user->settings->random_media_visible)
-        @livewire('random-media')
-    @endif
+                @break
+            @case('random_media')
+                @livewire('random-media')
 
-    @if ($user->settings->poll_visible)
-        @include('blocks.poll')
-    @endif
+                @break
+            @case('poll')
+                @include('blocks.poll')
 
-    @if ($user->settings->top_torrents_visible)
-        @livewire('top-torrents')
-    @endif
+                @break
+            @case('top_torrents')
+                @livewire('top-torrents')
 
-    @if ($user->settings->top_users_visible)
-        @livewire('top-users')
-    @endif
+                @break
+            @case('top_users')
+                @livewire('top-users')
 
-    @if ($user->settings->latest_topics_visible)
-        @include('blocks.latest-topics')
-    @endif
+                @break
+            @case('latest_topics')
+                @include('blocks.latest-topics')
 
-    @if ($user->settings->latest_posts_visible)
-        @include('blocks.latest-posts')
-    @endif
+                @break
+            @case('latest_posts')
+                @include('blocks.latest-posts')
 
-    @if ($user->settings->latest_comments_visible)
-        @include('blocks.latest-comments')
-    @endif
+                @break
+            @case('latest_comments')
+                @include('blocks.latest-comments')
 
-    @if ($user->settings->online_visible)
-        @include('blocks.online')
-    @endif
+                @break
+            @case('online')
+                @include('blocks.online')
+
+                @break
+        @endswitch
+    @endforeach
 @endsection

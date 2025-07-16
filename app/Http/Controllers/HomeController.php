@@ -44,10 +44,26 @@ class HomeController extends Controller
         $expiresAt = now()->addMinutes(5);
 
         // Authorized User
-        $user = $request->user();
+        $user = $request->user()->load('settings');
 
         return view('home.index', [
-            'user'  => $user,
+            'user'   => $user,
+            'blocks' => collect(
+                [
+                    'news', 'chat', 'featured', 'random_media', 'poll',
+                    'top_torrents', 'top_users', 'latest_topics', 'latest_posts',
+                    'latest_comments', 'online'
+                ]
+            )
+                ->map(fn ($block) => [
+                    'key'      => $block,
+                    'visible'  => $user->settings->{"{$block}_block_visible"},
+                    'position' => $user->settings->{"{$block}_block_position"},
+                ])
+                ->sortBy('position')
+                ->filter(fn ($block) => $block['visible'])
+                ->pluck('key')
+                ->toArray(),
             'users' => cache()->remember(
                 'online_users:by-group:'.auth()->user()->group_id,
                 $expiresAt,
