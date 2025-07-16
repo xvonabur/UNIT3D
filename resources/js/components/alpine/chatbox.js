@@ -121,11 +121,10 @@ const channelHandler = {
             })
             .listenForWhisper('typing', (e) => {
                 if (context.state.chat.target > 0 || context.state.chat.bot > 0) return;
-                context.activePeer = e;
-                clearTimeout(context.typingTimeout);
-                context.typingTimeout = setTimeout(() => {
-                    context.activePeer = false;
-                }, 15000);
+                const username = e.username;
+                clearTimeout(context.activePeer.get(username));
+                const messageTimeout = setTimeout(() => context.activePeer.delete(username), 15000);
+                context.activePeer.set(username, messageTimeout);
             });
 
         context.channel.error((error) => {
@@ -184,7 +183,7 @@ document.addEventListener('alpine:init', () => {
         pings: [],
         audibles: [],
         boot: 0,
-        activePeer: false,
+        activePeer: new Map(),
         frozen: false,
         scroll: true,
         channel: null,
@@ -650,11 +649,13 @@ document.addEventListener('alpine:init', () => {
                     if (index !== -1) this.messages.splice(index, 1);
                 } else if (e.type == 'typing') {
                     if (this.state.chat.target < 1) return;
-                    this.activePeer = e.username;
-                    clearTimeout(this.typingTimeout);
-                    this.typingTimeout = setTimeout(() => {
-                        this.activePeer = false;
-                    }, 15000);
+                    const username = e.username;
+                    clearTimeout(this.activePeer.get(username));
+                    const messageTimeout = setTimeout(
+                        () => this.activePeer.delete(username),
+                        15000,
+                    );
+                    this.activePeer.set(username, messageTimeout);
                 }
             });
 
