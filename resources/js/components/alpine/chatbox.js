@@ -56,7 +56,6 @@ const messageHandler = {
                 if (context.$refs && context.$refs.message) {
                     context.$refs.message.value = '';
                 }
-                context.scrollToBottom();
             });
     },
 
@@ -109,7 +108,6 @@ const channelHandler = {
                 if (!context.state.chat.activeTab.startsWith('room')) return;
                 const message = context.processMessageCanMod(e.message);
                 context.messages.push(message);
-                context.scrollToBottom();
             })
             .listen('.new.ping', (e) => {
                 context.handlePing('room', e.ping.id);
@@ -315,7 +313,6 @@ document.addEventListener('alpine:init', () => {
                     .map((message) => this.processMessageCanMod(message))
                     .reverse();
                 this.state.ui.connecting = false;
-                this.scrollToBottom();
             } catch (error) {
                 console.error('Error fetching bot messages:', error);
                 this.state.ui.connecting = false;
@@ -334,7 +331,6 @@ document.addEventListener('alpine:init', () => {
                     .map((message) => this.processMessageCanMod(message))
                     .reverse();
                 this.state.ui.connecting = false;
-                this.scrollToBottom();
             } catch (error) {
                 console.error('Error fetching private messages:', error);
                 this.state.ui.connecting = false;
@@ -351,7 +347,6 @@ document.addEventListener('alpine:init', () => {
                     .map((message) => this.processMessageCanMod(message))
                     .reverse();
                 this.state.ui.connecting = false;
-                this.scrollToBottom();
             } catch (error) {
                 console.error('Error fetching messages:', error);
                 this.state.ui.connecting = false;
@@ -755,17 +750,6 @@ document.addEventListener('alpine:init', () => {
                 messageInput.value = '/gift ' + name + ' ';
                 messageInput.focus();
             }
-        },
-
-        scrollToBottom() {
-            this.$nextTick(() => {
-                if (this.$refs && this.$refs.messagesWrapper) {
-                    requestAnimationFrame(() => {
-                        this.$refs.messagesWrapper.scrollTop =
-                            this.$refs.messagesWrapper.scrollHeight;
-                    });
-                }
-            });
         },
 
         formatTime(timestamp) {
