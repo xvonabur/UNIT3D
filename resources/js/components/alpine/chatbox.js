@@ -452,8 +452,6 @@ document.addEventListener('alpine:init', () => {
 
                 let currentAudio = this.audibles.find((o) => o.bot && o.bot.id == newVal);
                 this.state.chat.listening = currentAudio && currentAudio.status == 1 ? 1 : 0;
-            } else if (typeVal == 'list') {
-                this.toggleUserList();
             }
         },
 

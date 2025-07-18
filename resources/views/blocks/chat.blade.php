@@ -34,10 +34,7 @@
                     </button>
                 </div>
                 <div class="panel__action" x-show="state.chat.target < 1 && state.chat.bot < 1">
-                    <button
-                        class="form__button form__button--text"
-                        @click.prevent="changeTab('list', 'userlist')"
-                    >
+                    <button class="form__button form__button--text" @click.prevent="toggleUserList">
                         <i class="fa fa-users"></i>
                         Users:
                         <span x-text="users.length"></span>
@@ -50,7 +47,6 @@
                                 state.chat.room > 0 &&
                                 state.chat.bot < 1 &&
                                 state.chat.target < 1 &&
-                                state.chat.tab != 'userlist'
                         "
                     >
                         <button
@@ -64,7 +60,7 @@
                         </button>
                     </template>
                     <template
-                        x-if="state.chat.bot && state.chat.bot >= 1 && state.chat.target < 1 && state.chat.tab != 'userlist'"
+                        x-if="state.chat.bot && state.chat.bot >= 1 && state.chat.target < 1"
                     >
                         <button
                             class="form__button form__standard-icon-button form__standard-icon-button--skinny"
@@ -77,7 +73,7 @@
                         </button>
                     </template>
                     <template
-                        x-if="state.chat.target && state.chat.target >= 1 && state.chat.bot < 1 && state.chat.tab != 'userlist'"
+                        x-if="state.chat.target && state.chat.target >= 1 && state.chat.bot < 1"
                     >
                         <button
                             class="form__button form__standard-icon-button form__standard-icon-button--skinny"
@@ -365,7 +361,10 @@
                     </ul>
                 </div>
             </template>
-            <section class="chatroom__users" x-show="state.chat.showUserList">
+            <section
+                class="chatroom__users"
+                x-show="state.chat.showUserList && state.chat.target < 1 && state.chat.bot < 1"
+            >
                 <h2 class="chatroom-users__heading">Users</h2>
                 <ul class="chatroom-users__list">
                     <template x-for="user in users" :key="user.id">
