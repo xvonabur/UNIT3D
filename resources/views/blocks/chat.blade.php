@@ -220,7 +220,7 @@
                 </li>
             </template>
         </menu>
-        <div class="chatbox__chatroom" x-show="!state.ui.connecting">
+        <div class="chatbox__chatroom">
             <template x-if="state.chat.tab !== ''">
                 <div class="chatroom__messages--wrapper" x-ref="messagesWrapper">
                     <ul class="chatroom__messages">

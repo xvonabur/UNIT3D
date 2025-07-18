@@ -86,7 +86,6 @@ const channelHandler = {
 
         context.channel
             .here((users) => {
-                context.state.ui.connecting = false;
                 context.users = users;
             })
             .joining((user) => {
@@ -133,7 +132,6 @@ document.addEventListener('alpine:init', () => {
     Alpine.data('chatbox', (user) => ({
         state: {
             ui: {
-                connecting: true,
                 loading: true,
                 fullscreen: false,
                 error: null,
@@ -298,23 +296,19 @@ document.addEventListener('alpine:init', () => {
 
         async fetchBotMessages(id) {
             try {
-                this.state.ui.connecting = true;
                 const response = await axios.get(`/api/chat/bot/${id}`);
                 // Process messages to add canMod property for each message and sanitize content
                 this.messages = response.data.data
                     .map((message) => this.processMessageCanMod(message))
                     .reverse();
-                this.state.ui.connecting = false;
             } catch (error) {
                 console.error('Error fetching bot messages:', error);
-                this.state.ui.connecting = false;
                 throw error;
             }
         },
 
         async fetchPrivateMessages() {
             try {
-                this.state.ui.connecting = true;
                 const response = await axios.get(
                     `/api/chat/private/messages/${this.state.chat.target}`,
                 );
@@ -322,26 +316,21 @@ document.addEventListener('alpine:init', () => {
                 this.messages = response.data.data
                     .map((message) => this.processMessageCanMod(message))
                     .reverse();
-                this.state.ui.connecting = false;
             } catch (error) {
                 console.error('Error fetching private messages:', error);
-                this.state.ui.connecting = false;
                 throw error;
             }
         },
 
         async fetchMessages() {
             try {
-                this.state.ui.connecting = true;
                 const response = await axios.get(`/api/chat/messages/${this.state.chat.room}`);
                 // Process messages to add canMod property for each message and sanitize content
                 this.messages = response.data.data
                     .map((message) => this.processMessageCanMod(message))
                     .reverse();
-                this.state.ui.connecting = false;
             } catch (error) {
                 console.error('Error fetching messages:', error);
-                this.state.ui.connecting = false;
                 throw error;
             }
         },
