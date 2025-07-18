@@ -46,12 +46,6 @@ const messageHandler = {
                 ) {
                     context.messages.push(response.data.data);
                 }
-                if (context.messages.length > (context.config.message_limit || 100)) {
-                    context.messages.splice(
-                        0,
-                        context.messages.length - (context.config.message_limit || 100),
-                    );
-                }
                 if (context.$refs && context.$refs.message) {
                     context.$refs.message.value = '';
                 }
