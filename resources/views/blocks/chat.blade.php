@@ -37,7 +37,7 @@
                     <button class="form__button form__button--text" @click.prevent="toggleUserList">
                         <i class="fa fa-users"></i>
                         Users:
-                        <span x-text="users.length"></span>
+                        <span x-text="users.size"></span>
                     </button>
                 </div>
                 <div class="panel__action">
@@ -358,7 +358,7 @@
             >
                 <h2 class="chatroom-users__heading">Users</h2>
                 <ul class="chatroom-users__list">
-                    <template x-for="user in users" :key="user.id">
+                    <template x-for="user in [...users.values()]" :key="user.id">
                         <li class="chatroom-users__list-item">
                             <span class="chatroom-users__user user-tag">
                                 <a
