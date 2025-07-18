@@ -175,7 +175,6 @@ document.addEventListener('alpine:init', () => {
         audibles: [],
         boot: 0,
         activePeer: new Map(),
-        frozen: false,
         scroll: true,
         channel: null,
         chatter: null,
