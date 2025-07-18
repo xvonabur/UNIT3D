@@ -27,7 +27,6 @@ const messageHandler = {
     },
 
     create(message, context, save = true, user_id = 1, receiver_id = null, bot_id = null) {
-        if (/\[size=[0-9]{3,}\]/.test(message)) return;
         if (!message || message.trim() === '') return;
 
         return axios
