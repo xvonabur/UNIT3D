@@ -42,12 +42,7 @@
                 </div>
                 <div class="panel__action">
                     <template
-                        x-if="
-                            state.chat.room &&
-                                state.chat.room > 0 &&
-                                state.chat.bot < 1 &&
-                                state.chat.target < 1 &&
-                        "
+                        x-if="state.chat.room && state.chat.room > 0 && state.chat.bot < 1 && state.chat.target < 1"
                     >
                         <button
                             class="form__button form__standard-icon-button form__standard-icon-button--skinny"
