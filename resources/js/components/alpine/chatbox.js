@@ -154,9 +154,6 @@ document.addEventListener('alpine:init', () => {
                 activeRoom: '',
                 activeTarget: '',
                 activeBot: '',
-                botName: '',
-                botId: 0,
-                botCommand: '',
                 listening: 1,
                 showWhispers: true,
                 showUserList: false,
@@ -174,7 +171,6 @@ document.addEventListener('alpine:init', () => {
         statuses: [],
         status: 0,
         echoes: [],
-        bots: [],
         chatrooms: [],
         messages: [],
         users: [],
@@ -264,11 +260,11 @@ document.addEventListener('alpine:init', () => {
         async fetchBots() {
             try {
                 const response = await axios.get('/api/chat/bots');
-                this.bots = response.data.data;
-                if (this.bots.length > 0) {
-                    this.state.message.helpId = this.bots[0].id;
-                    this.state.message.helpName = this.bots[0].name;
-                    this.state.message.helpCommand = this.bots[0].command;
+                const bots = response.data.data;
+                if (bots.length > 0) {
+                    this.state.message.helpId = bots[0].id;
+                    this.state.message.helpName = bots[0].name;
+                    this.state.message.helpCommand = bots[0].command;
                 }
             } catch (error) {
                 console.error('Error fetching bots:', error);
@@ -442,9 +438,6 @@ document.addEventListener('alpine:init', () => {
 
                 let currentBot = this.echoes.find((o) => o.bot && o.bot.id == newVal);
                 if (currentBot) {
-                    this.state.chat.botName = currentBot.bot.name;
-                    this.state.chat.botCommand = currentBot.bot.command;
-                    this.state.chat.botId = currentBot.bot.id;
                     this.changeBot(currentBot.bot.id);
                     this.state.message.receiver_id = 1;
                     this.state.message.bot_id = currentBot.bot.id;
@@ -729,9 +722,6 @@ document.addEventListener('alpine:init', () => {
             this.state.chat.bot = this.state.message.helpId;
             this.state.message.bot_id = this.state.message.helpId;
             this.state.message.receiver_id = 1;
-            this.state.chat.botId = this.state.message.helpId;
-            this.state.chat.botName = this.state.message.helpName;
-            this.state.chat.botCommand = this.state.message.helpCommand;
 
             this.fetchBotMessages(this.state.chat.bot);
         },
