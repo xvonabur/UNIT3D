@@ -86,15 +86,13 @@ const channelHandler = {
 
         context.channel
             .here((users) => {
-                context.users = users;
+                context.users = new Map(users.map((user) => [user.id, user]));
             })
             .joining((user) => {
-                if (!context.users.some((u) => u.id === user.id)) {
-                    context.users.push(user);
-                }
+                context.users.set(user.id, user);
             })
             .leaving((user) => {
-                context.users = context.users.filter((u) => u.id !== user.id);
+                context.users.delete(user.id);
             })
             .listen('.new.message', (e) => {
                 if (!context.state.chat.activeTab.startsWith('room')) return;
@@ -164,7 +162,7 @@ document.addEventListener('alpine:init', () => {
         echoes: [],
         chatrooms: [],
         messages: [],
-        users: [],
+        users: new Map(),
         pings: [],
         audibles: [],
         boot: 0,
