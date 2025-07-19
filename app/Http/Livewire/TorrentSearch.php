@@ -375,7 +375,7 @@ class TorrentSearch extends Component
                 default   => null,
             },
             tmdbId: $this->tmdbId,
-            imdbId: $this->imdbId === '' ? null : ((int) (preg_match('/tt0*(?=(\d{7,}))/', $this->imdbId, $matches) ? $matches[1] : $this->imdbId)),
+            imdbId: $this->imdbId === '' ? null : ((int) (preg_match('/tt0*(\d{7,})/', $this->imdbId, $matches) ? $matches[1] : $this->imdbId)),
             tvdbId: $this->tvdbId,
             malId: $this->malId,
             playlistId: $this->playlistId,

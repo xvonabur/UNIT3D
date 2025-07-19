@@ -298,7 +298,7 @@
                         wire:model.live="imdbId"
                         class="form__text"
                         inputmode="numeric"
-                        pattern="[0-9]*"
+                        pattern="[0-9]+|tt0*\d{7,}"
                         placeholder=" "
                     />
                     <label class="form__label form__label--floating" for="imdbId">IMDb ID</label>
