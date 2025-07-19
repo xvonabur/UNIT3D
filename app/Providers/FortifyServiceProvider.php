@@ -56,7 +56,7 @@ class FortifyServiceProvider extends ServiceProvider
                 // Check if user is disabled
                 if ($user->group->slug === 'disabled') {
                     $user->group_id = Group::query()->where('slug', '=', 'user')->soleValue('id');
-                    $user->can_download = 1;
+                    $user->can_download = true;
                     $user->disabled_at = null;
                     $user->save();
 
@@ -111,7 +111,7 @@ class FortifyServiceProvider extends ServiceProvider
 
                 if ($user->group->slug !== 'banned') {
                     if ($user->group->slug === 'validating') {
-                        $user->can_download = 1;
+                        $user->can_download = true;
                         $user->group_id = Group::query()->where('slug', '=', 'user')->soleValue('id');
                         $user->save();
 
