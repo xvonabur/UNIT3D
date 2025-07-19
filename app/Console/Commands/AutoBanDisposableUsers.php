@@ -56,7 +56,7 @@ class AutoBanDisposableUsers extends Command
             return;
         }
 
-        $bannedGroupId = cache()->rememberForever('group:banned:id', fn () => Group::where('slug', '=', 'banned')->soleValue('id'));
+        $bannedGroupId = Group::where('slug', '=', 'banned')->soleValue('id');
 
         User::where('group_id', '!=', $bannedGroupId)->chunkById(100, function ($users) use ($bannedGroupId): void {
             foreach ($users as $user) {

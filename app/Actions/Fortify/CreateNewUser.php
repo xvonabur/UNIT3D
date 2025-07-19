@@ -68,8 +68,6 @@ class CreateNewUser implements CreatesNewUsers
             ]
         ])->validate();
 
-        $validatingGroupId = cache()->rememberForever('group:validating:id', fn () => Group::query()->where('slug', '=', 'validating')->soleValue('id'));
-
         $user = User::create([
             'username'   => $input['username'],
             'email'      => $input['email'],
@@ -78,7 +76,7 @@ class CreateNewUser implements CreatesNewUsers
             'rsskey'     => md5(random_bytes(60)),
             'uploaded'   => config('other.default_upload'),
             'downloaded' => config('other.default_download'),
-            'group_id'   => $validatingGroupId,
+            'group_id'   => Group::query()->where('slug', '=', 'validating')->soleValue('id'),
         ]);
 
         $user->passkeys()->create(['content' => $user->passkey]);

@@ -44,11 +44,10 @@ class ResetUserPassword implements ResetsUserPasswords
             'password' => Hash::make($input['password']),
         ]);
 
-        $validatingGroupId = cache()->rememberForever('group:validating:id', fn () => Group::query()->where('slug', '=', 'validating')->soleValue('id'));
-        $memberGroupId = cache()->rememberForever('group:user:id', fn () => Group::query()->where('slug', '=', 'user')->soleValue('id'));
+        $validatingGroupId = Group::query()->where('slug', '=', 'validating')->soleValue('id');
 
         if ($user->group_id === $validatingGroupId) {
-            $user->group_id = $memberGroupId;
+            $user->group_id = Group::query()->where('slug', '=', 'user')->soleValue('id');
 
             cache()->forget('user:'.$user->passkey);
 
