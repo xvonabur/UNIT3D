@@ -132,7 +132,8 @@ class RssController extends Controller
     {
         $user = $request->user();
 
-        $disabledGroupId = cache()->rememberForever('group:disabled:id', fn () => Group::where('slug', '=', 'disabled')->soleValue('id'));
+        // Redis returns ints as numeric strings!
+        $disabledGroupId = (int) cache()->rememberForever('group:disabled:id', fn () => Group::where('slug', '=', 'disabled')->soleValue('id'));
 
         abort_if($user->group_id === $disabledGroupId, 404);
 
