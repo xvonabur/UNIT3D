@@ -82,18 +82,16 @@
                     {{ $torrentRequest->category->name }}
                 </span>
             </li>
-            <li class="request__type">
-                <span>
-                    {{ $torrentRequest->type->name ?? 'Any' }}
-                </span>
-            </li>
-
             <li class="request__resolution">
                 <span>
                     {{ $torrentRequest->resolution->name ?? 'Any' }}
                 </span>
             </li>
-
+            <li class="request__type">
+                <span>
+                    {{ $torrentRequest->type->name ?? 'Any' }}
+                </span>
+            </li>
             <li class="request__requester">
                 <x-user-tag :user="$torrentRequest->user" :anon="$torrentRequest->anon" />
             </li>
