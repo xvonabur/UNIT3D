@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6a9a12282aa4589cdeb8444da9f7956c",
+    "content-hash": "f7f0c7df5833e4e06ebab22b49ad097b",
     "packages": [
         {
             "name": "assada/laravel-achievements",
@@ -1729,16 +1729,16 @@
         },
         {
             "name": "hdvinnie/laravel-security-headers",
-            "version": "v3.0.2",
+            "version": "v3.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/HDVinnie/laravel-security-headers.git",
-                "reference": "6e5569b361ae2d8c03e3c9f579d0a7735551bbf5"
+                "reference": "21974846b9178a541702d6526f9ea5b8543bf640"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/HDVinnie/laravel-security-headers/zipball/6e5569b361ae2d8c03e3c9f579d0a7735551bbf5",
-                "reference": "6e5569b361ae2d8c03e3c9f579d0a7735551bbf5",
+                "url": "https://api.github.com/repos/HDVinnie/laravel-security-headers/zipball/21974846b9178a541702d6526f9ea5b8543bf640",
+                "reference": "21974846b9178a541702d6526f9ea5b8543bf640",
                 "shasum": ""
             },
             "require": {
@@ -1800,9 +1800,9 @@
             ],
             "support": {
                 "issues": "https://github.com/HDVinnie/laravel-security-headers/issues",
-                "source": "https://github.com/HDVinnie/laravel-security-headers/tree/v3.0.2"
+                "source": "https://github.com/HDVinnie/laravel-security-headers/tree/v3.0.3"
             },
-            "time": "2025-07-05T02:47:06+00:00"
+            "time": "2025-07-19T23:38:31+00:00"
         },
         {
             "name": "intervention/image",
