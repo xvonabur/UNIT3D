@@ -165,7 +165,6 @@ document.addEventListener('alpine:init', () => {
         users: new Map(),
         pings: [],
         audibles: [],
-        boot: 0,
         activePeer: new Map(),
         scroll: true,
         channel: null,
@@ -238,7 +237,6 @@ document.addEventListener('alpine:init', () => {
             try {
                 const response = await axios.get('/api/chat/echoes');
                 this.echoes = this.sortEchoes(response.data.data);
-                this.boot = 1;
             } catch (error) {
                 console.error('Error fetching echoes:', error);
                 throw error;
