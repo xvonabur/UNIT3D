@@ -631,12 +631,6 @@ parameters:
 			path: app/Http/Livewire/TorrentRequestSearch.php
 
 		-
-			message: '#^Call to function is_countable\(\) with Illuminate\\Support\\Collection\<\(int\|string\), mixed\> will always evaluate to true\.$#'
-			identifier: function.alreadyNarrowedType
-			count: 1
-			path: app/Http/Middleware/CheckIfBanned.php
-
-		-
 			message: '#^Method App\\Http\\Middleware\\SetLanguage\:\:setSystemLocale\(\) has parameter \$request with no type specified\.$#'
 			identifier: missingType.parameter
 			count: 1
@@ -805,13 +799,13 @@ parameters:
 			path: app/Providers/FortifyServiceProvider.php
 
 		-
-			message: '#^Method Laravel\\Fortify\\Contracts\\RegisterViewResponse@anonymous/app/Providers/FortifyServiceProvider\.php\:99\:\:toResponse\(\) never returns Illuminate\\Http\\RedirectResponse so it can be removed from the return type\.$#'
+			message: '#^Method Laravel\\Fortify\\Contracts\\RegisterViewResponse@anonymous/app/Providers/FortifyServiceProvider\.php\:96\:\:toResponse\(\) never returns Illuminate\\Http\\RedirectResponse so it can be removed from the return type\.$#'
 			identifier: return.unusedType
 			count: 1
 			path: app/Providers/FortifyServiceProvider.php
 
 		-
-			message: '#^Method Laravel\\Fortify\\Contracts\\VerifyEmailResponse@anonymous/app/Providers/FortifyServiceProvider\.php\:110\:\:toResponse\(\) never returns Illuminate\\View\\View so it can be removed from the return type\.$#'
+			message: '#^Method Laravel\\Fortify\\Contracts\\VerifyEmailResponse@anonymous/app/Providers/FortifyServiceProvider\.php\:107\:\:toResponse\(\) never returns Illuminate\\View\\View so it can be removed from the return type\.$#'
 			identifier: return.unusedType
 			count: 1
 			path: app/Providers/FortifyServiceProvider.php

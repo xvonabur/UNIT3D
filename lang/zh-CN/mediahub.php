@@ -37,4 +37,5 @@ return [
     'view-collection' => '查看收藏',
     'wiki-read' => '在维基百科上阅读完整的个人简介：',
     'includes' => '包括：',
+    'collection' => '合集',
 ];

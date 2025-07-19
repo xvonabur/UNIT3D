@@ -25,17 +25,28 @@ use Illuminate\Database\Eloquent\Model;
  * @property int                             $id
  * @property int                             $user_id
  * @property bool                            $censor
- * @property bool                            $news_visible
- * @property bool                            $chat_visible
- * @property bool                            $featured_visible
- * @property bool                            $random_media_visible
- * @property bool                            $poll_visible
- * @property bool                            $top_torrents_visible
- * @property bool                            $top_users_visible
- * @property bool                            $latest_topics_visible
- * @property bool                            $latest_posts_visible
- * @property bool                            $latest_comments_visible
- * @property bool                            $online_visible
+ * @property bool                            $news_block_visible
+ * @property int                             $news_block_position
+ * @property bool                            $chat_block_visible
+ * @property int                             $chat_block_position
+ * @property bool                            $featured_block_visible
+ * @property int                             $featured_block_position
+ * @property bool                            $random_media_block_visible
+ * @property int                             $random_media_block_position
+ * @property bool                            $poll_block_visible
+ * @property int                             $poll_block_position
+ * @property bool                            $top_torrents_block_visible
+ * @property int                             $top_torrents_block_position
+ * @property bool                            $top_users_block_visible
+ * @property int                             $top_users_block_position
+ * @property bool                            $latest_topics_block_visible
+ * @property int                             $latest_topics_block_position
+ * @property bool                            $latest_posts_block_visible
+ * @property int                             $latest_posts_block_position
+ * @property bool                            $latest_comments_block_visible
+ * @property int                             $latest_comments_block_position
+ * @property bool                            $online_block_visible
+ * @property int                             $online_block_position
  * @property string                          $locale
  * @property int                             $style
  * @property int                             $torrent_layout
@@ -57,17 +68,28 @@ class UserSetting extends Model
      *
      * @return array{
      *     censor: 'bool',
-     *     news_visible: 'bool',
-     *     chat_visible: 'bool',
-     *     featured_visible: 'bool',
-     *     random_media_visible: 'bool',
-     *     poll_visible: 'bool',
-     *     top_torrents_visible: 'bool',
-     *     top_users_visible: 'bool',
-     *     latest_topics_visible: 'bool',
-     *     latest_posts_visible: 'bool',
-     *     latest_comments_visible: 'bool',
-     *     online_visible: 'bool',
+     *     news_block_visible: 'bool',
+     *     news_block_position: 'int',
+     *     chat_block_visible: 'bool',
+     *     chat_block_position: 'int',
+     *     featured_block_visible: 'bool',
+     *     featured_block_position: 'int',
+     *     random_media_block_visible: 'bool',
+     *     random_media_block_position: 'int',
+     *     poll_block_visible: 'bool',
+     *     poll_block_position: 'int',
+     *     top_torrents_block_visible: 'bool',
+     *     top_torrents_block_position: 'int',
+     *     top_users_block_visible: 'bool',
+     *     top_users_block_position: 'int',
+     *     latest_topics_block_visible: 'bool',
+     *     latest_topics_block_position: 'int',
+     *     latest_posts_block_visible: 'bool',
+     *     latest_posts_block_position: 'int',
+     *     latest_comments_block_visible: 'bool',
+     *     latest_comments_block_position: 'int',
+     *     online_block_visible: 'bool',
+     *     online_block_position: 'int',
      *     torrent_filters: 'bool',
      *     show_poster: 'bool',
      *     unbookmark_torrents_on_completion: 'bool',
@@ -77,17 +99,28 @@ class UserSetting extends Model
     {
         return [
             'censor'                            => 'bool',
-            'news_visible'                      => 'bool',
-            'chat_visible'                      => 'bool',
-            'featured_visible'                  => 'bool',
-            'random_media_visible'              => 'bool',
-            'poll_visible'                      => 'bool',
-            'top_torrents_visible'              => 'bool',
-            'top_users_visible'                 => 'bool',
-            'latest_topics_visible'             => 'bool',
-            'latest_posts_visible'              => 'bool',
-            'latest_comments_visible'           => 'bool',
-            'online_visible'                    => 'bool',
+            'news_block_visible'                => 'bool',
+            'news_block_position'               => 'int',
+            'chat_block_visible'                => 'bool',
+            'chat_block_position'               => 'int',
+            'featured_block_visible'            => 'bool',
+            'featured_block_position'           => 'int',
+            'random_media_block_visible'        => 'bool',
+            'random_media_block_position'       => 'int',
+            'poll_block_visible'                => 'bool',
+            'poll_block_position'               => 'int',
+            'top_torrents_block_visible'        => 'bool',
+            'top_torrents_block_position'       => 'int',
+            'top_users_block_visible'           => 'bool',
+            'top_users_block_position'          => 'int',
+            'latest_topics_block_visible'       => 'bool',
+            'latest_topics_block_position'      => 'int',
+            'latest_posts_block_visible'        => 'bool',
+            'latest_posts_block_position'       => 'int',
+            'latest_comments_block_visible'     => 'bool',
+            'latest_comments_block_position'    => 'int',
+            'online_block_visible'              => 'bool',
+            'online_block_position'             => 'int',
             'torrent_filters'                   => 'bool',
             'show_poster'                       => 'bool',
             'unbookmark_torrents_on_completion' => 'bool',

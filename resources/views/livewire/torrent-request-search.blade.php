@@ -53,6 +53,7 @@
                         class="form__text"
                         type="search"
                         autocomplete="off"
+                        pattern="[0-9]+|tt0*\d{7,}"
                         placeholder=" "
                     />
                     <label class="form__label form__label--floating" for="imdbId">IMDb ID</label>

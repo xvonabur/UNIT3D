@@ -240,4 +240,5 @@ return [
     'subject' => '主题',
     'total' => '总数',
     'test' => '测试',
+    'trending' => '趋势',
 ];

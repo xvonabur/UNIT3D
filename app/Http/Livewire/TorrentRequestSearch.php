@@ -242,7 +242,7 @@ class TorrentRequestSearch extends Component
             ->when($this->typeIds !== [], fn ($query) => $query->whereIntegerInRaw('type_id', $this->typeIds))
             ->when($this->resolutionIds !== [], fn ($query) => $query->whereIntegerInRaw('resolution_id', $this->resolutionIds))
             ->when($this->tmdbId !== null, fn ($query) => $query->where(fn ($query) => $query->where('tmdb_movie_id', '=', $this->tmdbId)->orWhere('tmdb_tv_id', '=', $this->tmdbId)))
-            ->when($this->imdbId !== '', fn ($query) => $query->where('imdb', '=', (preg_match('/tt0*(?=(\d{7,}))/', $this->imdbId, $matches) ? $matches[1] : $this->imdbId)))
+            ->when($this->imdbId !== '', fn ($query) => $query->where('imdb', '=', (preg_match('/tt0*(\d{7,})/', $this->imdbId, $matches) ? $matches[1] : $this->imdbId)))
             ->when($this->tvdbId !== null, fn ($query) => $query->where('tvdb', '=', $this->tvdbId))
             ->when($this->malId !== null, fn ($query) => $query->where('mal', '=', $this->malId))
             ->when(

@@ -22,49 +22,93 @@ class UpdateGeneralSettingRequest extends FormRequest
                 'required',
                 'boolean',
             ],
-            'news_visible' => [
+            'news_block_visible' => [
                 'required',
                 'boolean',
             ],
-            'chat_visible' => [
+            'news_block_position' => [
+                'required',
+                'numeric',
+            ],
+            'chat_block_visible' => [
                 'required',
                 'boolean',
             ],
-            'featured_visible' => [
+            'chat_block_position' => [
+                'required',
+                'numeric',
+            ],
+            'featured_block_visible' => [
                 'required',
                 'boolean',
             ],
-            'random_media_visible' => [
+            'featured_block_position' => [
+                'required',
+                'numeric',
+            ],
+            'random_media_block_visible' => [
                 'required',
                 'boolean',
             ],
-            'poll_visible' => [
+            'random_media_block_position' => [
+                'required',
+                'numeric',
+            ],
+            'poll_block_visible' => [
                 'required',
                 'boolean',
             ],
-            'top_torrents_visible' => [
+            'poll_block_position' => [
+                'required',
+                'numeric',
+            ],
+            'top_torrents_block_visible' => [
                 'required',
                 'boolean',
             ],
-            'top_users_visible' => [
+            'top_torrents_block_position' => [
+                'required',
+                'numeric',
+            ],
+            'top_users_block_visible' => [
                 'required',
                 'boolean',
             ],
-            'latest_topics_visible' => [
+            'top_users_block_position' => [
+                'required',
+                'numeric',
+            ],
+            'latest_topics_block_visible' => [
                 'required',
                 'boolean',
             ],
-            'latest_posts_visible' => [
+            'latest_topics_block_position' => [
+                'required',
+                'numeric',
+            ],
+            'latest_posts_block_visible' => [
                 'required',
                 'boolean',
             ],
-            'latest_comments_visible' => [
+            'latest_posts_block_position' => [
+                'required',
+                'numeric',
+            ],
+            'latest_comments_block_visible' => [
                 'required',
                 'boolean',
             ],
-            'online_visible' => [
+            'latest_comments_block_position' => [
+                'required',
+                'numeric',
+            ],
+            'online_block_visible' => [
                 'required',
                 'boolean',
+            ],
+            'online_block_position' => [
+                'required',
+                'numeric',
             ],
             'locale' => [
                 'required',

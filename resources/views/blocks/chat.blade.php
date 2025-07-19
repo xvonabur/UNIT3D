@@ -34,24 +34,15 @@
                     </button>
                 </div>
                 <div class="panel__action" x-show="state.chat.target < 1 && state.chat.bot < 1">
-                    <button
-                        class="form__button form__button--text"
-                        @click.prevent="changeTab('list', 'userlist')"
-                    >
+                    <button class="form__button form__button--text" @click.prevent="toggleUserList">
                         <i class="fa fa-users"></i>
                         Users:
-                        <span x-text="users.length"></span>
+                        <span x-text="users.size"></span>
                     </button>
                 </div>
                 <div class="panel__action">
                     <template
-                        x-if="
-                            state.chat.room &&
-                                state.chat.room > 0 &&
-                                state.chat.bot < 1 &&
-                                state.chat.target < 1 &&
-                                state.chat.tab != 'userlist'
-                        "
+                        x-if="state.chat.room && state.chat.room > 0 && state.chat.bot < 1 && state.chat.target < 1"
                     >
                         <button
                             class="form__button form__standard-icon-button form__standard-icon-button--skinny"
@@ -64,7 +55,7 @@
                         </button>
                     </template>
                     <template
-                        x-if="state.chat.bot && state.chat.bot >= 1 && state.chat.target < 1 && state.chat.tab != 'userlist'"
+                        x-if="state.chat.bot && state.chat.bot >= 1 && state.chat.target < 1"
                     >
                         <button
                             class="form__button form__standard-icon-button form__standard-icon-button--skinny"
@@ -77,7 +68,7 @@
                         </button>
                     </template>
                     <template
-                        x-if="state.chat.target && state.chat.target >= 1 && state.chat.bot < 1 && state.chat.tab != 'userlist'"
+                        x-if="state.chat.target && state.chat.target >= 1 && state.chat.bot < 1"
                     >
                         <button
                             class="form__button form__standard-icon-button form__standard-icon-button--skinny"
@@ -148,11 +139,8 @@
                 </div>
             </div>
         </header>
-        <menu id="chatbox_tabs" class="panel__tabs" role="tablist" x-show="boot == 1">
-            <template
-                x-for="(echo, idx) in echoes"
-                :key="echo.room && echo.room.id ? echo.room.id : 'room-' + idx"
-            >
+        <menu id="chatbox_tabs" class="panel__tabs" role="tablist">
+            <template x-for="echo in echoes" :key="echo.id">
                 <li
                     x-show="echo.room && echo.room.name && echo.room.name.length > 0"
                     class="panel__tab chatbox__tab"
@@ -174,10 +162,7 @@
                     </button>
                 </li>
             </template>
-            <template
-                x-for="(echo, idx) in echoes"
-                :key="echo.target && echo.target.id ? echo.target.id : 'target-' + idx"
-            >
+            <template x-for="echo in echoes" :key="echo.id">
                 <li
                     x-show="echo.target && echo.target.id >= 3 && echo.target.username && echo.target.username.length > 0"
                     class="panel__tab chatbox__tab"
@@ -202,10 +187,7 @@
                     </button>
                 </li>
             </template>
-            <template
-                x-for="(echo, idx) in echoes"
-                :key="echo.bot && echo.bot.id ? echo.bot.id : 'bot-' + idx"
-            >
+            <template x-for="echo in echoes" :key="echo.id">
                 <li
                     x-show="echo.bot && echo.bot.id >= 1 && echo.bot.name && echo.bot.name.length > 0"
                     class="panel__tab chatbox__tab"
@@ -229,8 +211,8 @@
                 </li>
             </template>
         </menu>
-        <div class="chatbox__chatroom" x-show="!state.ui.connecting">
-            <template x-if="state.chat.tab !== '' && state.chat.tab !== 'userlist'">
+        <div class="chatbox__chatroom">
+            <template x-if="state.chat.tab !== ''">
                 <div class="chatroom__messages--wrapper" x-ref="messagesWrapper">
                     <ul class="chatroom__messages">
                         <template x-for="message in messages" :key="message.id">
@@ -365,56 +347,60 @@
                     </ul>
                 </div>
             </template>
-            <template x-if="state.chat.tab === 'userlist'">
-                <section class="chatroom__users">
-                    <h2 class="chatroom-users__heading">Users</h2>
-                    <ul class="chatroom-users__list">
-                        <template x-for="user in users" :key="user.id">
-                            <li class="chatroom-users__list-item">
-                                <span class="chatroom-users__user user-tag">
-                                    <a
-                                        class="chatroom-users__user-link user-tag__link"
-                                        :href="'/users/' + user.username"
-                                    >
-                                        <span x-text="user.username"></span>
-                                    </a>
-                                </span>
-                                <menu
-                                    class="chatroom-users__buttons"
-                                    x-show="auth.id !== user.id"
+            <section
+                class="chatroom__users"
+                x-show="state.chat.showUserList && state.chat.target < 1 && state.chat.bot < 1"
+            >
+                <h2 class="chatroom-users__heading">Users</h2>
+                <ul class="chatroom-users__list">
+                    <template x-for="user in [...users.values()]" :key="user.id">
+                        <li class="chatroom-users__list-item">
+                            <span class="chatroom-users__user user-tag">
+                                <a
+                                    class="chatroom-users__user-link user-tag__link"
+                                    :href="'/users/' + user.username"
                                 >
-                                    <li>
-                                        <button
-                                            class="chatroom-users__button"
-                                            title="Gift user bon"
-                                            @click.prevent="forceGift(user.username)"
-                                        >
-                                            <i class="fas fa-gift"></i>
-                                        </button>
-                                    </li>
-                                    <li>
-                                        <button
-                                            class="chatroom-users__button"
-                                            title="Send chat PM"
-                                            @click.prevent="forceMessage(user.username)"
-                                        >
-                                            <i class="fas fa-envelope"></i>
-                                        </button>
-                                    </li>
-                                </menu>
-                            </li>
-                        </template>
-                    </ul>
-                </section>
-            </template>
+                                    <span x-text="user.username"></span>
+                                </a>
+                            </span>
+                            <menu class="chatroom-users__buttons" x-show="auth.id !== user.id">
+                                <li>
+                                    <button
+                                        class="chatroom-users__button"
+                                        title="Gift user bon"
+                                        @click.prevent="forceGift(user.username)"
+                                    >
+                                        <i class="fas fa-gift"></i>
+                                    </button>
+                                </li>
+                                <li>
+                                    <button
+                                        class="chatroom-users__button"
+                                        title="Send chat PM"
+                                        @click.prevent="forceMessage(user.username)"
+                                    >
+                                        <i class="fas fa-envelope"></i>
+                                    </button>
+                                </li>
+                            </menu>
+                        </li>
+                    </template>
+                </ul>
+            </section>
             <section class="chatroom__whispers" x-show="state.chat.showWhispers">
                 <span
-                    x-show="state.chat.target < 1 && state.chat.bot < 1 && activePeer && activePeer.username != ''"
-                >
-                    <span
-                        x-text="activePeer ? activePeer.username + ' is typing ...' : '*'"
-                    ></span>
-                </span>
+                    x-show="state.chat.target < 1 && state.chat.bot < 1 && activePeer && activePeer.size > 0"
+                    x-text="
+                        activePeer.size > 3
+                            ? 'Several people are typing...'
+                            : activePeer.size === 1
+                              ? [...activePeer.keys()][0] + ' is typing...'
+                              : [...activePeer.keys()].slice(0, -1).join(', ') +
+                                ' and ' +
+                                [...activePeer.keys()][activePeer.size - 1] +
+                                ' are typing...'
+                    "
+                ></span>
             </section>
             <form
                 class="form chatroom__new-message"
