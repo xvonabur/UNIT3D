@@ -139,7 +139,7 @@
                 </div>
             </div>
         </header>
-        <menu id="chatbox_tabs" class="panel__tabs" role="tablist" x-show="boot == 1">
+        <menu id="chatbox_tabs" class="panel__tabs" role="tablist">
             <template x-for="echo in echoes" :key="echo.id">
                 <li
                     x-show="echo.room && echo.room.name && echo.room.name.length > 0"
