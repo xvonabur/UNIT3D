@@ -21,7 +21,7 @@
         "graham-campbell/markdown": "^v16.0.0",
         "guzzlehttp/guzzle": "^7.9.3",
         "hdvinnie/laravel-joypixel-emojis": "^3.0.1",
-        "hdvinnie/laravel-security-headers": "^3.0.2",
+        "hdvinnie/laravel-security-headers": "^3.0.3",
         "intervention/image": "^2.7.2",
         "joypixels/assets": "^v7.0.1",
         "laravel/fortify": "^1.27.0",
