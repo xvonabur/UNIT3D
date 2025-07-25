@@ -249,6 +249,7 @@ class Movie
         // App\Exceptions\Handler.php::dontReport, but still throws an exception
         // when the job is dispatched in sync for the FetchMeta.php command.
         $response = Http::acceptJson()
+            ->withToken(config('api-keys.tmdb'))
             ->retry(
                 [1000, 5000, 15000],
                 when: fn (Exception $exception) => !($exception instanceof RequestException && $exception->response->notFound()),
@@ -256,7 +257,6 @@ class Movie
             )
             ->withUrlParameters(['id' => $id])
             ->get('https://api.TheMovieDB.org/3/movie/{id}', [
-                'api_key'            => config('api-keys.tmdb'),
                 'language'           => config('app.meta_locale'),
                 'append_to_response' => 'videos,images,credits,external_ids,keywords,recommendations,alternative_titles',
             ])
