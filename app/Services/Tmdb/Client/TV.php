@@ -309,28 +309,56 @@ class TV
         // error that admins don't want to deal with. Hides 404s from logs via
         // App\Exceptions\Handler.php::dontReport, but still throws an exception
         // when the job is dispatched in sync for the FetchMeta.php command.
-        $response = Http::acceptJson()
-            ->withToken(config('api-keys.tmdb'))
+        $baseUrl = 'https://api.TheMovieDB.org/3/tv/{id}';
+        $token = config('api-keys.tmdb');
+
+        $urlParams = ['id' => $id];
+
+        // First request for app.meta_locale locale
+        $localizedResponse = Http::acceptJson()
+            ->withToken($token)
             ->retry(
                 [1000, 5000, 15000],
-                when: fn (Exception $exception) => !($exception instanceof RequestException && $exception->response->notFound()),
+                when: fn (Exception $e) => !($e instanceof RequestException && $e->response->notFound()),
                 throw: false
             )
-            ->withUrlParameters(['id' => $id])
-            ->get('https://api.TheMovieDB.org/3/tv/{id}', [
-                'language'           => config('app.meta_locale'),
-                'append_to_response' => 'videos,images,aggregate_credits,external_ids,keywords,recommendations,alternative_titles',
+            ->withUrlParameters($urlParams)
+            ->get($baseUrl, [
+                'language' => config('app.meta_locale'),
+                'append_to_response' => 'videos,images,credits,external_ids,keywords,recommendations,alternative_titles',
             ])
             ->throwIf(fn (Response $response) => !$response->notFound());
 
-        if ($response->notFound()) {
+        if ($localizedResponse->notFound()) {
             throw new MetaFetchNotFoundException(
-                $response->toException()->getMessage(),
-                $response->toException()->getCode()
+                $localizedResponse->toException()->getMessage(),
+                $localizedResponse->toException()->getCode()
             );
         }
 
-        $this->data = $response->json();
+        $this->data = $localizedResponse->json();
+
+        if (config('app.meta_locale') !== 'en-US') {
+            // Second request for en-US poster
+            $fallbackResponse = Http::acceptJson()
+                ->withToken($token)
+                ->retry(
+                    [1000, 5000, 15000],
+                    when: fn (Exception $e) => !($e instanceof RequestException && $e->response->notFound()),
+                    throw: false
+                )
+                ->withUrlParameters($urlParams)
+                ->get($baseUrl, [
+                    'language' => 'en-US',
+                ])
+                ->throwIf(fn (Response $response) => !$response->notFound());
+
+            $fallbackData = $fallbackResponse->json();
+
+            if (!empty($fallbackData['poster_path'])) {
+                $this->data['poster_path'] = $fallbackData['poster_path'];
+            }
+        }
 
         $this->tmdb = new TMDB();
     }
