@@ -14,19 +14,24 @@ declare(strict_types=1);
  */
 
 return [
-    'create'              => 'Создайте',
-    'create-private-feed' => 'Создать приватную ленту RSS',
-    'create-public-feed'  => 'Создать общедоступный канал RSS',
+    'create'              => 'Создать',
+    'create-private-feed' => 'Создать приватную RSS-ленту',
+    'create-public-feed'  => 'Создать публичную RSS-ленту',
+    'created'             => 'Приватная RSS-лента создана',
     'delete'              => 'Удалить',
+    'deleted'             => 'RSS-лента удалена!',
     'edit'                => 'Редактировать',
-    'edit-private-feed'   => 'Редактировать частный канал RSS',
-    'edit-public-feed'    => 'Изменить общедоступный канал RSS',
-    'feed'                => 'Кормить',
+    'edit-private-feed'   => 'Редактировать приватную RSS-ленту',
+    'edit-public-feed'    => 'Редактировать публичную RSS-ленту',
+    'error'               => 'Не удалось обработать запрос',
+    'feed'                => 'Лента',
     'feeds'               => 'Ленты',
     'name'                => 'Название',
-    'public'              => 'Общественного',
-    'private'             => 'Частный',
+    'public'              => 'Публичная',
+    'private'             => 'Приватная',
     'rss'                 => 'RSS',
-    'rss-feed'            => 'Новостная лента',
+    'rss-feed'            => 'RSS-лента',
     'type'                => 'Тип',
+    'updated'             => 'Приватная RSS-лента обновлена',
+
 ];

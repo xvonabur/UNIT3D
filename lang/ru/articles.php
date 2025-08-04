@@ -16,6 +16,6 @@ declare(strict_types=1);
 return [
     'articles'      => 'Статьи',
     'meta-articles' => 'Статьи и новости о трекере и сообществе',
-    'published-at'  => 'Опубликован в',
-    'read-more'     => 'Прочитайте больше',
+    'published-at'  => 'Опубликовано ',
+    'read-more'     => 'Читать далее',
 ];

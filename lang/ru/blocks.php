@@ -14,19 +14,35 @@ declare(strict_types=1);
  */
 
 return [
-    'chatbox'                 => 'Окно чата',
-    'click'                   => 'Нажмите',
-    'to-enable-editor'        => 'включить редактор',
-    'featured-by'             => 'Показанный',
-    'featured-torrents'       => 'Популярные торренты',
-    'featured-torrents-intro' => 'Получите их, пока можете!',
-    'featured-until'          => 'Это показанный торрент до',
-    'top-torrents'            => 'Лучшие торренты',
-    'latest-posts'            => 'последние сообщения',
-    'latest-topics'           => 'Последние темы',
-    'active-in-last'          => 'Активный в прошлом',
-    'users-online'            => 'Пользователи онлайн',
-    'check-news'              => 'Новости (проверяйте ежедневно)',
-    'new-news'                => 'Новые новости',
-    'new-torrents'            => 'Новые торренты',
+    // Chat
+    'chatbox' => 'Чат',
+    'click' => 'Нажмите',
+    'to-enable-editor' => 'чтобы включить редактор',
+    // Featured Torrents
+    'featured-by' => 'Рекомендует',
+    'featured-torrents' => 'Рекомендуемые торренты',
+    'featured-torrents-intro' => 'Берите, пока доступны!',
+    'featured-until' => 'Этот торрент в рекомендациях до',
+    // Latest Torrents
+    'top-torrents' => 'Топ торрентов',
+
+    // Latest Posts
+    'latest-posts' => 'Последние сообщения',
+
+    // Latest Topics
+    'latest-topics' => 'Последние темы',
+
+    // Latest Comments
+    'latest-comments' => 'Последние комментарии',
+
+    // Users Online
+    'active-in-last' => 'Активны за последние',
+    'users-online' => 'Пользователи онлайн',
+
+    // News/Articles
+    'check-news' => 'Последние новости',
+    'new-news' => 'Новости',
+
+    // Top Torrents
+    'new-torrents' => 'Новые торренты',
 ];
