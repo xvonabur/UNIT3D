@@ -309,6 +309,11 @@ class Bbcode
             fn ($matches) => '<img src="'.$this->sanitizeUrl($matches[2], isImage: true).'" loading="lazy" width="'.$matches[1].'px">',
             $source ?? ''
         );
+        $source = preg_replace_callback(
+            '/\[cimg=(\d+)(?:x\d+)?](.*?)\[\/cimg]/i',
+            fn ($matches) => '<a href="'.$this->sanitizeUrl($matches[2]).'"><img src="'.$this->sanitizeUrl($matches[2], isImage: true).'" loading="lazy" width="'.$matches[1].'px"></a>',
+            $source ?? ''
+        );
 
         // YouTube video elements need to be replaced like this because the content inside the two tags
         // has to be moved into an HTML attribute

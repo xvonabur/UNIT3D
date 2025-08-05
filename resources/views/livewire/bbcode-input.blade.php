@@ -75,6 +75,13 @@
                 </abbr>
             </button>
         </li>
+         <li>
+            <button type="button" class="form__standard-icon-button" x-on:click="insertCImage">
+                <abbr title="Insert Image">
+                    <i class="{{ config('other.font-awesome') }} fa-photo-film"></i>
+                </abbr>
+            </button>
+        </li>
         <li>
             <button type="button" class="form__standard-icon-button" x-on:click="insertYoutube">
                 <abbr title="Insert YouTube">
@@ -293,6 +300,9 @@
                 },
                 insertImage() {
                     this.insert('[img=350]', '[/img]');
+                },
+                insertCImage() {
+                    this.insert('[cimg=450]', '[/cimg]');
                 },
                 insertYoutube() {
                     this.insert('[video=&quot;youtube&quot;]', '[/video]');
