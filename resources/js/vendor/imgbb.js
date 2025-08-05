@@ -600,4 +600,20 @@
     )
         t.vendors[e[i]] = Object.assign(Object.assign({}, t.vendors.redactor2), t.vendors[e[i]]);
     t.prepare();
+    window.imgbbUploader = t;
+})();
+
+(function () {
+    const imgbb = window.imgbbUploader;
+
+    if (!imgbb || typeof imgbb.observe !== 'function') {
+        return;
+    }
+
+
+    document.querySelector('#description-bbcode-preview-disabled').addEventListener('click', () => {
+      setTimeout(() => {
+        imgbb.observe();
+      }, 300);
+    });
 })();
