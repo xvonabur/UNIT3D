@@ -286,12 +286,12 @@ class Bbcode
         $source = str_replace('[hr]', '<hr>', $source);
         $source = preg_replace_callback(
             '/\[url](.*?)\[\/url]/i',
-            fn ($matches) => '<a href="'.$this->sanitizeUrl($matches[1]).'">'.$this->sanitizeUrl($matches[1]).'</a>',
+            fn ($matches) => '<a href="'.$this->sanitizeUrl($matches[1]).'" target="_blank">'.$this->sanitizeUrl($matches[1]).'</a>',
             $source
         );
         $source = preg_replace_callback(
             '/\[url=(.*?)](.*?)\[\/url]/i',
-            fn ($matches) => '<a href="'.$this->sanitizeUrl($matches[1]).'">'.$matches[2].'</a>',
+            fn ($matches) => '<a href="'.$this->sanitizeUrl($matches[1]).'" target="_blank">'.$matches[2].'</a>',
             $source ?? ''
         );
         $source = preg_replace_callback(
